@@ -1,0 +1,2 @@
+# epidots
+My Epita configuration
