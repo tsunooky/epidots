@@ -70,7 +70,8 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `afs` | goes into the **afs** directory |
 | `intra` | Open Intranet |
 | `moodle` | Open Moodle |
-| `tarpls` | Moves all tar files from Downloads, and extracts the content in current directory |
+| `tarpls` | Moves all .tar files from Downloads, and extracts the content in current directory |
+| `zippls` | Same than tarpls but with .zip files |
 | `makec` | runs `make && make check && make clean` (The holy trinity) |
 | `gcw` | `gcc` with all required EPITA flags (`-Werror -Wall -Wextra -Wvla`...) |
 | `cf` | Run `clang-format -i` on current files |
