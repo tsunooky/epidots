@@ -97,7 +97,7 @@ alias tarpls='mv ~/Downloads/*.tar . && tar -xvf *.tar && rm *.tar'
 cfe() {
     local here=$(pwd)
     cd $(git rev-parse --show-toplevel)
-    cp ~/afs/.confs/.clang-format ./
+    cp ~/afs/.confs/clang-format ./.clang-format
     clang-format-epita
     rm .clang-format
     cd "$here"
@@ -220,6 +220,11 @@ update-conf() {
     fi
 
     rm -rf "$TEMP_DIR"
+
+    if [ -f ~/afs/.confs/install.sh ]; then
+        ~/afs/.confs/install.sh
+    fi
+
     echo -e "${GREEN}Update complete!${NC}"
 }
 
@@ -281,11 +286,12 @@ reset-conf() {
         echo -e "${RED}[FAIL]${NC}"
     fi
 
+    if [ -f ~/afs/.confs/install.sh ]; then
+        ~/afs/.confs/install.sh
+    fi
+
     echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
 }
-
-# Configuration Management
-alias update-conf='HERE I DONT KNOW'
 
 # Wallpaper & Matugen scripts
 alias bg='~/afs/.confs/config/scripts/change_wallpaper.sh'
