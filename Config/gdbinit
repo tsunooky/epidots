@@ -1,0 +1,45 @@
+tui enable
+
+layout src
+
+focus cmd
+
+
+define epiconf
+    help epiconf
+end
+
+document epiconf
+    list of command:
+        dlistPrint   : print double linked list
+        llistPrint   : print linked list
+        intlistPrint : print n first element of a int list
+end
+
+define dlistPrint
+  set var $n = $arg0->head
+  while $n
+    print $n->data
+    set var $n = $n->next
+  end
+end
+
+document dlistPrint
+    tg
+end
+
+define llistPrint
+    set var $n = $arg0
+    while $n
+        print $n->data
+        set var $n = $n->next;
+    end
+end
+
+define intlistPrint
+    set var $i = $arg1
+    while $i
+        print $arg0[$i]
+        set var $i = $i-1
+    end
+end
