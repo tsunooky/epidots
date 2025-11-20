@@ -19,7 +19,7 @@ curl -L https://raw.githubusercontent.com/tsunooky/epidots/refs/heads/main/insta
 ```
 
 ### 🦊 Installation Requirement
-For the automatic theming to work with Firefox, you must install the [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
+For the automatic theming to work with Firefox, you must install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
 
 ---
 
