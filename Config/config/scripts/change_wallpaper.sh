@@ -9,8 +9,12 @@ if [ ! -f "$1" ]; then
   exit 1
 fi
 
-#matugen "$1"
+echo "$(basename "$1")" > ~/afs/.confs/.bg
+
+matugen image "$1"
 feh --bg-fill "$1"
 cp ~/.fehbg ~/afs/.confs/
-#.~/afs/.confs/install.sh
 
+if [ -f ~/afs/.confs/install.sh ]; then
+    ~/afs/.confs/install.sh
+fi

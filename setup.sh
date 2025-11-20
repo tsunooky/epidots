@@ -38,10 +38,9 @@ run_step "Deploying configs to AFS" \
 run_step "Installing Vim plugins" \
     "vim +PluginInstall +qall"
 
-WALLPAPER_SCRIPT="$AFS_DIR/config/scripts/change_wallpaper.sh"
 DEFAULT_WALL="$AFS_DIR/wallpapers/default.jpg"
 run_step "Setting default wallpaper" \
-    "chmod +x \"$WALLPAPER_SCRIPT\" && \"$WALLPAPER_SCRIPT\" \"$DEFAULT_WALL\""
+    "feh --bg-fill \"$DEFAULT_WALL\" && cp ~/.fehbg \"$AFS_DIR/\""
 
 run_step "Reloading i3 window manager" \
     "i3-msg restart"

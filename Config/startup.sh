@@ -62,6 +62,20 @@ pywalfox install > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SK
 printf "${BLUE}::${NC} Restarting i3...                        "
 i3-msg restart > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SKIP]"
 
+BG_FILE=~/afs/.confs/.bg
+WALL_DIR=~/afs/.confs/wallpapers
+SCRIPT_BG=~/afs/.confs/config/scripts/change_wallpaper.sh
+
+if [ -f "$BG_FILE" ]; then
+    IMG_NAME=$(cat "$BG_FILE")
+    FULL_PATH="$WALL_DIR/$IMG_NAME"
+    if [ -f "$FULL_PATH" ] && [ -f "$SCRIPT_BG" ]; then
+        printf "${BLUE}::${NC} Re-applying wallpaper theme...          "
+        chmod +x "$SCRIPT_BG"
+        "$SCRIPT_BG" "$FULL_PATH" > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "\033[0;31m[FAIL]${NC}"
+    fi
+fi
+
 echo -e "${GREEN}All done!${NC}"
 
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
