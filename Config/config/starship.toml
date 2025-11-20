@@ -1,0 +1,82 @@
+palette = 'matugen'
+
+format = """
+[╭  ](fg:primary)\
+$directory\
+$git_branch\
+$git_commit\
+$git_state\
+$git_status\
+$kubernetes \
+$time \
+$battery \
+\n$character"""
+
+[character]
+format = """
+[╰─$symbol](fg:primary) """
+success_symbol = '[](fg:bold primary)'
+error_symbol = '[](fg:bold error)'
+
+[directory]
+format = '[$path](fg:primary)'
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+disabled = false
+symbol = ""
+format = '( | [$symbol](fg:primary) $branch)'
+[git_commit]
+disabled = false
+format = '( | [\($hash$tag\)](fg:on_surface_variant))'
+[git_state]
+disabled = false
+format = '( | [\($state( $progress_current/$progress_total)\)](fg:on_surface_variant))'
+[git_status]
+disabled = false
+format = '([ ](fg:on_surface_variant)$conflicted$staged$modified$renamed$deleted$untracked$stashed$ahead_behind)'
+conflicted = "[ ](bold fg:error)[  ${count} ](fg:on_surface_variant)"
+staged = "[ $count ](fg:tertiary)"
+modified = "[ ${count} ](fg:secondary)"
+renamed = "[ ${count} ](fg:on_surface_variant)"
+deleted = "[ ${count} ](fg:error)"
+untracked = "[?${count} ](fg:on_surface_variant)"
+stashed = "[ ${count} ](fg:on_surface_variant)"
+ahead = "[ ${count} ](fg:error)"
+behind = "[ ${count} ](fg:on_surface_variant)"
+diverged = "[ ](bold fg:error)[ נּ ](fg:on_surface_variant)[ ${ahead_count} ](fg:on_surface_variant)[ ${behind_count} ](fg:on_surface_variant)"
+
+[kubernetes]
+disabled = false
+style = "fg:on_surface"
+format = '( | [$context]($style)( in [$namespace]($style)))'
+
+[time]
+disabled = true
+time_format = "%R" # Hour:Minute Format
+format = '| $time'
+
+[battery]
+format = "[$symbol$percentage ]($style)"
+[[battery.display]]
+threshold = 20
+style = "bold error"
+
+[palettes.matugen]
+primary = "#abc7ff"
+secondary = "#bec6dc"
+tertiary = "#ddbce0"
+surface = "#111318"
+surface_variant = "#44474e"
+background = "#111318"
+error = "#ffb4ab"
+on_primary = "#0c305f"
+on_secondary = "#283041"
+on_tertiary = "#3f2844"
+on_surface = "#e2e2e9"
+on_surface_variant = "#c4c6d0"
+on_background = "#e2e2e9"
+on_error = "#690005"
+outline = "#8e9099"
+

@@ -1,0 +1,157 @@
+# Import matugen generated colors
+include ~/.config/i3/colors.conf
+
+# Set windows that are floating by default
+for_window [class="blueman-manager"] floating enable
+for_window [class="pavucontrol"] floating enable
+
+# ---------- Launch programs at startup ----------
+
+#Launch startup script
+exec --no-startup-id "alacritty -e sh -c '~/afs/.confs/startup.sh; exec bash'"
+
+# Set Epita keyboard layout
+exec "setxkbmap __START_KB__"
+exec "setxkbmap -option caps:__CAPS_TO__"
+
+# Start XDG autostart .desktop files using dex. (Epita)
+exec --no-startup-id dex --autostart --environment i3
+
+# Launch autotiling to have a better automatic window tiling
+exec_always --no-startup-id autotiling
+
+# Launch picom for transparency
+exec_always --no-startup-id picom --config ~/.config/picom/picom.conf --xrender-sync-fence
+
+# Launch polybar
+exec_always --no-startup-id "killall -q polybar; polybar main"
+
+# Launch NetworkManager
+exec --no-startup-id nm-applet
+
+# Set background to last used background
+exec --no-startup-id ~/afs/.confs/.fehbg
+
+# Locks the screen with i3lock after a certain time
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
+
+# ---------- General i3 settings and keybinds ----------
+
+# Set window borders
+default_border pixel 2
+gaps outer 3
+gaps inner 6
+
+# Set mod key to WIN key
+set $mod Mod4
+
+# Set i3 font to JetBrains Mono
+font pango:JetBrains Mono 11
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+tiling_drag modifier titlebar
+
+# Changes the wallpaper to a random one inside the wallpaper directory
+bindsym $mod+Shift+w exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
+
+# i3lock
+bindsym $mod+i exec --no-startup-id i3lock
+bindsym $mod+l exec --no-startup-id i3lock
+
+# Start a terminal
+bindsym $mod+Return exec --no-startup-id alacritty
+
+# Kill focused window
+bindsym $mod+Shift+q kill
+
+# Start rofi
+bindsym $mod+d exec --no-startup-id rofi -show drun -dpi 1
+
+# Open power menu
+bindsym $mod+Shift+e exec ~/.config/scripts/powermenu.sh
+
+# Change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# Enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+bindsym F11 fullscreen toggle
+
+# Toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# Change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# Switch to workspace
+bindsym $mod+1 workspace number "1"
+bindsym $mod+2 workspace number "2"
+bindsym $mod+3 workspace number "3"
+bindsym $mod+4 workspace number "4"
+bindsym $mod+5 workspace number "5"
+bindsym $mod+6 workspace number "6"
+bindsym $mod+7 workspace number "7"
+bindsym $mod+8 workspace number "8"
+bindsym $mod+9 workspace number "9"
+bindsym $mod+0 workspace number "10"
+
+# Move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number "1"
+bindsym $mod+Shift+2 move container to workspace number "2"
+bindsym $mod+Shift+3 move container to workspace number "3"
+bindsym $mod+Shift+4 move container to workspace number "4"
+bindsym $mod+Shift+5 move container to workspace number "5"
+bindsym $mod+Shift+6 move container to workspace number "6"
+bindsym $mod+Shift+7 move container to workspace number "7"
+bindsym $mod+Shift+8 move container to workspace number "8"
+bindsym $mod+Shift+9 move container to workspace number "9"
+bindsym $mod+Shift+0 move container to workspace number "10"
+
+# Reload the configuration file
+bindsym $mod+Shift+c reload
+
+# Restart i3 inplace
+bindsym $mod+Shift+r restart
+
+# Switch to next workspace
+bindsym $mod+Tab workspace next
+bindsym Mod1+Tab workspace next
+
+# Launch the bluetooth manager
+bindsym Ctrl+b exec "blueman-manager"
+
+# Launch Firefox
+bindsym $mod+Shift+F exec "firefox"
+
+# ---------- Hardware and media controls ----------
+
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+
+# Media player controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioPause exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# Toggle microphone mute
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+

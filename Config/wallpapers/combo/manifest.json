@@ -1,0 +1,18 @@
+{
+    "Type": "solar",
+    "Meta": [
+        {
+            "Time": "00:00",
+            "FileName": "1.jpg"
+        }, {
+            "Time": "06:00",
+            "FileName": "2.jpg"
+        }, {
+            "Time": "12:00",
+            "FileName": "3.jpg"
+        }, {
+            "Time": "18:00",
+            "FileName": "4.jpg"
+        }
+    ]
+}

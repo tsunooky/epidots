@@ -1,0 +1,300 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# ----------------------------
+# ENVIRONMENT VARIABLES & PATH
+# ----------------------------
+
+if [ -d ~/afs/bin ] ; then
+    export PATH=~/afs/bin:$PATH
+fi
+if [ -d ~/.local/bin ] ; then
+    export PATH=~/.local/bin:$PATH
+fi
+
+export LANG=en_US.utf8
+export NNTPSERVER="news.epita.fr"
+export EDITOR=vim
+
+# Use bat for colored man pages
+export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+
+# -----------------------
+# HISTORY & SHELL OPTIONS
+# -----------------------
+
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
+HISTIGNORE="&:[bf]g:exit:ls:lsd:ll:la:sl:clear:history"
+shopt -s histappend
+shopt -s checkwinsize
+
+# ------------------------------
+# GENERAL ALIASES & REPLACEMENTS
+# ------------------------------
+
+# Colorize standard commands
+alias diff='diff --color=auto'
+alias grep='grep --color=auto'
+alias ip='ip -color=auto'
+alias cat='bat -pp'
+alias cqt='bat -pp'
+alias ls='lsd'
+alias sl='lsd'
+alias la='lsd -A'
+alias ll='lsd -l'
+alias tree='lsd --tree'
+
+# Spawns a new terminal in the current directory
+alias double='alacritty --working-directory "$PWD" > /dev/null 2>&1 & disown'
+
+# -----------
+# GIT ALIASES
+# -----------
+
+alias gs='git status'
+alias ga='git add'
+alias gc='git commit -m'
+alias gp='git push'
+alias gpu='git pull'
+alias gl='git log --oneline --graph --decorate'
+alias gt='git tag -ma'
+alias gpt='git push --follow-tags'
+alias gd='git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff'
+
+# Go to the root of current git repository
+cdg() {
+    local root_dir
+    root_dir=$(git rev-parse --show-toplevel 2>/dev/null)
+    if [[ -n "$root_dir" ]]; then
+        cd "$root_dir"
+    else
+        echo "Error : You are not in a Git repository." >&2
+        return 1
+    fi
+}
+
+# ---------------------
+# EPITA & C PROGRAMMING
+# ---------------------
+
+# School shortcuts
+alias afs='cd ~/afs/'
+alias intra="firefox https://intra.forge.epita.fr/"
+alias moodle="firefox https://moodle.epita.fr/my/"
+alias forge="firefox https://cri.epita.fr/"
+
+# C Dev shortcuts
+alias makec="make && make check && make clean"
+alias gcw="gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla"
+alias cf="clang-format -i"
+
+# Quick tar extraction from Downloads directory
+alias tarpls='mv ~/Downloads/*.tar . && tar -xvf *.tar && rm *.tar'
+
+# Apply clang-format to the current repository
+cfe() {
+    local here=$(pwd)
+    cd $(git rev-parse --show-toplevel)
+    cp ~/afs/.confs/.clang-format ./
+    clang-format-epita
+    rm .clang-format
+    cd "$here"
+}
+
+# Compile with coverage flags, run lcov, and open report
+lc() {
+    mkdir -p coverage
+    gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla "$@" -fPIC -coverage -lgcov -lcriterion
+    ./a.out
+    lcov --capture --directory ./ --output-file coverage.info --ignore-errors empty --ignore-errors inconsistent
+    genhtml coverage.info --output-directory coverage
+    rm *.gcno *.gcda coverage.info a.out
+    firefox coverage/index.html
+}
+
+# -----------------
+# UTILITY FUNCTIONS
+# -----------------
+
+# Create a directory and enter it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Smart archive extractor
+extract() {
+  if [ -f $1 ] ; then
+    case $1 in
+          *.tar.bz2)     tar xvjf $1    ;;
+          *.tar.gz)      tar xvzf $1    ;;
+          *.bz2)         bunzip2 $1     ;;
+          *.rar)         unrar x $1     ;;
+          *.gz)          gunzip $1      ;;
+          *.tar)         tar xvf $1     ;;
+          *.tbz2)        tar xvjf $1    ;;
+          *.zip)         unzip $1       ;;
+          *.Z)           uncompress $1  ;;
+          *.7z)          7z x $1        ;;
+          *)             echo "Don't know how to extract '$1'..."
+      esac
+    else
+      echo "'$1' is not a valid file!"
+    fi
+}
+
+# Clipboard utilities (requires xsel)
+copy() {
+    cat "$@" | xsel -b
+}
+
+copyfiles() {
+    (
+        for file in "$@"; do
+            if [ -f "$file" ]; then
+                echo "$file"
+                cat "$file"
+                echo
+            fi
+        done
+    ) | xsel -b
+}
+
+# ------
+# CONFIG
+# ------
+
+# Function to define colors inside the functions to avoid namespace pollution
+_epidots_colors() {
+    GREEN='\033[0;32m'
+    BLUE='\033[0;34m'
+    GRAY='\033[0;90m'
+    RED='\033[0;31m'
+    NC='\033[0m'
+}
+
+update-conf() {
+    _epidots_colors
+    local TEMP_DIR=$(mktemp -d)
+    local REPO_URL="https://github.com/tsunooky/epidots.git"
+    local AFS_DIR=~/afs/.confs
+    local STEP=1
+    local TOTAL_STEPS=4
+
+    echo -e "${BLUE}=== EPIDOTS UPDATE ===${NC}"
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Downloading latest version..."
+    if git clone --quiet --depth 1 "$REPO_URL" "$TEMP_DIR" > /dev/null 2>&1; then
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${RED}[FAIL]${NC}"
+        rm -rf "$TEMP_DIR"
+        return 1
+    fi
+    ((STEP++))
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Updating configuration files..."
+    if cp -r "$TEMP_DIR/Config/"* "$AFS_DIR/" > /dev/null 2>&1; then
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${RED}[FAIL]${NC}"
+        rm -rf "$TEMP_DIR"
+        return 1
+    fi
+    ((STEP++))
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Reloading shell configuration..."
+    if source ~/.bashrc; then
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${RED}[FAIL]${NC}"
+    fi
+    ((STEP++))
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restarting Window Manager..."
+    if i3-msg restart > /dev/null 2>&1; then
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${RED}[FAIL]${NC}"
+    fi
+
+    rm -rf "$TEMP_DIR"
+    echo -e "${GREEN}Update complete!${NC}"
+}
+
+reset-conf() {
+    _epidots_colors
+    local STEP=1
+    local TOTAL_STEPS=4
+
+    echo -e "\n${RED}=== FACTORY RESET ===${NC}"
+    echo -e "${GRAY}You are about to remove Epidots and revert to EPITA default.${NC}"
+    echo -e "${GRAY}This action cannot be undone.${NC}"
+    echo ""
+    echo -ne "${BLUE}Are you sure? (y/n) ${NC}"
+    read -n 1 -r
+    echo ""
+
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo -e "${RED}Aborted.${NC}"
+        return 1
+    fi
+
+    echo ""
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restoring default configuration..."
+    if curl -L https://raw.githubusercontent.com/Darkrentin/default-nixos-config-epita/refs/heads/main/installer.sh 2>/dev/null | sh -s > /dev/null 2>&1; then
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${RED}[FAIL]${NC}"
+        return 1
+    fi
+    ((STEP++))
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Cleaning up i3 configuration..."
+    if [ -f ~/afs/.confs/config/i3/config ]; then
+        cp ~/afs/.confs/config/i3/config ~/config.temp
+        rm -rf ~/afs/.confs/config/i3/*
+        mv ~/config.temp ~/afs/.confs/config/i3/config
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${GRAY}[SKIP]${NC}"
+    fi
+    ((STEP++))
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Removing Epidots specific files..."
+
+    rm -rf ~/afs/.confs/wallpapers
+    rm -rf ~/afs/.confs/config/{alacritty,matugen,gtk-3.0,gtk-4.0,qt5ct,qt6ct,rofi,scripts,polybar,picom,starship.toml}
+
+    echo -e "${GREEN}[OK]${NC}"
+    ((STEP++))
+
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restarting Window Manager..."
+    pkill polybar > /dev/null 2>&1
+    pkill picom > /dev/null 2>&1
+
+    if i3-msg restart > /dev/null 2>&1; then
+        echo -e "${GREEN}[OK]${NC}"
+    else
+        echo -e "${RED}[FAIL]${NC}"
+    fi
+
+    echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
+}
+
+# Configuration Management
+alias update-conf='HERE I DONT KNOW'
+
+# Wallpaper & Matugen scripts
+alias bg='~/afs/.confs/config/scripts/change_wallpaper.sh'
+alias rbg='(~/afs/.confs/config/scripts/random_wallpaper.sh &)'
+alias bgdir='cd ~/afs/.confs/wallpapers'
+
+bgadd() {
+    cp "$1" ~/afs/.confs/wallpapers
+}
+
+# ----- Prompt init with starship -----
+eval "$(starship init bash)"
