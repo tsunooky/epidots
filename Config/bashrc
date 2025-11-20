@@ -92,6 +92,7 @@ alias cf="clang-format -i"
 
 # Quick tar extraction from Downloads directory
 alias tarpls='mv ~/Downloads/*.tar . && tar -xvf *.tar && rm *.tar'
+alias zippls='mv ~/Downloads/*.zip . && unzip *.zip && rm *.zip'
 
 # Apply clang-format to the current repository
 cfe() {
