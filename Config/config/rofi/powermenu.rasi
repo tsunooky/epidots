@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font:                        "JetBrainsMono Nerd Font 11";
+    font:                        "JetBrainsMono Nerd Font 14";
 }
 
 /*****----- Configuration -----*****/
@@ -76,7 +76,7 @@ entry {
     background-color:            inherit;
     text-color:                  inherit;
     cursor:                      text;
-    placeholder:                 "  Search...";
+    placeholder:                 "...";
     placeholder-color:           inherit;
 }
 
@@ -84,7 +84,7 @@ entry {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       5;
+    lines:                       4;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -142,7 +142,7 @@ element selected.alternate {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        30px;
+    size:                        32px;
     cursor:                      inherit;
 }
 element-text {

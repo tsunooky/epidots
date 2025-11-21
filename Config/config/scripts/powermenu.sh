@@ -10,7 +10,6 @@ uptime="`uptime -p | sed -e 's/up //g'`"
 shutdown='   Shutdown'
 reboot='   Reboot'
 lock='   Lock'
-suspend='   Suspend'
 logout='   Logout'
 yes='   Yes'
 no='   No'
@@ -43,7 +42,7 @@ confirm_exit() {
 
 # Pass variables to rofi dmenu
 run_rofi() {
-    echo -e "$lock\n$suspend\n$logout\n$reboot\n$shutdown" | rofi_cmd
+    echo -e "$lock\n$logout\n$reboot\n$shutdown" | rofi_cmd
 }
 
 # Execute Command
@@ -54,10 +53,6 @@ run_cmd() {
             systemctl poweroff
         elif [[ $1 == '--reboot' ]]; then
             systemctl reboot
-        elif [[ $1 == '--suspend' ]]; then
-            mpc -q pause
-            amixer set Master mute
-            systemctl suspend
         elif [[ $1 == '--logout' ]]; then
             i3-msg exit
         fi
@@ -77,9 +72,6 @@ case ${chosen} in
         ;;
     $lock)
         i3lock
-        ;;
-    $suspend)
-        run_cmd --suspend
         ;;
     $logout)
         run_cmd --logout

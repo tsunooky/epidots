@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font:                        "JetBrainsMono Nerd Font 11";
+    font:                        "JetBrainsMono Nerd Font 14";
 }
 
 /*****----- Configuration -----*****/
@@ -143,7 +143,7 @@ element selected.alternate {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        30px;
+    size:                        32px;
     cursor:                      inherit;
 }
 element-text {
