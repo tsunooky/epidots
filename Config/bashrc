@@ -222,9 +222,9 @@ update-conf() {
 
     rm -rf "$TEMP_DIR"
 
-    if [ -f ~/afs/.confs/install.sh ]; then
-        ~/afs/.confs/install.sh
-    fi
+    sleep 1
+
+    ~/afs/.confs/install.sh
 
     echo -e "${GREEN}Update complete!${NC}"
 }
