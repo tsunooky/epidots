@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dot_list="bashrc config gitignore gitconfig signature jnewsrc mozilla msmtprc muttrc slrnrc ssh thunderbird vim vimrc Xdefaults gdbinit"
+dot_list="bashrc config mozilla signature ssh thunderbird vim vimrc Xdefaults gdbinit"
 
 for f in $dot_list; do
   rm -rf "$HOME/.$f"
