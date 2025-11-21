@@ -152,3 +152,10 @@ update-conf
 # Removes Epidotfiles and restores the default EPITA configuration
 reset-conf
 ```
+
+## 📩 Contact
+
+If you encounter any kind of problem using Epidots, feel free to contact me:
+
+Discord : @bv6
+
