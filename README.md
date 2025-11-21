@@ -1,6 +1,6 @@
 ***
 
-# ☁️ Epidots
+# 💠 Epidots
 
 A clean, automated, and aesthetic NixOS configuration designed specifically for **EPITA** school computers.
 
