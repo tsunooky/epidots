@@ -108,6 +108,7 @@ This configuration includes a suite of commands you can use inside the terminal 
 
 | Keybind | Action |
 | :--- | :--- |
+| `Ctrl` + `f` | Run **Clang Format** on the file (BEST KEYBIND) |
 | `Ctrl` + `s` | **Save** file (`:w`) |
 | `Ctrl` + `x` | **Save & Quit** (`:x`) |
 | `Ctrl` + `q` | **Force Quit** (`:q!`) |
@@ -118,13 +119,6 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `Ctrl` + `t` | Toggle File Explorer (**NERDTree**) |
 |`+` | Open New Tab |
 | `<` / `>` | Previous / Next Tab |
-
-### 🛠️ Code & Compilation
-
-| Keybind | Action |
-| :--- | :--- |
-| `Ctrl` + `f` | Run **Clang Format** on the file (BEST KEYBIND) |
-| `Ctrl` + `r` | **Compile and run** the file (Experimental)|
 
 ### ✨ Auto-Snippets (Insert Mode)
 Type these specific triggers in **Insert Mode** to instantly expand code structures:

@@ -36,7 +36,6 @@ autocmd Filetype make setlocal noexpandtab
 
 set list listchars=tab:»·,trail:·
 
-
 " per .git vim configs
 " just `git config vim.settings "expandtab sw=4 sts=4"` in a git repository
 " change syntax settings for this repository
@@ -71,28 +70,6 @@ endif
 :nnoremap < gT
 :nnoremap > gt
 :nnoremap + :tabe<CR>
-
-function Run()
-    :w
-    if expand("%:e") == "c"
-        :!gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla %:p
-        :!echo $(./a.out) > output
-        :!rm -rf a.out
-    elseif expand("%:e") == "sh"
-        :!echo $(%:p) > output
-    elseif expand("%:e") == "py"
-        :!echo $(python3 %:p) > output
-    else
-        :!echo "Error: Unknown file extension." > output
-    endif
-    set splitbelow
-    :sview output
-    :!rm -rf output
-    :tabp
-endfunction
-
-:nnoremap <C-r> :call Run()<CR><Esc>
-:inoremap <C-r> <Esc>:call Run()<CR><Esc>i
 
 :inoremap { {}<Left>
 
