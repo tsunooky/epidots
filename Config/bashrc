@@ -178,46 +178,15 @@ _epidots_colors() {
 update-conf() {
     _epidots_colors
     local TEMP_DIR=$(mktemp -d)
-    local REPO_URL="https://github.com/tsunooky/epidots.git"
     local AFS_DIR=~/afs/.confs
-    local STEP=1
-    local TOTAL_STEPS=4
 
     echo -e "${BLUE}=== EPIDOTS UPDATE ===${NC}"
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Downloading latest version..."
-    if git clone --quiet --depth 1 "$REPO_URL" "$TEMP_DIR" > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${RED}[FAIL]${NC}"
-        rm -rf "$TEMP_DIR"
-        return 1
-    fi
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Updating configuration files..."
-    if cp -r "$TEMP_DIR/Config/"* "$AFS_DIR/" > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${RED}[FAIL]${NC}"
-        rm -rf "$TEMP_DIR"
-        return 1
-    fi
-
-    ( "$AFS_DIR/install.sh" ) > /dev/null 2>&1;
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restarting Window Manager..."
-    if i3 restart > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${RED}[FAIL]${NC}"
-    fi
-
+    git clone --quiet --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"
+    cp -r "$TEMP_DIR/Config/"* "$AFS_DIR/"
+    ( sh ~/afs/.confs/install.sh )
+    i3 restart > /dev/null 2>&1;
     rm -rf "$TEMP_DIR"
-
     echo -e "${GREEN}Update complete!${NC}"
-
     source ~/afs/.confs/.bashrc
 }
 
