@@ -115,7 +115,7 @@ highlight vimError cterm=bold ctermfg=red ctermbg=black
 highlight LineNr cterm=NONE ctermfg=darkcyan
 
 autocmd FileType * highlight Statement cterm=bold ctermfg=darkyellow
-autocmd FileType * highlight LineNr cterm=NONE ctermfg=darkgrey
+autocmd FileType * highlight LineNr cterm=NONE ctermfg=darkred
 
 " --- Plugin Configuration ---
 let g:syntastic_always_populate_loc_list = 1
