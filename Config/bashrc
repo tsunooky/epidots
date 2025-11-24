@@ -303,5 +303,10 @@ bgadd() {
     cp "$1" ~/afs/.confs/wallpapers
 }
 
+# --- Custom aliases ---
+alias clip='copy'
+alias clipfiles='copyfiles'
+alias repo='cdg'
+
 # ----- Prompt init with starship -----
 eval "$(starship init bash)"
