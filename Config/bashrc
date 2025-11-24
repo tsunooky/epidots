@@ -184,10 +184,11 @@ update-conf() {
     echo -e "${RED}/!\ Please don't close this terminal while updating${NC}"
     git clone --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"
     cp -r "$TEMP_DIR/Config/"* "$AFS_DIR/"
-    sleep 0.5
-    ( sh ~/afs/.confs/install.sh )
-    sleep 1    
+    echo "TEST before install!"
+    ~/afs/.confs/install.sh
+    echo "TEST after install!"
     i3 restart > /dev/null 2>&1;
+    echo "i3 reloaded"
     rm -rf "$TEMP_DIR"
     echo -e "${GREEN}Update complete!${NC}"
     source ~/afs/.confs/bashrc
