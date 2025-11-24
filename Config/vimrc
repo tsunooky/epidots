@@ -112,10 +112,10 @@ highlight Statement cterm=bold ctermfg=darkyellow
 highlight SyntasticWarningSign cterm=bold ctermfg=yellow ctermbg=black
 highlight SyntasticErrorSign cterm=bold ctermfg=red ctermbg=black
 highlight vimError cterm=bold ctermfg=red ctermbg=black
-highlight LineNr cterm=bold ctermfg=darkcyan
+highlight LineNr cterm=NONE ctermfg=darkcyan
 
 autocmd FileType * highlight Statement cterm=bold ctermfg=darkyellow
-autocmd FileType * highlight LineNr cterm=bold ctermfg=darkred
+autocmd FileType * highlight LineNr cterm=NONE ctermfg=darkgrey
 
 " --- Plugin Configuration ---
 let g:syntastic_always_populate_loc_list = 1
