@@ -185,9 +185,9 @@ update-conf() {
     git clone --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"
     cp -r "$TEMP_DIR/Config/"* "$AFS_DIR/"
     echo "TEST before install!"
-    ~/afs/.confs/install.sh
+    alacritty --command ~/afs/.confs/install.sh & disown
     echo "TEST after install!"
-    i3 restart > /dev/null 2>&1;
+    alacritty --command i3 restart & disown
     echo "i3 reloaded"
     rm -rf "$TEMP_DIR"
     echo -e "${GREEN}Update complete!${NC}"
