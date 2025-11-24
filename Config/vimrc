@@ -53,13 +53,6 @@ set incsearch
 set hlsearch
 nnoremap <C-l> :noh<CR>
 
-" --- Persistent Undo ---
-set undofile
-set undodir=~/.vim/undodir
-if !isdirectory(&undodir)
-    call mkdir(&undodir, "p")
-endif
-
 " --- Mappings & Shortcuts ---
 nnoremap <C-x> :wq<CR>
 inoremap <C-x> <Esc>:wq<CR>
