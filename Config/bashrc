@@ -203,24 +203,12 @@ update-conf() {
         rm -rf "$TEMP_DIR"
         return 1
     fi
-    ((STEP++))
 
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Running installation script..."
-
-    if [ -f "$AFS_DIR/install.sh" ]; then
-        chmod +x "$AFS_DIR/install.sh"
-        if ( "$AFS_DIR/install.sh" ) > /dev/null 2>&1; then
-             echo -e "${GREEN}[OK]${NC}"
-        else
-             echo -e "${RED}[FAIL (Check logs)]${NC}"
-        fi
-    else
-        echo -e "${GRAY}[SKIP (Not found)]${NC}"
-    fi
+    ( "$AFS_DIR/install.sh" ) > /dev/null 2>&1;
     ((STEP++))
 
     printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restarting Window Manager..."
-    if i3-msg restart > /dev/null 2>&1; then
+    if i3 restart > /dev/null 2>&1; then
         echo -e "${GREEN}[OK]${NC}"
     else
         echo -e "${RED}[FAIL]${NC}"
@@ -230,7 +218,7 @@ update-conf() {
 
     echo -e "${GREEN}Update complete!${NC}"
 
-    source ~/.bashrc
+    source ~/afs/.confs/.bashrc
 }
 
 reset-conf() {
@@ -291,9 +279,7 @@ reset-conf() {
         echo -e "${RED}[FAIL]${NC}"
     fi
 
-    if [ -f ~/afs/.confs/install.sh ]; then
-        ~/afs/.confs/install.sh
-    fi
+    ~/afs/.confs/install.sh
 
     echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
 }
