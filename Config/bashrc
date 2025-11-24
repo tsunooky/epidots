@@ -205,11 +205,17 @@ update-conf() {
     fi
     ((STEP++))
 
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Reloading shell configuration..."
-    if source ~/.bashrc; then
-        echo -e "${GREEN}[OK]${NC}"
+    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Running installation script..."
+
+    if [ -f "$AFS_DIR/install.sh" ]; then
+        chmod +x "$AFS_DIR/install.sh"
+        if ( "$AFS_DIR/install.sh" ) > /dev/null 2>&1; then
+             echo -e "${GREEN}[OK]${NC}"
+        else
+             echo -e "${RED}[FAIL (Check logs)]${NC}"
+        fi
     else
-        echo -e "${RED}[FAIL]${NC}"
+        echo -e "${GRAY}[SKIP (Not found)]${NC}"
     fi
     ((STEP++))
 
@@ -222,11 +228,9 @@ update-conf() {
 
     rm -rf "$TEMP_DIR"
 
-    sleep 1
-
-    ~/afs/.confs/install.sh
-
     echo -e "${GREEN}Update complete!${NC}"
+
+    source ~/.bashrc
 }
 
 reset-conf() {
