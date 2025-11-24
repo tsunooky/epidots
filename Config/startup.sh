@@ -41,7 +41,6 @@ PACKAGES=(
     "nixpkgs.autotiling"
     "nixpkgs.papirus-icon-theme"
     "nixpkgs.bat"
-    "nixpkgs.blueman"
     "nixpkgs.matugen"
     "nixpkgs.adw-gtk3"
 )
