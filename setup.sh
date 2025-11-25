@@ -45,12 +45,8 @@ run_step "Setting default wallpaper" \
 run_step "Reloading i3 window manager" \
     "i3-msg restart"
 
-run_step "Opening Pywalfox setup" \
-    "nohup firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/ &"
-
-echo -e "${GRAY}   -> Please install the Pywalfox extension in the opened window.${NC}"
-echo -e "${GRAY}   -> Press ENTER once installed to cleanup and reboot.${NC}"
-read -r
+run_step "Pywalfox setup" \
+    "pywalfox install"
 
 run_step "Cleaning up installation files" \
     "cd ~ && rm -rf \"$REPO_DIR\""
@@ -58,8 +54,9 @@ run_step "Cleaning up installation files" \
 echo ""
 echo -e "${GREEN}=======================================${NC}"
 echo -e "${GREEN}        Installation Complete!         ${NC}"
-echo -e "${GREEN}        Rebooting system...            ${NC}"
+echo -e "${GREEN}   Rebooting system in 10 seconds...   ${NC}"
+echo -r "${GREEN}      (Press CTRL + C to cancel)       ${NC}"
 echo -e "${GREEN}=======================================${NC}"
 
-sleep 2
-reboot
+sleep 10
+shutdown -r now
