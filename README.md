@@ -150,6 +150,6 @@ reset-conf
 
 ## 📩 Contact
 
-If you encounter any kind of problem using Epidots, feel free to contact me:
-Discord : @bv6
+If you encounter any kind of problem or have any suggestion about Epidots, feel free to report it on the [Discord Server](https://discord.gg/G7MNkdDFD9).
 
+***
