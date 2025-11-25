@@ -28,16 +28,15 @@ For the automatic theming to work with Firefox, you must install [**Pywalfox**](
 This configuration uses **Matugen**, a **Material You** color scheme generator. It creates a cohesive look across your system by extracting colors from your wallpaper and applying them everywhere (i3, status bar, terminal, Vim, Firefox, GTK, Qt, ...).
 
 ### How to change the theme
-You can either use `WIN + Shift + W` or `rbg` to randomly change the wallpaper from the **wallpaper directory**, or change the wallpaper to a specific picture
-with `bg <path-to-image>`
+You can choose a wallpaper with a menu using `WIN + Shift + W`.
+Also, you can either use `WIN + Shift + B` or `rbg` to randomly change the wallpaper from the **wallpaper directory**, or change the wallpaper to a specific picture
+with `bg <path-to-image>`.
 
 You can access the **wallpaper directory** with `bgdir` and add a picture to the directory with `bgadd <file>`.
 
 ---
 
 ## ⌨️ Keybinds (i3)
-
-
 
 ### Window Management
 | Keybind | Action |

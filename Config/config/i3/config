@@ -53,7 +53,10 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # Changes the wallpaper to a random one inside the wallpaper directory
-bindsym $mod+Shift+w exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
+bindsym $mod+Shift+b exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
+
+# Opens rofi wallpaper chooser
+bindsym $mod+Shift+w exec --no-startup-id ~/afs/.confs/config/scripts/bg_chooser.sh
 
 # i3lock
 bindsym $mod+i exec --no-startup-id i3lock
