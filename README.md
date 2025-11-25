@@ -2,11 +2,13 @@
 
 # 💠 Epidots
 
-A clean, automated, and aesthetic NixOS configuration designed specifically for **EPITA** school computers.
+A clean, automated, and aesthetic NixOS configuration designed for **EPITA** school computers.
 
 This setup enhances the default environment with a modern status bar, custom Vim bindings, and dynamic theming using **Matugen**.
 
 Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for vim and scripts.
+
+[Discord Server](https://discord.gg/G7MNkdDFD9).
 
 ## 📦 Installation
 
