@@ -66,7 +66,7 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 
 ## 🚀 Aliases & Functions
 
-This configuration includes a suite of commands you can use inside the terminal to speed up your workflow at EPITA.
+This configuration includes a suite of commands you can use inside the terminal to speed up your workflow.
 
 ### EPITA & C Programming
 | Alias | Command / Description |
