@@ -254,11 +254,14 @@ reset-conf() {
     echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
 }
 
+# Switch between WIN and ALT mod key
+alias winpls="sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
+alias altpls="sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to ALT'"
+
 # Wallpaper & Matugen scripts
 alias bg='~/afs/.confs/config/scripts/change_wallpaper.sh'
 alias rbg='(~/afs/.confs/config/scripts/random_wallpaper.sh &)'
 alias bgdir='cd ~/afs/.confs/wallpapers'
-
 bgadd() {
     cp "$1" ~/afs/.confs/wallpapers
 }
