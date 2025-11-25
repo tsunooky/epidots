@@ -1,3 +1,6 @@
+# Set mod key : Mod4 = WIN | Mod1 = ALT
+set $mod Mod4
+
 # Import matugen generated colors
 include ~/.config/i3/colors.conf
 
@@ -41,9 +44,6 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
 default_border pixel 2
 gaps outer 3
 gaps inner 6
-
-# Set mod key to WIN key
-set $mod Mod4
 
 # Set i3 font to JetBrains Mono
 font pango:JetBrains Mono 11
@@ -134,7 +134,6 @@ bindsym $mod+Shift+r restart
 
 # Switch to next workspace
 bindsym $mod+Tab workspace next
-bindsym Mod1+Tab workspace next
 
 # Launch the bluetooth manager
 bindsym Ctrl+b exec "blueman-manager"
