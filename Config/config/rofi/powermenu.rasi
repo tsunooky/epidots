@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font:                        "JetBrainsMono Nerd Font 14";
+    font:                        "JetBrainsMono Nerd Font 13";
 }
 
 /*****----- Configuration -----*****/
