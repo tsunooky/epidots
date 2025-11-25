@@ -47,6 +47,7 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | `WIN` + `f` | Toggle Fullscreen |
 | `WIN` + `Arrow Keys` | Focus window (Left/Down/Up/Right) |
 | `WIN` + `Shift` + `Arrows` | Move window |
+| `WIN` + `TAB` | Switch between last two opened workspaces |
 
 ### System & Media
 | Keybind | Action |
