@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font:             "JetBrainsMono Nerd Font 10";
+    font:             "JetBrainsMono Nerd Font 14";
     background-color: transparent;
     text-color:       white;
 }
@@ -9,7 +9,7 @@
 window {
     transparency:     "real";
     fullscreen:       true;
-    background-color: black/25%;
+    background-color: black/20%;
     padding:          4em;
     children:         [ wrap, listview-split];
     spacing:          1em;
@@ -78,7 +78,7 @@ element {
     children: [element-icon, element-text ];
 }
 element-icon {
-    size: calc(((100% - 8em) / 8 ));
+    size: calc(((110% - 8em) / 8 ));
     horizontal-align: 0.5;
     vertical-align: 0.5;
 }
