@@ -10,11 +10,11 @@ Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) f
 
 ## 📦 Installation
 
-#### 🦊 Installation Requirement
+### 🦊 Installation Requirement
 For the automatic theming to work with Firefox, you must install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
 
-> **Backup required:** This configuration will override your existing `i3`, `.vimrc`, and `.bashrc` settings. Please back up your current config before proceeding.
-
+### 💠 Installation
+> ** /!\ Backup required:** This configuration will override your existing `i3`, `.vimrc`, and `.bashrc` settings. Please back up your current config before proceeding.
 Run the following command in your terminal to install everything automatically:
 
 ```bash
