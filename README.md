@@ -8,7 +8,7 @@ This setup enhances the default environment with a modern status bar, custom Vim
 
 Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for vim and scripts.
 
-[Discord Server](https://discord.gg/G7MNkdDFD9).
+[Discord Server](https://discord.gg/G7MNkdDFD9)
 
 ## 📦 Installation
 
