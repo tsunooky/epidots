@@ -10,6 +10,9 @@ Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) f
 
 ## 📦 Installation
 
+### 🦊 Installation Requirement
+For the automatic theming to work with Firefox, you must install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
+
 > **Backup required:** This configuration will override your existing `i3`, `.vimrc`, and `.bashrc` settings. Please back up your current config before proceeding.
 
 Run the following command in your terminal to install everything automatically:
@@ -17,9 +20,7 @@ Run the following command in your terminal to install everything automatically:
 ```bash
 curl -L https://raw.githubusercontent.com/tsunooky/epidots/refs/heads/main/installer.sh | sh -s
 ```
-
-### 🦊 Installation Requirement
-For the automatic theming to work with Firefox, you must install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
+> By default, the `$mod` key will be `WIN`, you can change this by typing `plsalt` or `plswin` in your terminal after every install or update.
 
 ---
 
@@ -28,8 +29,8 @@ For the automatic theming to work with Firefox, you must install [**Pywalfox**](
 This configuration uses **Matugen**, a **Material You** color scheme generator. It creates a cohesive look across your system by extracting colors from your wallpaper and applying them everywhere (i3, status bar, terminal, Vim, Firefox, GTK, Qt, ...).
 
 ### How to change the theme
-You can choose a wallpaper with a menu using `WIN + Shift + W`.
-Also, you can either use `WIN + Shift + B` or `rbg` to randomly change the wallpaper from the **wallpaper directory**, or change the wallpaper to a specific picture
+You can choose a wallpaper with a menu using `$mod + Shift + W`.
+Also, you can either use `$mod + Shift + B` or `rbg` to randomly change the wallpaper from the **wallpaper directory**, or change the wallpaper to a specific picture
 with `bg <path-to-image>`.
 
 You can access the **wallpaper directory** with `bgdir` and add a picture to the directory with `bgadd <file>`.
@@ -41,13 +42,13 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 ### Window Management
 | Keybind | Action |
 | :--- | :--- |
-| `WIN` + `Enter` | Open Terminal |
-| `WIN` + `Shift` + `q` | Kill focused window |
-| `WIN` + `d` | Open Application Launcher |
-| `WIN` + `f` | Toggle Fullscreen |
-| `WIN` + `Arrow Keys` | Focus window (Left/Down/Up/Right) |
-| `WIN` + `Shift` + `Arrows` | Move window |
-| `WIN` + `TAB` | Switch between last two opened workspaces |
+| `$mod` + `Enter` | Open Terminal |
+| `$mod` + `Shift` + `q` | Kill focused window |
+| `$mod` + `d` | Open Application Launcher |
+| `$mod` + `f` | Toggle Fullscreen |
+| `$mod` + `Arrow Keys` | Focus window (Left/Down/Up/Right) |
+| `$mod` + `Shift` + `Arrows` | Move window |
+| `$mod` + `TAB` | Switch between last two opened workspaces |
 
 ### System & Media
 | Keybind | Action |
@@ -55,7 +56,7 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | `$mod` + `Shift` + `e` | Open **Power Menu** (Shutdown/Reboot/Logoff) |
 | `$mod` + `Shift` + `w` | Set random wallpaper (in the **Wallpaper Directory**) |
 | `$mod` + `i` | Launches i3lock |
-| `Ctrl` + `b` | Open **Bluetooth Manager** |
+| `$mod` + `b` | Open **Bluetooth Manager** |
 | `$mod` + `Shift` + `F` | Open **Firefox** |
 
 ---
