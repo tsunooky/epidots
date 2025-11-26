@@ -56,7 +56,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Shift+b exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
 
 # Opens rofi wallpaper chooser
-bindsym $mod+Shift+w exec --no-startup-id ~/afs/.confs/config/scripts/bg_chooser.sh
+bindsym $mod+Shift+w exec --no-startup-id \tree ~/afs/.confs/wallpapers > /dev/null 2>&1 && ~/afs/.confs/config/scripts/bg_chooser.sh
 
 # i3lock
 bindsym $mod+i exec --no-startup-id i3lock
