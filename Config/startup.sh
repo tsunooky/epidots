@@ -1,33 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 GRAY='\033[0;90m'
 NC='\033[0m'
 
-install_pkg() {
-    local pkg_full=$1
-    local current_idx=$2
-    local total_pkgs=$3
-    local pkg_name="${pkg_full#nixpkgs.}"
-
-    printf "${BLUE}[%d/%d]${NC} Installing %-30s " "$current_idx" "$total_pkgs" "$pkg_name..."
-
-    if nix-env -iA "$pkg_full" > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "\033[0;31m[FAIL]${NC}"
-    fi
-}
-
-echo -e "${BLUE}=== Starting Epidots Setup ===${NC}"
+echo -e "${BLUE}=== Epidots Startup ===${NC}"
 
 printf "${BLUE}::${NC} Updating Nix channels... "
 {
     nix-channel --add https://nixos.org/channels/nixpkgs-unstable
     nix-channel --update
-} > /dev/null 2>&1
-echo -e "${GREEN}[DONE]${NC}"
+} > /dev/null 2>&1 && echo -e "${GREEN}[DONE]${NC}" || echo -e "\033[0;31m[FAIL]${NC}"
 
 PACKAGES=(
     "nixpkgs.lsd"
@@ -45,15 +29,27 @@ PACKAGES=(
     "nixpkgs.adw-gtk3"
 )
 
-TOTAL_PKGS=${#PACKAGES[@]}
-CURRENT_COUNT=1
+echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
 
-echo -e "${GRAY}Installing packages...${NC}"
+nix-env -iA "${PACKAGES[@]}" > /tmp/epidots_install.log 2>&1 &
+PID=$!
 
-for pkg in "${PACKAGES[@]}"; do
-    install_pkg "$pkg" "$CURRENT_COUNT" "$TOTAL_PKGS"
-    CURRENT_COUNT=$((CURRENT_COUNT + 1))
+sp="/-\|"
+i=0
+while kill -0 $PID 2>/dev/null; do
+    printf "\b${sp:i++%${#sp}:1}"
+    sleep 0.1
 done
+
+wait $PID
+EXIT_CODE=$?
+
+if [ $EXIT_CODE -eq 0 ]; then
+    echo -e "\b${GREEN}[DONE]${NC}"
+else
+    echo -e "\b\033[0;31m[FAIL]${NC}"
+    echo -e "${GRAY}An error occurred. Check /tmp/epidots_install.log for details.${NC}"
+fi
 
 printf "${BLUE}::${NC} Configuring Pywalfox...                 "
 pywalfox install > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SKIP]"
@@ -78,11 +74,9 @@ fi
 echo -e "${GREEN}All done!${NC}"
 
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
-
+sleep 2
 (cd ~/afs && nohup alacritty > /dev/null 2>&1 &)
 
 echo -e "${GRAY}Closing installer...${NC}"
 
-sleep 1
-
-kill -9 $PPID
+exit 0

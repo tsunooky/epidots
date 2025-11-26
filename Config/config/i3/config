@@ -10,8 +10,8 @@ for_window [class="pavucontrol"] floating enable
 
 # ---------- Launch programs at startup ----------
 
-#Launch startup script
-exec --no-startup-id "alacritty -e sh -c '~/afs/.confs/startup.sh; exec bash'"
+# Launch startup script
+exec --no-startup-id "alacritty --config-file ~/afs/.confs/config/alacritty/startup_conf.toml -e sh -c '~/afs/.confs/startup.sh; exec bash'"
 
 # Set Epita keyboard layout
 exec "setxkbmap __START_KB__"

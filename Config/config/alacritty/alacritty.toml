@@ -1,5 +1,5 @@
 [general]
-import = ["~/.config/alacritty/colors.toml"]
+import = ["~/afs/.confs/config/alacritty/colors.toml"]
 
 [window]
 opacity = 0.9

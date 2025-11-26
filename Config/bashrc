@@ -178,17 +178,31 @@ _epidots_colors() {
 update-conf() {
     _epidots_colors
     local TEMP_DIR=$(mktemp -d)
-    local AFS_DIR=~/afs/.confs
+    local CONFIG_SOURCE=~/afs/.confs
 
     echo -e "${BLUE}=== EPIDOTS UPDATE ===${NC}"
     echo -e "${RED}/!\ Please don't close this terminal while updating${NC}"
-    git clone --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"
-    cp -r "$TEMP_DIR/Config/"* "$AFS_DIR/"
-    ~/afs/.confs/install.sh
-    i3 restart
+
+    if ! git clone --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"; then
+        echo -e "${RED}Download failed.${NC}"
+        return 1
+    fi
+
+    cp -r "$TEMP_DIR/Config/"* "$CONFIG_SOURCE/"
+
+    echo "Running install.sh..."
+    if ! AFS_DIR="$HOME/afs" "$CONFIG_SOURCE/install.sh"; then
+        echo -e "${RED}install.sh failed!${NC}"
+        rm -rf "$TEMP_DIR"
+        return 1
+    fi
+
+    i3-msg restart > /dev/null 2>&1
+
     rm -rf "$TEMP_DIR"
     echo -e "${GREEN}Update complete!${NC}"
-    source ~/afs/.confs/bashrc
+
+    source ~/.bashrc
 }
 
 reset-conf() {
