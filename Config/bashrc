@@ -284,6 +284,7 @@ bgadd() {
 alias clip='copy'
 alias clipfiles='copyfiles'
 alias repo='cdg'
+alias doom='wget "http://doomfactory.free.fr/NoHotLink/Doom.rar" -O ~/.doom.rar && nix-shell -p unrar --command "unrar x ~/.doom.rar <<< Y" && mv ~/Doom.wad ~/.doom.wad && nix-shell -p doomretro --command "doomretro -iwad ~/.doom.wad"'
 
 # ----- Prompt init with starship -----
 eval "$(starship init bash)"
