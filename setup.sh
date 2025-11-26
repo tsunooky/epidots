@@ -45,8 +45,8 @@ run_step "Setting default wallpaper" \
 run_step "Reloading i3 window manager" \
     "i3-msg restart"
 
-run_step "Pywalfox setup" \
-    "pywalfox install"
+run_step "! Make sure to have pywalfox extension for firefox theming to work !" \
+    "firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/"
 
 run_step "Cleaning up installation files" \
     "cd ~ && rm -rf \"$REPO_DIR\""
@@ -54,9 +54,8 @@ run_step "Cleaning up installation files" \
 echo ""
 echo -e "${GREEN}=======================================${NC}"
 echo -e "${GREEN}        Installation Complete!         ${NC}"
-echo -e "${GREEN}   Rebooting system in 10 seconds...   ${NC}"
-echo -r "${GREEN}      (Press CTRL + C to cancel)       ${NC}"
+echo -e "${GREEN}     Please reboot your system...      ${NC}"
 echo -e "${GREEN}=======================================${NC}"
 
-sleep 10
-shutdown -r now
+i3-nagbar -t warning -m 'Epidots is succefully installed, you need to reboot to apply the configuration' -B 'REBOOT' 'shutdown -r now' 2&> /dev/null &
+

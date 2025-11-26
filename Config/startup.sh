@@ -71,6 +71,8 @@ if [ -f "$BG_FILE" ]; then
     fi
 fi
 
+\tree ~/afs/.confs/wallpapers > /dev/null 2>&1
+
 echo -e "${GREEN}All done!${NC}"
 
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
