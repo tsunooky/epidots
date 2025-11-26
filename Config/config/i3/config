@@ -136,7 +136,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # Launch the bluetooth manager
-bindsym Ctrl+b exec "blueman-manager"
+bindsym $mod+b exec "blueman-manager"
 
 # Launch Firefox
 bindsym $mod+Shift+F exec "firefox"
