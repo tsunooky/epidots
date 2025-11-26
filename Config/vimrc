@@ -32,6 +32,7 @@ if strlen(git_settings)
 endif
 
 " --- User Interface ---
+set mouse=a
 set number
 set cc=80
 set scrolloff=10
