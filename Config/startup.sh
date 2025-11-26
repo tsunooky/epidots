@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -74,9 +74,7 @@ fi
 echo -e "${GREEN}All done!${NC}"
 
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
-sleep 2
-(cd ~/afs && nohup alacritty > /dev/null 2>&1 &)
 
 echo -e "${GRAY}Closing installer...${NC}"
 
-exit 0
+kill -9 $PPID
