@@ -126,23 +126,31 @@ mkcd() {
 
 # Smart archive extractor
 extract() {
-  if [ -f $1 ] ; then
-    case $1 in
-          *.tar.bz2)     tar xvjf $1    ;;
-          *.tar.gz)      tar xvzf $1    ;;
-          *.bz2)         bunzip2 $1     ;;
-          *.rar)         unrar x $1     ;;
-          *.gz)          gunzip $1      ;;
-          *.tar)         tar xvf $1     ;;
-          *.tbz2)        tar xvjf $1    ;;
-          *.zip)         unzip $1       ;;
-          *.Z)           uncompress $1  ;;
-          *.7z)          7z x $1        ;;
-          *)             echo "Don't know how to extract '$1'..."
-      esac
-    else
-      echo "'$1' is not a valid file!"
-    fi
+    for f in "$@"; do
+      if [ -f $f ] ; then
+        case $f in
+              *.tar.bz2)     tar xvjf $f    ;;
+              *.tar.gz)      tar xvzf $f    ;;
+              *.bz2)         bunzip2 $f     ;;
+              *.rar)         unrar x $f     ;;
+              *.gz)          gunzip $f      ;;
+              *.tar)         tar xvf $f     ;;
+              *.tbz2)        tar xvjf $f    ;;
+              *.zip)         unzip $f       ;;
+              *.Z)           uncompress $f  ;;
+              *.7z)          7z x $f        ;;
+              *)             echo "Don't know how to extract '$f'..."
+          esac
+        else
+          echo "'$f' is not a valid file!"
+        fi
+    done
+}
+
+extpls() {
+    mv ~/Downloads/*.{,tar,bz2,rar,gz,tbz2,zip,Z,7z} . 2> /dev/null
+    extract *
+    rm *.{,tar,bz2,rar,gz,tbz2,zip,Z,7z} 2> /dev/null
 }
 
 # Clipboard utilities (requires xsel)
@@ -285,6 +293,7 @@ alias clip='copy'
 alias clipfiles='copyfiles'
 alias repo='cdg'
 alias doom='wget "http://doomfactory.free.fr/NoHotLink/Doom.rar" -O ~/.doom.rar && nix-shell -p unrar --command "unrar x ~/.doom.rar <<< Y" && mv ~/Doom.wad ~/.doom.wad && nix-shell -p doomretro --command "doomretro -iwad ~/.doom.wad"'
+alias err='echo $?'
 
 # ----- Prompt init with starship -----
 eval "$(starship init bash)"
