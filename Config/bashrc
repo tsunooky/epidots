@@ -139,16 +139,19 @@ extract() {
 }
 
 extpls() {
-    local extensions="tar bz2 gz tbz2 zip Z rar 7z"
+    if [ -n "$ZSH_VERSION" ]; then
+        setopt local_options no_nomatch
+    fi
 
-    for ext in $extensions; do
-        mv ~/Downloads/*.$ext . 2> /dev/null
-    done
+    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
 
-    extract *
-
-    for ext in $extensions; do
-        rm *.$ext 2> /dev/null
+    for ext in tar bz2 gz tbz2 zip Z rar 7z; do
+        for file in *.$ext; do
+            if [ -f "$file" ]; then
+                extract "$file"
+                rm "$file"
+            fi
+        done
     done
 }
 
