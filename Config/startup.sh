@@ -27,6 +27,8 @@ PACKAGES=(
     "nixpkgs.bat"
     "nixpkgs.matugen"
     "nixpkgs.adw-gtk3"
+    "nixpkgs.zsh"
+    "nixpkgs.zsh-autosuggestions"
 )
 
 echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
