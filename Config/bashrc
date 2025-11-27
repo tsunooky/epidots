@@ -1,4 +1,3 @@
-# If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
@@ -140,9 +139,17 @@ extract() {
 }
 
 extpls() {
-    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z} . 2> /dev/null
+    local extensions="tar bz2 gz tbz2 zip Z rar 7z"
+
+    for ext in $extensions; do
+        mv ~/Downloads/*.$ext . 2> /dev/null
+    done
+
     extract *
-    rm *.{tar,bz2,gz,tbz2,zip,Z} 2> /dev/null
+
+    for ext in $extensions; do
+        rm *.$ext 2> /dev/null
+    done
 }
 
 # Clipboard utilities (requires xsel)
