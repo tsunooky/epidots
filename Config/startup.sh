@@ -92,5 +92,6 @@ if [ -d ~/afs/.confs/config/scripts/startup_scripts ] ; then
     done
 fi
 
+kill emacs > /dev/null
 sleep 0.2
 kill -9 $PPID
