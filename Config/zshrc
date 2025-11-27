@@ -171,9 +171,20 @@ extract() {
 }
 
 extpls() {
-    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z} . 2> /dev/null
-    extract *
-    rm *.{tar,bz2,gz,tbz2,zip,Z} 2> /dev/null
+    if [ -n "$ZSH_VERSION" ]; then
+        setopt local_options no_nomatch
+    fi
+
+    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
+
+    for ext in tar bz2 gz tbz2 zip Z rar 7z; do
+        for file in *.$ext; do
+            if [ -f "$file" ]; then
+                extract "$file"
+                rm "$file"
+            fi
+        done
+    done
 }
 
 # Clipboard utilities (requires xsel)
