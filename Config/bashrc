@@ -1,6 +1,15 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
+    if [[ $- == *i* ]]; then
+        export SHELL="$HOME/.nix-profile/bin/zsh"
+        exec "$HOME/.nix-profile/bin/zsh" -l
+    fi
+else
+    echo "Zsh failed. Reboot your computer to apply zsh update."
+fi
+
 # ----------------------------
 # ENVIRONMENT VARIABLES & PATH
 # ----------------------------
@@ -283,13 +292,3 @@ fi
 
 # ----- Prompt init with starship -----
 eval "$(starship init bash)"
-
-if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
-    if [[ $- == *i* ]]; then
-        export SHELL="$HOME/.nix-profile/bin/zsh"
-        exec "$HOME/.nix-profile/bin/zsh" -l
-    fi
-else
-    echo "Zsh failed. Reboot your computer to apply zsh update."
-fi
-
