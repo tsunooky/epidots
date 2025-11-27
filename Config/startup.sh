@@ -1,5 +1,7 @@
 #!/bin/sh
 
+~/afs/.confs/config/scripts/rand_game.sh
+
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 GRAY='\033[0;90m'
@@ -78,8 +80,11 @@ fi
 
 echo -e "${GREEN}All done!${NC}"
 
-nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
+nohup firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
+nohup alacritty > /dev/null 2>&1 & disown
 
 echo -e "${GRAY}Closing installer...${NC}"
+
+sleep 0.5
 
 kill -9 $PPID
