@@ -54,8 +54,9 @@ run_step "Cleaning up installation files" \
 echo ""
 echo -e "${GREEN}=======================================${NC}"
 echo -e "${GREEN}        Installation Complete!         ${NC}"
-echo -e "${GREEN}     Please reboot your system...      ${NC}"
+echo -e "${GREEN}     Please logout and reconnect...    ${NC}"
 echo -e "${GREEN}=======================================${NC}"
+echo ""
 
-i3-nagbar -t warning -m 'Epidots is succefully installed, you need to reboot to apply the configuration' -B 'REBOOT' 'shutdown -r now' 2&> /dev/null &
+i3-nagbar -t warning -m 'Epidots is successfully installed, you need to logout and reconnect to apply the configuration' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &
 
