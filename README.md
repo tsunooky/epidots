@@ -46,20 +46,22 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | Keybind | Action |
 | :--- | :--- |
 | `$mod` + `Enter` | Open Terminal |
-| `$mod` + `Shift` + `q` | Kill focused window |
-| `$mod` + `d` | Open Application Launcher |
-| `$mod` + `f` | Toggle Fullscreen |
+| `$mod` + `Shift` + `Q` | Kill focused window |
+| `$mod` + `D` | Open Application Launcher |
+| `$mod` + `F` | Toggle Fullscreen |
 | `$mod` + `Arrow Keys` | Focus window (Left/Down/Up/Right) |
 | `$mod` + `Shift` + `Arrows` | Move window |
-| `$mod` + `TAB` | Switch between last two opened workspaces |
+| `$mod` + `TAB` | Go to next workspace |
+| `$mod` + `Shift` + `TAB` | Go to last workspace |
 
 ### System & Media
 | Keybind | Action |
 | :--- | :--- |
-| `$mod` + `Shift` + `e` | Open **Power Menu** (Shutdown/Reboot/Logoff) |
-| `$mod` + `Shift` + `w` | Set random wallpaper (in the **Wallpaper Directory**) |
-| `$mod` + `i` | Launches i3lock |
-| `$mod` + `b` | Open **Bluetooth Manager** |
+| `$mod` + `Shift` + `E` | Opens **Power Menu** (Shutdown/Reboot/Logoff/Lock) |
+| `$mod` + `Shift` + `W` | Opens **Wallpaper Chooser** (in the Wallpaper Directory) |
+| `$mod` + `Shift` + `B` | Sets a random wallpaper (from the Wallpaper Directory) |
+| `$mod` + `I` and `$mod` + `L` | Launches i3lock |
+| `$mod` + `B` | Open **Bluetooth Manager** |
 | `$mod` + `Shift` + `F` | Open **Firefox** |
 
 ---
@@ -68,18 +70,21 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 
 This configuration includes a suite of commands you can use inside the terminal to speed up your workflow.
 
-### EPITA & C Programming
+### EPITA & General Utilities
 | Alias | Command / Description |
 | :--- | :--- |
 | `afs` | goes into the **afs** directory |
+| `double` | Spawns a new terminal instance in current directory |
 | `intra` | Open Intranet |
 | `moodle` | Open Moodle |
-| `tarpls` | Moves all .tar files from Downloads, and extracts the content in current directory |
-| `zippls` | Same than tarpls but with .zip files |
+| `copy <file(s)>` | Copy content of given files to clipboard  |
+| `copyname <file(s)>` | Copy content of a file to clipboard with the name of the file above |
+| `extract <file(s)>` | Extract a file of any type (`.tar`, `.zip`, etc.) |
+| `extpls` | Moves all compressed files from Downloads, and extracts the content in current directory |
+| `cf <file(s)>` | Run `clang-format -i` on given files |
+| `cfe` | Apply **Clang Format** on every files in current repository |
 | `makec` | runs `make && make check && make clean` (The holy trinity) |
 | `gcw` | `gcc` with all required EPITA flags (`-Werror -Wall -Wextra -Wvla`...) |
-| `cf` | Run `clang-format -i` on current files |
-| `cfe` | Apply **Clang Format** on every files in current repository |
 | `lc` | compile with coverage flags, run `lcov`, and open the HTML report |
 
 ### Git Shortcuts
@@ -95,14 +100,6 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `gt` | `git tag -ma` |
 | `gpt` | `git push --follow-tags` |
 | `gl` | `git log` |
-
-### General Utilities
-| Alias | Command / Description |
-| :--- | :--- |
-| `extract <file>` | Extract a file of any type (`.tar`, `.zip`, `.rar`, etc.) |
-| `copy <file(s)>` | Copy content of a file to clipboard  |
-| `copyfile <file(s)>` | Copy content of a file to clipboard with the name of the file above |
-| `double` | Spawns a new terminal instance in the current directory |
 
 ---
 
