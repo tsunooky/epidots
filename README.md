@@ -78,7 +78,6 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `intra` | Open Intranet |
 | `moodle` | Open Moodle |
 | `copy <file(s)>` | Copy content of given files to clipboard  |
-| `copyname <file(s)>` | Copy content of a file to clipboard with the name of the file above |
 | `extract <file(s)>` | Extract a file of any type (`.tar`, `.zip`, etc.) |
 | `extpls` | Moves all compressed files from Downloads, and extracts the content in current directory |
 | `cf <file(s)>` | Run `clang-format -i` on given files |
