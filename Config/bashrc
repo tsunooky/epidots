@@ -7,7 +7,7 @@ if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
         exec "$HOME/.nix-profile/bin/zsh" -l
     fi
 else
-    echo "Zsh failed. Reboot your computer to apply zsh update."
+    echo "Zsh failed. Logout and reconnect to apply zsh update."
 fi
 
 # ----------------------------
@@ -290,5 +290,3 @@ if [ -d "afs" ]; then
     cd ~/afs
 fi
 
-# ----- Prompt init with starship -----
-eval "$(starship init bash)"
