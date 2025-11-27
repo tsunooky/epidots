@@ -85,6 +85,12 @@ nohup alacritty > /dev/null 2>&1 & disown
 
 echo -e "${GRAY}Closing installer...${NC}"
 
-sleep 0.2
+if [ -d ~/afs/.confs/config/scripts/startup_scripts ] ; then
+    for f in \ls ~/afs/.confs/config/scripts/startup_scripts ; do
+        chmod +x $f
+        ./$f
+    done
+fi
 
+sleep 0.2
 kill -9 $PPID
