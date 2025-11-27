@@ -36,7 +36,7 @@ PACKAGES=(
 
 echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
 
-nix-env -iA "${PACKAGES[@]}" > /tmp/epidots_install.log 2>&1 &
+nix-env -iA "${PACKAGES[@]}" #> /tmp/epidots_install.log 2>&1 &
 PID=$!
 
 sp="/-\|"
@@ -85,6 +85,6 @@ nohup alacritty > /dev/null 2>&1 & disown
 
 echo -e "${GRAY}Closing installer...${NC}"
 
-sleep 0.5
+sleep 0.2
 
 kill -9 $PPID
