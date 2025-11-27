@@ -132,13 +132,11 @@ extract() {
               *.tar.bz2)     tar xvjf $f    ;;
               *.tar.gz)      tar xvzf $f    ;;
               *.bz2)         bunzip2 $f     ;;
-              *.rar)         unrar x $f     ;;
               *.gz)          gunzip $f      ;;
               *.tar)         tar xvf $f     ;;
               *.tbz2)        tar xvjf $f    ;;
               *.zip)         unzip $f       ;;
               *.Z)           uncompress $f  ;;
-              *.7z)          7z x $f        ;;
               *)             echo "Don't know how to extract '$f'..."
           esac
         else
@@ -148,9 +146,9 @@ extract() {
 }
 
 extpls() {
-    mv ~/Downloads/*.{,tar,bz2,rar,gz,tbz2,zip,Z,7z} . 2> /dev/null
+    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z} . 2> /dev/null
     extract *
-    rm *.{,tar,bz2,rar,gz,tbz2,zip,Z,7z} 2> /dev/null
+    rm *.{tar,bz2,gz,tbz2,zip,Z} 2> /dev/null
 }
 
 # Clipboard utilities (requires xsel)
