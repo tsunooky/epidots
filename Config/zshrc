@@ -256,18 +256,6 @@ reset-conf() {
     local TOTAL_STEPS=4
 
     echo -e "\n${RED}=== FACTORY RESET ===${NC}"
-    echo -e "${GRAY}You are about to remove Epidots and revert to EPITA default.${NC}"
-    echo -e "${GRAY}This action cannot be undone.${NC}"
-    echo ""
-    echo -ne "${BLUE}Are you sure? (y/n) ${NC}"
-    read -n 1 -r
-    echo ""
-
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo -e "${RED}Aborted.${NC}"
-        return 1
-    fi
-
     echo ""
 
     printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restoring default configuration..."
