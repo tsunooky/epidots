@@ -28,11 +28,6 @@ output_path = '~/afs/.confs/config/rofi/colors.rasi'
 input_path = '~/afs/.confs/config/matugen/templates/alacritty.toml'
 output_path = '~/afs/.confs/config/alacritty/colors.toml'
 
-# Starship
-[templates.starship]
-input_path = '~/afs/.confs/config/matugen/templates/starship.toml'
-output_path = '~/afs/.confs/config/starship.toml'
-
 # Pywalfox
 [templates.pywalfox]
 input_path = '~/afs/.confs/config/matugen/templates/pywalfox.json'
