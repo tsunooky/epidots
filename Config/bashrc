@@ -1,5 +1,8 @@
 [[ $- != *i* ]] && return
 
+export PGDATA="$HOME/postgres_data"
+export PGHOST="/tmp"
+
 if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
     if [[ $- == *i* ]]; then
         export SHELL="$HOME/.nix-profile/bin/zsh"

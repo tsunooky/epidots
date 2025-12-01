@@ -20,6 +20,9 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 # ENVIRONMENT VARIABLES & PATH
 # ----------------------------
 
+export PGDATA="$HOME/postgres_data"
+export PGHOST="/tmp"
+
 if [ -d ~/afs/bin ] ; then
     export PATH=~/afs/bin:$PATH
 fi
