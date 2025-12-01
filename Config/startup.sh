@@ -36,7 +36,7 @@ PACKAGES=(
 
 echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
 
-nix-env -iA "${PACKAGES[@]}" #> /tmp/epidots_install.log 2>&1 &
+nix-env -iA "${PACKAGES[@]}" > /tmp/epidots_install.log 2>&1 &
 PID=$!
 
 sp="/-\|"
