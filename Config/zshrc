@@ -49,7 +49,7 @@ export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08
 # HISTORY & SHELL OPTIONS
 # -----------------------
 
-HISTFILE=~/.zsh_history
+HISTFILE=~/afs/.confs/.zsh_history
 HISTSIZE=1000
 SAVEHIST=2000
 
