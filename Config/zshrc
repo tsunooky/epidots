@@ -224,8 +224,8 @@ copyname() {
 update-conf() {
     setopt local_options no_monitor
     echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
-    echo "\b\033[0;31m/!\ Please don't close the terminal during update\033[0m"
-    echo -ne "\033[0;34m::\033[0m Updating Epidots... "
+    echo "\b\033[0;31m/!\ Don't close this terminal during update\033[0m"
+    echo -ne "\033[0;34m::\033[0m Updating Epidots...  "
     local err=$(mktemp)
     (
         set -e
