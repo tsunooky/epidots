@@ -135,7 +135,17 @@ alias sqlfix='sqlfluff fix'
 
 sqlrun()
 {
-    psql roger_roger -f $@ | bat
+    if [ $# -ne 1 ]; then
+        echo 'usage: sqlrun <file>.sql'
+    elif [ ! -f $1 ]; then
+        echo "error : $1: file not found" 
+    else
+        OUTPUT_FILE=/tmp/sqloutput.csv
+        echo "(empty)" > $OUTPUT_FILE
+        psql roger_roger -f $@ > $OUTPUT_FILE
+        bat $OUTPUT_FILE
+        rm $OUTPUT_FILE
+    fi
 }
 
 # Apply clang-format to the current repository
