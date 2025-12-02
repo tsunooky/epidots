@@ -224,7 +224,7 @@ copyname() {
 update-conf() {
     setopt local_options no_monitor
     echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
-    echo "\b\033[0;31m/!\Please don't close the terminal during update\033[0m"
+    echo "\b\033[0;31m/!\ Please don't close the terminal during update\033[0m"
     echo -ne "\033[0;34m::\033[0m Updating Epidots... "
     local err=$(mktemp)
     (
@@ -240,13 +240,12 @@ update-conf() {
 
     BG_FILE=~/afs/.confs/.bg
     WALL_DIR=~/afs/.confs/wallpapers
-    SCRIPT_BG=~/afs/.confs/config/scripts/change_wallpaper.sh
     if [ -f "$BG_FILE" ]; then
         IMG_NAME=$(cat "$BG_FILE")
         FULL_PATH="$WALL_DIR/$IMG_NAME"
-        if [ -f "$FULL_PATH" ] && [ -f "$SCRIPT_BG" ]; then
-            chmod +x "$SCRIPT_BG"
-            "$SCRIPT_BG" "$FULL_PATH" > /dev/null 2>&1
+        if [ -f "$FULL_PATH" ]; then
+            matugen image "$FULL_PATH" > /dev/null 2>&1
+            feh --bg-fill "$FULL_PATH"
         fi
     fi
 
