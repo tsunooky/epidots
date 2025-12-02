@@ -143,7 +143,7 @@ sqlrun()
         OUTPUT_FILE=/tmp/sqloutput.csv
         echo "(empty)" > $OUTPUT_FILE
         psql roger_roger -f $@ > $OUTPUT_FILE
-        bat $OUTPUT_FILE
+        bat -p $OUTPUT_FILE
         rm $OUTPUT_FILE
     fi
 }
