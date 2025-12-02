@@ -223,8 +223,8 @@ copyname() {
 
 update-conf() {
     setopt local_options no_monitor
-    echo "=================================================="
-    echo "\b\033[0;31m/!\Please don't close the terminal during update/!\\033[0m";
+    echo -e "=\b\033[0;31m=================================================\033[0m"
+    echo -e"\b\033[0;31m/!\Please don't close the terminal during update/!\\033[0m"
     echo -ne "\033[0;34m::\033[0m Updating Epidots... "
     local err=$(mktemp)
     (
@@ -237,7 +237,7 @@ update-conf() {
     ) >"$err" 2>&1 &
     local pid=$! sp='/-\|' i=0
     while kill -0 $pid 2>/dev/null; do printf "\b${sp[(i++%4)+1]}"; sleep 0.1; done
-    
+
     BG_FILE=~/afs/.confs/.bg
     WALL_DIR=~/afs/.confs/wallpapers
     SCRIPT_BG=~/afs/.confs/config/scripts/change_wallpaper.sh
