@@ -237,6 +237,20 @@ update-conf() {
     ) >"$err" 2>&1 &
     local pid=$! sp='/-\|' i=0
     while kill -0 $pid 2>/dev/null; do printf "\b${sp[(i++%4)+1]}"; sleep 0.1; done
+    
+    BG_FILE=~/afs/.confs/.bg
+    WALL_DIR=~/afs/.confs/wallpapers
+    SCRIPT_BG=~/afs/.confs/config/scripts/change_wallpaper.sh
+
+    if [ -f "$BG_FILE" ]; then
+        IMG_NAME=$(cat "$BG_FILE")
+        FULL_PATH="$WALL_DIR/$IMG_NAME"
+        if [ -f "$FULL_PATH" ] && [ -f "$SCRIPT_BG" ]; then
+            chmod +x "$SCRIPT_BG"
+            "$SCRIPT_BG" "$FULL_PATH" > /dev/null 2>&1
+        fi
+    fi
+
     wait $pid
     if [ $? -eq 0 ]; then
         rm "$err"
