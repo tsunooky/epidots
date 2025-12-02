@@ -279,7 +279,7 @@ reset-conf() {
     echo -e "\033[0;32mReset done.\033[0m Restart terminal."
 }
 
-alias clean-afs='./~/afs/.confs/config/scripts/afs_cleaner.sh'
+alias clean-afs='~/afs/.confs/config/scripts/afs_cleaner.sh'
 
 # Switch between WIN and ALT mod key
 alias winpls="sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
