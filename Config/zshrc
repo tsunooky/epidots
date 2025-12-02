@@ -223,7 +223,6 @@ copyname() {
 
 update-conf() {
     echo -ne "\033[0;34m::\033[0m ==== Updating Epidots ===="
-    echo -ne "Please don't close this terminal during the update."
     local err=$(mktemp)
     (
         set -e
@@ -237,7 +236,7 @@ update-conf() {
     while kill -0 $pid 2>/dev/null; do printf "\b${sp:i++%4:1}"; sleep 0.1; done
     wait $pid
     if [ $? -eq 0 ]; then
-        echo -e "\b\033[0;32m==== [OK] ====\033[0m"
+        echo -e "\b\033[0;32m[OK]\033[0m"
         rm "$err"
         i3-msg restart >/dev/null 2>&1
         source "${ZDOTDIR:-$HOME}/.zshrc"
