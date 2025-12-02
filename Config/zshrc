@@ -128,7 +128,7 @@ alias gcw="gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla"
 alias cf="clang-format -i"
 
 # SQL shortcuts
-alias sqlsetup 'chmod +x ~/afs/.confs/config/scripts/setup_sql.sh && ~/afs/.confs/config/scripts/setup_sql.sh'
+alias sqlsetup='chmod +x ~/afs/.confs/config/scripts/setup_sql.sh && ~/afs/.confs/config/scripts/setup_sql.sh'
 alias sqlserv='postgres -k "$PGHOST"'
 alias sqlrun='psql roger_roger -f'
 
