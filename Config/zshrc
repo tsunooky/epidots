@@ -23,18 +23,18 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 export PGDATA="$HOME/postgres_data"
 export PGHOST="/tmp"
 
-if [[ -d "$HOME/afs/bin" ]]; then
-    path=("$HOME/afs/bin" $path)
+if [ -d ~/afs/bin ] ; then
+    export PATH=~/afs/bin:$PATH
 fi
-if [[ -d "$HOME/.local/bin" ]]; then
-    path=("$HOME/.local/bin" $path)
+
+if [ -d ~/.local/bin ] ; then
+    export PATH=~/.local/bin:$PATH
 fi
 
 export LANG=en_US.utf8
 export NNTPSERVER="news.epita.fr"
 export EDITOR=vim
 
-# Ensure unique paths (Zsh specific)
 typeset -U path
 export PATH
 
@@ -223,8 +223,8 @@ copyname() {
 
 update-conf() {
     setopt local_options no_monitor
-    echo -e "=\b\033[0;31m=================================================\033[0m"
-    echo -e"\b\033[0;31m/!\Please don't close the terminal during update/!\\033[0m"
+    echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
+    echo "\b\033[0;31m/!\Please don't close the terminal during update/!\\\033[0m"
     echo -ne "\033[0;34m::\033[0m Updating Epidots... "
     local err=$(mktemp)
     (
@@ -241,7 +241,6 @@ update-conf() {
     BG_FILE=~/afs/.confs/.bg
     WALL_DIR=~/afs/.confs/wallpapers
     SCRIPT_BG=~/afs/.confs/config/scripts/change_wallpaper.sh
-
     if [ -f "$BG_FILE" ]; then
         IMG_NAME=$(cat "$BG_FILE")
         FULL_PATH="$WALL_DIR/$IMG_NAME"
