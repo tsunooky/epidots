@@ -224,7 +224,7 @@ copyname() {
 update-conf() {
     setopt local_options no_monitor
     echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
-    echo "\b\033[0;31m/!\Please don't close the terminal during update/!\\\033[0m"
+    echo "\b\033[0;31m/!\Please don't close the terminal during update\033[0m"
     echo -ne "\033[0;34m::\033[0m Updating Epidots... "
     local err=$(mktemp)
     (
@@ -279,6 +279,8 @@ reset-conf() {
     "$HOME/afs/.confs/install.sh" >/dev/null 2>&1
     echo -e "\033[0;32mReset done.\033[0m Restart terminal."
 }
+
+alias clean-afs='./~/afs/.confs/config/scripts/afs_cleaner.sh'
 
 # Switch between WIN and ALT mod key
 alias winpls="sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
