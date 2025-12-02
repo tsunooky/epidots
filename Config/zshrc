@@ -131,6 +131,7 @@ alias cf="clang-format -i"
 alias sqlsetup='chmod +x ~/afs/.confs/config/scripts/setup_sql.sh && ~/afs/.confs/config/scripts/setup_sql.sh'
 alias sqlserv='postgres -k "$PGHOST"'
 alias sqlrun='psql roger_roger -f'
+alias sqlfix='sqlfluff fix'
 
 # Apply clang-format to the current repository
 cfe() {
