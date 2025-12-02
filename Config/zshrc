@@ -23,11 +23,11 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 export PGDATA="$HOME/postgres_data"
 export PGHOST="/tmp"
 
-if [ -d ~/afs/bin ] ; then
-    export PATH=~/afs/bin:$PATH
+if [[ -d "$HOME/afs/bin" ]]; then
+    path=("$HOME/afs/bin" $path)
 fi
-if [ -d ~/.local/bin ] ; then
-    export PATH=~/.local/bin:$PATH
+if [[ -d "$HOME/.local/bin" ]]; then
+    path=("$HOME/.local/bin" $path)
 fi
 
 export LANG=en_US.utf8
@@ -36,6 +36,7 @@ export EDITOR=vim
 
 # Ensure unique paths (Zsh specific)
 typeset -U path
+export PATH
 
 # TAB colors
 if [ -x /usr/bin/dircolors ]; then
@@ -61,6 +62,10 @@ setopt HIST_IGNORE_SPACE
 # Navigation options
 setopt AUTO_CD
 setopt CORRECT
+
+# Remap Home and End buttons
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
 
 # ------------------------------
 # GENERAL ALIASES & REPLACEMENTS
@@ -216,94 +221,48 @@ copyname() {
 # CONFIG
 # ------
 
-# Function to define colors inside the functions to avoid namespace pollution
-_epidots_colors() {
-    GREEN='\033[0;32m'
-    BLUE='\033[0;34m'
-    GRAY='\033[0;90m'
-    RED='\033[0;31m'
-    NC='\033[0m'
-}
-
 update-conf() {
-    _epidots_colors
-    local TEMP_DIR=$(mktemp -d)
-    local CONFIG_SOURCE=~/afs/.confs
-
-    echo -e "${BLUE}=== EPIDOTS UPDATE ===${NC}"
-    echo -e "${RED}/!\ Please don't close this terminal while updating${NC}"
-
-    if ! git clone --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"; then
-        echo -e "${RED}Download failed.${NC}"
-        return 1
+    echo -ne "\033[0;34m::\033[0m ==== Updating Epidots ===="
+    echo -ne "Please don't close this terminal during the update."
+    local err=$(mktemp)
+    (
+        set -e
+        tmp=$(mktemp -d)
+        git clone --depth 1 https://github.com/tsunooky/epidots.git "$tmp"
+        cp -r "$tmp/Config/"* "$HOME/afs/.confs/"
+        AFS_DIR="$HOME/afs" "$HOME/afs/.confs/install.sh"
+        rm -rf "$tmp"
+    ) >"$err" 2>&1 &
+    local pid=$! sp='/-\|' i=0
+    while kill -0 $pid 2>/dev/null; do printf "\b${sp:i++%4:1}"; sleep 0.1; done
+    wait $pid
+    if [ $? -eq 0 ]; then
+        echo -e "\b\033[0;32m==== [OK] ====\033[0m"
+        rm "$err"
+        i3-msg restart >/dev/null 2>&1
+        source "${ZDOTDIR:-$HOME}/.zshrc"
+    else
+        echo -e "\b\033[0;31m[FAIL]\033[0m"; cat "$err"; rm "$err"
     fi
-
-    cp -r "$TEMP_DIR/Config/"* "$CONFIG_SOURCE/"
-
-    echo "Running install.sh..."
-    if ! AFS_DIR="$HOME/afs" "$CONFIG_SOURCE/install.sh"; then
-        echo -e "${RED}install.sh failed!${NC}"
-        rm -rf "$TEMP_DIR"
-        return 1
-    fi
-
-    i3-msg restart > /dev/null 2>&1
-
-    rm -rf "$TEMP_DIR"
-    echo -e "${GREEN}Update complete!${NC}"
-
-    source ~/.bashrc
 }
 
 reset-conf() {
-    _epidots_colors
-    local STEP=1
-    local TOTAL_STEPS=4
-
-    echo -e "\n${RED}=== FACTORY RESET ===${NC}"
-    echo ""
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restoring default configuration..."
-    if curl -L https://raw.githubusercontent.com/Darkrentin/default-nixos-config-epita/refs/heads/main/installer.sh 2>/dev/null | sh -s > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
+    echo -e "\n\033[0;31m=== FACTORY RESET ===\033[0m"
+    echo -ne "\033[0;34m::\033[0m Restoring defaults...   "
+    if curl -L https://raw.githubusercontent.com/Darkrentin/default-nixos-config-epita/refs/heads/main/installer.sh 2>/dev/null | sh -s >/dev/null 2>&1; then
+        echo -e "\033[0;32m[OK]\033[0m"
     else
-        echo -e "${RED}[FAIL]${NC}"
-        return 1
+        echo -e "\033[0;31m[FAIL]\033[0m"; return 1
     fi
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Cleaning up i3 configuration..."
-    if [ -f ~/afs/.confs/config/i3/config ]; then
-        cp ~/afs/.confs/config/i3/config ~/config.temp
-        rm -rf ~/afs/.confs/config/i3/*
-        mv ~/config.temp ~/afs/.confs/config/i3/config
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${GRAY}[SKIP]${NC}"
-    fi
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Removing Epidots specific files..."
-
-    rm -rf ~/afs/.confs/wallpapers
-    rm -rf ~/afs/.confs/config/{alacritty,matugen,gtk-3.0,gtk-4.0,qt5ct,qt6ct,rofi,scripts,polybar,picom,starship.toml}
-
-    echo -e "${GREEN}[OK]${NC}"
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restarting Window Manager..."
-    pkill polybar > /dev/null 2>&1
-    pkill picom > /dev/null 2>&1
-
-    if i3-msg restart > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${RED}[FAIL]${NC}"
-    fi
-
-    ~/afs/.confs/install.sh
-
-    echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
+    echo -ne "\033[0;34m::\033[0m Cleaning files...       "
+    local i3c="$HOME/afs/.confs/config/i3/config"
+    [ -f "$i3c" ] && cp "$i3c" "$HOME/config.temp"
+    rm -rf "$HOME/afs/.confs/"{wallpapers,config/{alacritty,matugen,gtk-*,qt*ct,rofi,scripts,polybar,picom,starship.toml}}
+    [ -f "$HOME/config.temp" ] && mkdir -p "$(dirname "$i3c")" && mv "$HOME/config.temp" "$i3c"
+    echo -e "\033[0;32m[OK]\033[0m"
+    pkill polybar; pkill picom; i3-msg restart >/dev/null 2>&1
+    "$HOME/afs/.confs/install.sh" >/dev/null 2>&1
+    echo -e "\033[0;32mReset done.\033[0m Restart terminal."
 }
 
 # Switch between WIN and ALT mod key

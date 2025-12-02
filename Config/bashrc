@@ -1,7 +1,6 @@
 [[ $- != *i* ]] && return
 
-export PGDATA="$HOME/postgres_data"
-export PGHOST="/tmp"
+# --- Run zsh ---
 
 if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
     if [[ $- == *i* ]]; then
@@ -9,12 +8,13 @@ if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
         exec "$HOME/.nix-profile/bin/zsh" -l
     fi
 else
-    echo "Zsh failed. Logout and reconnect to apply zsh update."
+    echo "zsh failed. Please logout and reconnect to apply zsh update."
 fi
 
-# ----------------------------
-# ENVIRONMENT VARIABLES & PATH
-# ----------------------------
+# --- Default Epita configuration ---
+
+export PGDATA="$HOME/postgres_data"
+export PGHOST="/tmp"
 
 if [ -d ~/afs/bin ] ; then
     export PATH=~/afs/bin:$PATH
@@ -27,159 +27,12 @@ export LANG=en_US.utf8
 export NNTPSERVER="news.epita.fr"
 export EDITOR=vim
 
-# Use bat for colored man pages
-export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08/, \"\", \$0); print }'\'' | bat -p -lman'"
+alias ls='ls --color=auto'
+alias grep='grep --color -n'
+PS1='[\u@\h \W]\$ '
 
-# -----------------------
-# HISTORY & SHELL OPTIONS
-# -----------------------
+# --- CONFIG ---
 
-HISTCONTROL=ignoreboth
-HISTSIZE=1000
-HISTFILESIZE=2000
-HISTIGNORE="&:[bf]g:exit:ls:lsd:ll:la:sl:clear:history"
-shopt -s histappend
-shopt -s checkwinsize
-
-# ------------------------------
-# GENERAL ALIASES & REPLACEMENTS
-# ------------------------------
-
-# Colorize standard commands
-alias diff='diff --color=auto'
-alias grep='grep --color=auto'
-alias ip='ip -color=auto'
-alias cat='bat -pp'
-alias cqt='bat -pp'
-alias ls='lsd'
-alias sl='lsd'
-alias la='lsd -A'
-alias ll='lsd -l'
-alias tree='lsd --tree'
-
-# -----------
-# GIT ALIASES
-# -----------
-
-alias gs='git status'
-alias ga='git add'
-alias gc='git commit -m'
-alias gp='git push'
-alias gpu='git pull'
-alias gl='git log --oneline --graph --decorate'
-alias gt='git tag -ma'
-alias gpt='git push --follow-tags'
-alias gd='git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff'
-
-# Go to the root of current git repository
-cdg() {
-    local root_dir
-    root_dir=$(git rev-parse --show-toplevel 2>/dev/null)
-    if [[ -n "$root_dir" ]]; then
-        cd "$root_dir"
-    else
-        echo "Error : You are not in a Git repository." >&2
-        return 1
-    fi
-}
-
-# ---------------------
-# EPITA & C PROGRAMMING
-# ---------------------
-
-# Spawns a new terminal in the current directory
-alias double='alacritty --working-directory "$PWD" > /dev/null 2>&1 & disown'
-
-# School shortcuts
-alias afs='cd ~/afs/'
-alias intra="firefox https://intra.forge.epita.fr/"
-alias moodle="firefox https://moodle.epita.fr/my/"
-alias forge="firefox https://cri.epita.fr/"
-
-# C Dev shortcuts
-alias makec="make && make check && make clean"
-alias gcw="gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla"
-alias cf="clang-format -i"
-
-# Apply clang-format to the current repository
-cfe() {
-    local here=$(pwd)
-    cd $(git rev-parse --show-toplevel)
-    cp ~/afs/.confs/clang-format ./.clang-format
-    clang-format-epita
-    rm .clang-format
-    cd "$here"
-}
-
-# -----------------
-# UTILITY FUNCTIONS
-# -----------------
-
-# Create a directory and enter it
-mkcd() {
-    mkdir -p "$1" && cd "$1"
-}
-
-# Smart archive extractor
-extract() {
-    for f in "$@"; do
-      if [ -f $f ] ; then
-        case $f in
-              *.tar.bz2)     tar xvjf $f    ;;
-              *.tar.gz)      tar xvzf $f    ;;
-              *.bz2)         bunzip2 $f     ;;
-              *.gz)          gunzip $f      ;;
-              *.tar)         tar xvf $f     ;;
-              *.tbz2)        tar xvjf $f    ;;
-              *.zip)         unzip $f       ;;
-              *.Z)           uncompress $f  ;;
-              *)             echo "Don't know how to extract '$f'..."
-          esac
-        else
-          echo "'$f' is not a valid file!"
-        fi
-    done
-}
-
-extpls() {
-    if [ -n "$ZSH_VERSION" ]; then
-        setopt local_options no_nomatch
-    fi
-
-    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
-
-    for ext in tar bz2 gz tbz2 zip Z rar 7z; do
-        for file in *.$ext; do
-            if [ -f "$file" ]; then
-                extract "$file"
-                rm "$file"
-            fi
-        done
-    done
-}
-
-# Clipboard utilities (requires xsel)
-copy() {
-    cat "$@" | xsel -b
-}
-
-copyname() {
-    (
-        for file in "$@"; do
-            if [ -f "$file" ]; then
-                echo "$file"
-                cat "$file"
-                echo
-            fi
-        done
-    ) | xsel -b
-}
-
-# ------
-# CONFIG
-# ------
-
-# Function to define colors inside the functions to avoid namespace pollution
 _epidots_colors() {
     GREEN='\033[0;32m'
     BLUE='\033[0;34m'
@@ -224,18 +77,6 @@ reset-conf() {
     local TOTAL_STEPS=4
 
     echo -e "\n${RED}=== FACTORY RESET ===${NC}"
-    echo -e "${GRAY}You are about to remove Epidots and revert to EPITA default.${NC}"
-    echo -e "${GRAY}This action cannot be undone.${NC}"
-    echo ""
-    echo -ne "${BLUE}Are you sure? (y/n) ${NC}"
-    read -n 1 -r
-    echo ""
-
-    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-        echo -e "${RED}Aborted.${NC}"
-        return 1
-    fi
-
     echo ""
 
     printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restoring default configuration..."
@@ -280,26 +121,4 @@ reset-conf() {
 
     echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
 }
-
-# Switch between WIN and ALT mod key
-alias winpls="sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
-alias altpls="sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to ALT'"
-
-# Wallpaper & Matugen scripts
-alias bg='~/afs/.confs/config/scripts/change_wallpaper.sh'
-alias rbg='(~/afs/.confs/config/scripts/random_wallpaper.sh &)'
-alias bgdir='cd ~/afs/.confs/wallpapers'
-bgadd() {
-    cp "$1" ~/afs/.confs/wallpapers
-}
-
-# --- Custom aliases ---
-alias tarpls='extpls'
-alias clip='copy'
-alias repo='cdg'
-alias err='echo $?'
-
-if [ -d "afs" ]; then
-    cd ~/afs
-fi
 
