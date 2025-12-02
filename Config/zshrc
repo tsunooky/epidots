@@ -222,6 +222,7 @@ copyname() {
 # ------
 
 update-conf() {
+    setopt local_options no_monitor
     echo -ne "\033[0;34m::\033[0m ==== Updating Epidots ===="
     local err=$(mktemp)
     (
