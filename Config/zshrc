@@ -63,9 +63,10 @@ setopt HIST_IGNORE_SPACE
 setopt AUTO_CD
 setopt CORRECT
 
-# Remap Home and End buttons
+# Remap keys
 bindkey "^[[H" beginning-of-line
 bindkey "^[[F" end-of-line
+bindkey  "^[[3~"  delete-char
 
 # ------------------------------
 # GENERAL ALIASES & REPLACEMENTS
