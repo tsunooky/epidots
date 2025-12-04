@@ -110,6 +110,21 @@ cdg() {
     fi
 }
 
+# All in one git command
+gg() {
+    cdg
+    git add .
+    git commit -m "added features"
+
+    if [ $# -eq 1 ]; then
+        git tag -ma $1
+        git push --follow-tags
+    else
+        git push
+    fi
+    cd - > /dev/null
+}
+
 # ---------------------
 # EPITA & C PROGRAMMING
 # ---------------------
