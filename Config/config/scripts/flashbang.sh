@@ -1,9 +1,10 @@
 #!/bin/sh
 
-if [-f /tmp/flashbang.lock ]
+if [ -f "/tmp/flashbang.lock" ]; then
     exit 0
+fi
 
-touch /tmp/flashbang.lock
+touch "/tmp/flashbang.lock"
 
 xrandr --output DP-1 --brightness 30 > /dev/null 2>&1
 xrandr --output HDMI-1 --brightness 30 > /dev/null 2>&1
@@ -18,4 +19,5 @@ done
 xrandr --output DP-1 --brightness 1 > /dev/null 2>&1
 xrandr --output HDMI-1 --brightness 1 > /dev/null 2>&1
 
-rm /tmp/flashbang
+rm "/tmp/flashbang.lock"
+
