@@ -150,7 +150,10 @@ bindsym $mod+Shift+F exec "firefox"
 bindsym XF86HomePage exec --no-startup-id firefox https://github.com/tsunooky/epidots
 bindsym XF86WWW exec --no-startup-id firefox https://github.com/tsunooky/epidots
 
-# CALC : Flashbang
+# Random wallpaper
+bindsym XF86Mail exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
+
+# Flashbang
 bindsym XF86Calculator exec --no-startup-id "~/afs/.confs/config/scripts/flashbang.sh"
 
 # Pulse Audio controls
