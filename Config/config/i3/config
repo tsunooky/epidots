@@ -146,7 +146,11 @@ bindsym $mod+Shift+F exec "firefox"
 
 # ---------- Hardware and media controls ----------
 
-# Flashbang
+# Link to github page
+bindsym XF86HomePage exec --no-startup-id firefox https://github.com/tsunooky/epidots
+bindsym XF86WWW exec --no-startup-id firefox https://github.com/tsunooky/epidots
+
+# CALC : Flashbang
 bindsym XF86Calculator exec --no-startup-id "~/afs/.confs/config/scripts/flashbang.sh"
 
 # Pulse Audio controls
