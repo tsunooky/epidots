@@ -99,6 +99,7 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `gt` | `git tag -ma` |
 | `gpt` | `git push --follow-tags` |
 | `gl` | `git log` |
+| `gg <optional_tag>` | `git add .` at root, `git commit -m "added features"` and `git push`. The `optional_tag` will be pushed if precised |
 
 ---
 
