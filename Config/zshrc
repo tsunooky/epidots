@@ -55,13 +55,15 @@ HISTSIZE=10000
 SAVEHIST=20000
 
 # Share history and ignore duplicates
-setopt SHARE_HISTORY
+# setopt SHARE_HISTORY
+setopt APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_IGNORE_SPACE
+setopt HIST_REDUCE_BLANKS
+HISTORY_IGNORE="(lsd|sl|ls|l|ll|la|cd|exit|clear|history|bg|fg)"
 
 # Navigation options
 setopt AUTO_CD
-setopt CORRECT
 
 # Remap keys
 bindkey "^[[H" beginning-of-line
