@@ -84,13 +84,12 @@ nohup firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
 nohup alacritty > /dev/null 2>&1 & disown
 
 echo -e "${GRAY}Closing installer...${NC}"
-
-if [ -d ~/afs/.confs/config/scripts/startup_scripts ] ; then
-    for f in \ls ~/afs/.confs/config/scripts/startup_scripts ; do
-        chmod +x $f
-        ./$f
-    done
-fi
+#the if don't work !!!!
+for f in ~/afs/.confs/config/scripts/startup_scripts/* ; do
+    chmod +x "$f"
+    echo "exec script: $f"
+    $f
+done
 
 kill emacs > /dev/null
 sleep 0.2
