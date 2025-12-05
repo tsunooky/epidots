@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# Fix Epita emacs config
+for F in ~/afs/.confs/emacs ~/.emacs; do
+    [ -f "$F" ] && sed -i 's/(global-linum-mode)/(global-display-line-numbers-mode)/g' "$F"
+done
+
 ~/afs/.confs/config/scripts/rand_game.sh
 
 GREEN='\033[0;32m'
@@ -76,21 +81,18 @@ if [ -f "$BG_FILE" ]; then
     fi
 fi
 
-\tree ~/afs/.confs/wallpapers > /dev/null 2>&1
-
 echo -e "${GREEN}All done!${NC}"
 
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
 nohup alacritty > /dev/null 2>&1 & disown
 
 echo -e "${GRAY}Closing installer...${NC}"
-#the if don't work !!!!
 for f in ~/afs/.confs/config/scripts/startup_scripts/* ; do
     chmod +x "$f"
-    echo "exec script: $f"
+    echo "Executed script: $f"
     $f
 done
 
 kill emacs > /dev/null
-sleep 0.2
+sleep 0.1
 kill -9 $PPID
