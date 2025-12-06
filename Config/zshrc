@@ -277,7 +277,7 @@ update-conf() {
         rm "$err"
         echo -e "\b\033[0;32m[OK]\033[0m"
         i3-msg restart >/dev/null 2>&1
-        source ~/.bashrc
+        source ~/.zshrc > /dev/null 2>&1
     else
         echo -e "\b\033[0;31m[FAIL]\033[0m"; cat "$err"; rm "$err"
     fi
