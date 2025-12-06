@@ -4,11 +4,11 @@
 
 A clean, automated, and aesthetic NixOS configuration designed for **EPITA** school computers.
 
-This setup enhances the default environment with a modern status bar, custom Vim bindings, and dynamic theming using **Matugen**.
+This setup enhances the default environment with terminal autocompletion, a modern status bar, custom Vim bindings, and dynamic color theming using **Matugen**.
 
-Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for vim and scripts.
+Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for the vimrc.
 
-[Discord Server](https://discord.gg/G7MNkdDFD9)
+[Join the Discord Server.](https://discord.gg/G7MNkdDFD9)
 
 ## 📦 Installation
 
@@ -16,7 +16,7 @@ Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) f
 For the automatic theming to work with Firefox, you must install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
 
 ### 💠 Installation
-**WARNING:** This will override your existing `i3`, `.vimrc`, and `.bashrc` configuration.
+**WARNING:** This will override your existing `i3`, `.vimrc`, `.bashrc` and `.zshrc` configuration.
 
 Run the following command in your terminal to install everything automatically:
 
@@ -54,6 +54,14 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | `$mod` + `TAB` | Go to next workspace |
 | `$mod` + `Shift` + `TAB` | Go to last workspace |
 
+### Numpad / Special Keys (Midlab & Cisco)
+| Key | Action |
+| :--- | :--- |
+| `Lock` | Launches i3lock |
+| `Web` | Opens Epidots documentation |
+| `Mail` | Sets a random wallpaper |
+| `Calc` | Throws a flashbang on screen (`flash` command) |
+
 ### System & Media
 | Keybind | Action |
 | :--- | :--- |
@@ -74,6 +82,7 @@ This configuration includes a suite of commands you can use inside the terminal 
 | Alias | Command / Description |
 | :--- | :--- |
 | `afs` | goes into the **afs** directory |
+| `clean-afs`| Cleans cache and useless config files to free afs space (**Deletes Thunderbird config folder**)
 | `double` | Spawns a new terminal instance in current directory |
 | `intra` | Open Intranet |
 | `moodle` | Open Moodle |
@@ -84,7 +93,14 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `cfe` | Apply **Clang Format** on every files in current repository |
 | `makec` | runs `make && make check && make clean` (The holy trinity) |
 | `gcw` | `gcc` with all required EPITA flags (`-Werror -Wall -Wextra -Wvla`...) |
-| `lc` | compile with coverage flags, run `lcov`, and open the HTML report |
+
+### SQL Utilities
+| Command | Description |
+| :--- | :--- |
+| `sqlsetup` | Initialize the database (same location as `roger_roger.dump`) |
+| `sqlserv` | Start the SQL server |
+| `sqlrun <request>` | Execute a SQL request and show colored output |
+| `sqlfix <request>` | Format your SQL request using `sqlfluff` |
 
 ### Git Shortcuts
 | Alias | Command |
@@ -134,6 +150,14 @@ Type these specific triggers in **Insert Mode** to instantly expand code structu
 | `@if` / `@else` | Standard `if` / `else` blocks |
 | `@struct` | `struct { ... };` template |
 | `@pf` | `printf("\n");` |
+
+## ⚙️ Customization
+
+### Startup Scripts
+You can add your own shell scripts to run automatically when you log in (after package installation).
+Simply place your scripts in:
+`~/afs/.confs/config/scripts/startup_scripts/`
+or use the command `scriptadd <script>` to add it automatically to the folder.
 
 ## 🔄 Management
 
