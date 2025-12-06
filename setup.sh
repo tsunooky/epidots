@@ -5,6 +5,7 @@ set -e
 AFS_DIR=~/afs/.confs
 CONFIG_SRC="Config"
 REPO_DIR=~/epidots
+WALLPAPER_REPO="https://github.com/tsunooky/epidots-wallpapers.git"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -13,7 +14,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 STEP=1
-TOTAL_STEPS=6
+TOTAL_STEPS=7
 
 run_step() {
     local description=$1
@@ -32,8 +33,16 @@ run_step() {
 
 echo -e "${BLUE}=== EPIDOTS SETUP ===${NC}"
 
-run_step "Deploying configs to AFS" \
+run_step "Deploying config to AFS" \
     "mkdir -p \"$AFS_DIR\" && cp -r \"$CONFIG_SRC/\"* \"$AFS_DIR/\""
+
+run_step "Downloading Default Wallpapers" \
+    "if [ ! -d \"$AFS_DIR/wallpapers\" ]; then \
+        git clone \"$WALLPAPER_REPO\" \"$AFS_DIR/wallpapers\" && \
+        rm -rf \"$AFS_DIR/wallpapers/.git\"; \
+    else \
+        echo \"[SKIP] Folder already exists\"; \
+    fi"
 
 run_step "Installing Vim plugins" \
     "vim +PluginInstall +qall"
@@ -45,7 +54,7 @@ run_step "Setting default wallpaper" \
 run_step "Reloading i3 window manager" \
     "i3-msg restart"
 
-run_step "! Make sure to have pywalfox extension for firefox theming to work !" \
+run_step "! Check pywalfox extension for firefox color theming !" \
     "firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/"
 
 run_step "Cleaning up installation files" \
@@ -58,5 +67,4 @@ echo -e "${GREEN}     Please logout and reconnect...    ${NC}"
 echo -e "${GREEN}=======================================${NC}"
 echo ""
 
-i3-nagbar -t warning -m 'Epidots is successfully installed, you need to logout and reconnect to apply the configuration' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &
-
+i3-nagbar -t warning -m 'Epidots installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &

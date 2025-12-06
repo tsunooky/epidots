@@ -322,7 +322,6 @@ scriptadd() {
     cp "$1" ~/afs/.confs/config/scripts/startup_scripts
 }
 
-
 # --- Custom aliases ---
 alias tarpls='extpls'
 alias clip='copy'
