@@ -33,92 +33,64 @@ PS1='[\u@\h \W]\$ '
 
 # --- CONFIG ---
 
-_epidots_colors() {
-    GREEN='\033[0;32m'
-    BLUE='\033[0;34m'
-    GRAY='\033[0;90m'
-    RED='\033[0;31m'
-    NC='\033[0m'
-}
-
 update-conf() {
-    _epidots_colors
-    local TEMP_DIR=$(mktemp -d)
-    local CONFIG_SOURCE=~/afs/.confs
+    setopt local_options no_monitor
+    echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
+    echo "\b\033[0;31m/!\ Don't close this terminal during update\033[0m"
+    echo -ne "\033[0;34m::\033[0m Updating Epidots...  "
+    local err=$(mktemp)
+    (
+        set -e
+        tmp=$(mktemp -d)
+        git clone --depth 1 https://github.com/tsunooky/epidots.git "$tmp"
+        cp -r "$tmp/Config/"* "$HOME/afs/.confs/"
+        if [ -f "$HOME/afs/.confs/.alt" ]; then
+            sed -i 's/set $mod Mod4/set $mod Mod1/' "$HOME/afs/.confs/config/i3/config"
+        fi
+        AFS_DIR="$HOME/afs" "$HOME/afs/.confs/install.sh"
+        rm -rf "$tmp"
+    ) >"$err" 2>&1 &
+    local pid=$! sp='/-\|' i=0
+    while kill -0 $pid 2>/dev/null; do printf "\b${sp[(i++%4)+1]}"; sleep 0.1; done
 
-    echo -e "${BLUE}=== EPIDOTS UPDATE ===${NC}"
-    echo -e "${RED}/!\ Please don't close this terminal while updating${NC}"
-
-    if ! git clone --depth 1 https://github.com/tsunooky/epidots.git "$TEMP_DIR"; then
-        echo -e "${RED}Download failed.${NC}"
-        return 1
+    BG_FILE=~/afs/.confs/.bg
+    WALL_DIR=~/afs/.confs/wallpapers
+    if [ -f "$BG_FILE" ]; then
+        IMG_NAME=$(cat "$BG_FILE")
+        FULL_PATH="$WALL_DIR/$IMG_NAME"
+        if [ -f "$FULL_PATH" ]; then
+            matugen image "$FULL_PATH" > /dev/null 2>&1
+            feh --bg-fill "$FULL_PATH"
+        fi
     fi
 
-    cp -r "$TEMP_DIR/Config/"* "$CONFIG_SOURCE/"
-
-    echo "Running install.sh..."
-    if ! AFS_DIR="$HOME/afs" "$CONFIG_SOURCE/install.sh"; then
-        echo -e "${RED}install.sh failed!${NC}"
-        rm -rf "$TEMP_DIR"
-        return 1
+    wait $pid
+    if [ $? -eq 0 ]; then
+        rm "$err"
+        echo -e "\b\033[0;32m[OK]\033[0m"
+        i3-msg restart >/dev/null 2>&1
+        source ~/.bashrc > /dev/null 2>&1
+    else
+        echo -e "\b\033[0;31m[FAIL]\033[0m"; cat "$err"; rm "$err"
     fi
-
-    i3-msg restart > /dev/null 2>&1
-
-    rm -rf "$TEMP_DIR"
-    echo -e "${GREEN}Update complete!${NC}"
-
-    source ~/.bashrc
 }
 
 reset-conf() {
-    _epidots_colors
-    local STEP=1
-    local TOTAL_STEPS=4
-
-    echo -e "\n${RED}=== FACTORY RESET ===${NC}"
-    echo ""
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restoring default configuration..."
-    if curl -L https://raw.githubusercontent.com/Darkrentin/default-nixos-config-epita/refs/heads/main/installer.sh 2>/dev/null | sh -s > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
+    echo -e "\n\033[0;31m=== FACTORY RESET ===\033[0m"
+    echo -ne "\033[0;34m::\033[0m Restoring defaults...   "
+    if curl -L https://raw.githubusercontent.com/Darkrentin/default-nixos-config-epita/refs/heads/main/installer.sh 2>/dev/null | sh -s >/dev/null 2>&1; then
+        echo -e "\033[0;32m[OK]\033[0m"
     else
-        echo -e "${RED}[FAIL]${NC}"
-        return 1
+        echo -e "\033[0;31m[FAIL]\033[0m"; return 1
     fi
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Cleaning up i3 configuration..."
-    if [ -f ~/afs/.confs/config/i3/config ]; then
-        cp ~/afs/.confs/config/i3/config ~/config.temp
-        rm -rf ~/afs/.confs/config/i3/*
-        mv ~/config.temp ~/afs/.confs/config/i3/config
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${GRAY}[SKIP]${NC}"
-    fi
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Removing Epidots specific files..."
-
-    rm -rf ~/afs/.confs/wallpapers
-    rm -rf ~/afs/.confs/config/{alacritty,matugen,gtk-3.0,gtk-4.0,qt5ct,qt6ct,rofi,scripts,polybar,picom,starship.toml}
-
-    echo -e "${GREEN}[OK]${NC}"
-    ((STEP++))
-
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "Restarting Window Manager..."
-    pkill polybar > /dev/null 2>&1
-    pkill picom > /dev/null 2>&1
-
-    if i3-msg restart > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${RED}[FAIL]${NC}"
-    fi
-
-    ~/afs/.confs/install.sh
-
-    echo -e "\n${GREEN}Reset successful.${NC} Please close this terminal."
+    echo -ne "\033[0;34m::\033[0m Cleaning files...       "
+    local i3c="$HOME/afs/.confs/config/i3/config"
+    [ -f "$i3c" ] && cp "$i3c" "$HOME/config.temp"
+    rm -rf "$HOME/afs/.confs/"{wallpapers,config/{alacritty,matugen,gtk-*,qt*ct,rofi,scripts,polybar,picom,starship.toml}}
+    [ -f "$HOME/config.temp" ] && mkdir -p "$(dirname "$i3c")" && mv "$HOME/config.temp" "$i3c"
+    echo -e "\033[0;32m[OK]\033[0m"
+    pkill polybar; pkill picom; i3-msg restart >/dev/null 2>&1
+    "$HOME/afs/.confs/install.sh" >/dev/null 2>&1
+    echo -e "\033[0;32mReset done.\033[0m Restart terminal."
 }
 
