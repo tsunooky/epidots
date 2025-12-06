@@ -65,10 +65,22 @@ HISTORY_IGNORE="(lsd|sl|ls|l|ll|la|cd|exit|clear|history|bg|fg)"
 # Navigation options
 setopt AUTO_CD
 
-# Remap keys
-bindkey "^[[H" beginning-of-line
-bindkey "^[[F" end-of-line
-bindkey  "^[[3~"  delete-char
+# Fix weird keys mapping
+bindkey -e
+bindkey "^[[H"  beginning-of-line      # Home
+bindkey "^[[F"  end-of-line            # End
+bindkey "^[[3~" delete-char            # Delete
+bindkey "^?"    backward-delete-char   # Backspace
+# Fix Ctrl + Arrows
+bindkey '^[[1;5C' forward-word         # Ctrl + Right
+bindkey '^[[1;5D' backward-word        # Ctrl + Left
+# Fix Home/End variants
+bindkey '^[[1~' beginning-of-line
+bindkey '^[[4~' end-of-line
+# Other fixes
+autoload -U select-word-style
+select-word-style bash
+bindkey \^U backward-kill-line
 
 # ------------------------------
 # GENERAL ALIASES & REPLACEMENTS
