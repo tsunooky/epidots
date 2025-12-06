@@ -8,7 +8,7 @@ This setup enhances the default environment with terminal autocompletion, a mode
 
 Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for the vimrc.
 
-[Join the Discord Server.](https://discord.gg/G7MNkdDFD9)
+[**Join the Discord Server**](https://discord.gg/G7MNkdDFD9)
 
 ## 📦 Installation
 
