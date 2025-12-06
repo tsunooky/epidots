@@ -23,7 +23,7 @@ Run the following command in your terminal to install everything automatically:
 ```bash
 curl -L epidots.dserv.fr | sh -s
 ```
-> By default, the `$mod` key will be `WIN`, you can change this by typing `altpls` or `winpls` in your terminal after every install or update.
+> By default, the `$mod` key will be `WIN`, you can change this by typing `altpls` (and `winpls` to go back) in your terminal after install.
 
 ---
 
