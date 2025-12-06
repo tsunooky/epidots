@@ -98,7 +98,7 @@ alias gpu='git pull'
 alias gl='git log --oneline --graph --decorate'
 alias gt='git tag -ma'
 alias gpt='git push --follow-tags'
-alias gd='git diff --name-only --relative --diff-filter=d -z | xargs -0 bat --diff'
+alias gd='git diff | bat -pp'
 
 # Go to the root of current git repository
 cdg() {
@@ -117,7 +117,6 @@ gg() {
     cdg
     git add .
     git commit -m "added features"
-
     if [ $# -eq 1 ]; then
         git tag -ma $1
         git push --follow-tags
@@ -148,9 +147,7 @@ alias cf="clang-format -i"
 # SQL shortcuts
 alias sqlsetup='chmod +x ~/afs/.confs/config/scripts/setup_sql.sh && ~/afs/.confs/config/scripts/setup_sql.sh'
 alias sqlserv='postgres -k "$PGHOST"'
-#alias sqlrun='psql roger_roger -f'
 alias sqlfix='sqlfluff fix'
-
 sqlrun()
 {
     if [ $# -ne 1 ]; then
@@ -174,17 +171,6 @@ cfe() {
     clang-format-epita
     rm .clang-format
     cd "$here"
-}
-
-# Compile with coverage flags, run lcov, and open report
-lc() {
-    mkdir -p coverage
-    gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla "$@" -fPIC -coverage -lgcov -lcriterion
-    ./a.out
-    lcov --capture --directory ./ --output-file coverage.info --ignore-errors empty --ignore-errors inconsistent
-    genhtml coverage.info --output-directory coverage
-    rm *.gcno *.gcda coverage.info a.out
-    firefox coverage/index.html
 }
 
 # -----------------
@@ -328,6 +314,10 @@ alias bgdir='cd ~/afs/.confs/wallpapers'
 bgadd() {
     cp "$1" ~/afs/.confs/wallpapers
 }
+scriptadd() {
+    cp "$1" ~/afs/.confs/config/scripts/startup_scripts
+}
+
 
 # --- Custom aliases ---
 alias tarpls='extpls'
