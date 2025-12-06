@@ -252,6 +252,9 @@ update-conf() {
         tmp=$(mktemp -d)
         git clone --depth 1 https://github.com/tsunooky/epidots.git "$tmp"
         cp -r "$tmp/Config/"* "$HOME/afs/.confs/"
+        if [ -f "$HOME/afs/.confs/.alt" ]; then
+            sed -i 's/set $mod Mod4/set $mod Mod1/' "$HOME/afs/.confs/config/i3/config"
+        fi
         AFS_DIR="$HOME/afs" "$HOME/afs/.confs/install.sh"
         rm -rf "$tmp"
     ) >"$err" 2>&1 &
@@ -304,8 +307,9 @@ alias clean-afs='~/afs/.confs/config/scripts/afs_cleaner.sh'
 alias flash='~/afs/.confs/config/scripts/flashbang.sh & disown'
 
 # Switch between WIN and ALT mod key
-alias winpls="sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
-alias altpls="sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/.config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to ALT'"
+alias winpls="rm -f ~/afs/.confs/.alt && sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/afs/.confs/config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
+alias altpls="touch ~/afs/.confs/.alt && sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/afs/.confs/config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to ALT'"
+
 
 # Wallpaper & Matugen scripts
 alias bg='~/afs/.confs/config/scripts/change_wallpaper.sh'
