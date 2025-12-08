@@ -267,6 +267,7 @@ update-conf() {
         if [ -f "$HOME/afs/.confs/.alt" ]; then
             sed -i 's/set $mod Mod4/set $mod Mod1/' "$HOME/afs/.confs/config/i3/config"
         fi
+        chmod +x "$CONFIG_SOURCE/install.sh" > /dev/null 2&>1
         AFS_DIR="$HOME/afs" "$HOME/afs/.confs/install.sh"
         rm -rf "$tmp"
     ) >"$err" 2>&1 &
