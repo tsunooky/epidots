@@ -102,6 +102,11 @@ bindsym $mod+Shift+space floating toggle
 # Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
+# notebook
+
+bindsym $mod + n exec --no-startup-id alacritty --class "float_window" -e ~/afs/.confs/config/scripts/note.sh
+for_window [class="float_window"] floating enable, rezise set 800 600, move position center
+
 # Switch to workspace
 bindsym $mod+1 workspace number "1"
 bindsym $mod+2 workspace number "2"
