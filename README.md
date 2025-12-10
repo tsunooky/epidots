@@ -69,7 +69,7 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | `$mod` + `Shift` + `E` | Opens **Power Menu** (Shutdown/Reboot/Logoff/Lock) |
 | `$mod` + `Shift` + `W` | Opens **Wallpaper Chooser** (in the Wallpaper Directory) |
 | `$mod` + `Shift` + `B` | Sets a random wallpaper (from the Wallpaper Directory) |
-| `$mod` + `Shift` + `N` | Opens your floating **personal note** |
+| `$mod` + `N` | Opens your floating **personal note** |
 | `$mod` + `I` / `$mod` + `L` | Launches i3lock |
 | `$mod` + `B` | Open **Bluetooth Manager** |
 | `$mod` + `Shift` + `F` | Open **Firefox** |
