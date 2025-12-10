@@ -1,5 +1,3 @@
-***
-
 # 💠 Epidots
 
 A clean, automated, and aesthetic NixOS configuration designed for **EPITA** school computers.
@@ -177,5 +175,3 @@ reset-conf
 ## 📩 Contact
 
 If you encounter any kind of problem or have any suggestion about Epidots, feel free to report it on the [Discord Server](https://discord.gg/G7MNkdDFD9).
-
-***
