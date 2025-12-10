@@ -23,7 +23,7 @@ Run the following command in your terminal to install everything automatically:
 ```bash
 curl -L epidots.dserv.fr | sh -s
 ```
-> By default, the `$mod` key will be `WIN`, you can change this by typing `altpls` (and `winpls` to go back) in your terminal after install.
+> By default, the `$mod` key will be `WIN`, you can change this by typing `altpls` (`winpls` to revert) in your terminal after install.
 
 ---
 
@@ -65,10 +65,12 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 ### System & Media
 | Keybind | Action |
 | :--- | :--- |
+| `$mod` + `D` | Opens **Application Menu** |
 | `$mod` + `Shift` + `E` | Opens **Power Menu** (Shutdown/Reboot/Logoff/Lock) |
 | `$mod` + `Shift` + `W` | Opens **Wallpaper Chooser** (in the Wallpaper Directory) |
 | `$mod` + `Shift` + `B` | Sets a random wallpaper (from the Wallpaper Directory) |
-| `$mod` + `I` and `$mod` + `L` | Launches i3lock |
+| `$mod` + `Shift` + `N` | Opens your floating **personal note** |
+| `$mod` + `I` / `$mod` + `L` | Launches i3lock |
 | `$mod` + `B` | Open **Bluetooth Manager** |
 | `$mod` + `Shift` + `F` | Open **Firefox** |
 
@@ -168,7 +170,7 @@ To keep your configuration up to date, use theses commands:
 update-conf
 
 # ⚠️ Factory Reset
-# Removes Epidotfiles and restores the default EPITA configuration
+# Removes Epidots and restores the default EPITA configuration
 reset-conf
 ```
 
