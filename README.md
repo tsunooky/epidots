@@ -50,7 +50,7 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | `$mod` + `Arrow Keys` | Focus window (Left/Down/Up/Right) |
 | `$mod` + `Shift` + `Arrows` | Move window |
 | `$mod` + `TAB` | Go to next workspace |
-| `$mod` + `Shift` + `TAB` | Go to last workspace |
+| `$mod` + `Shift` + `TAB` | Go to previous workspace |
 
 ### Numpad / Special Keys (Midlab & Cisco)
 | Key | Action |
