@@ -350,7 +350,7 @@ fi
 eval "$(starship init zsh)"
 
 # -----------------------------
-# ZSH PLUGINS (Arch Linux path)
+# ZSH PLUGINS (NixOS path)
 # -----------------------------
 
 if [ -f "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]; then
