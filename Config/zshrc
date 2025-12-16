@@ -204,6 +204,7 @@ extract() {
               *.bz2)         bunzip2 $f     ;;
               *.gz)          gunzip $f      ;;
               *.tar)         tar xvf $f     ;;
+              *.tgz)         tar xvf $f     ;;
               *.tbz2)        tar xvjf $f    ;;
               *.zip)         unzip $f       ;;
               *.Z)           uncompress $f  ;;
