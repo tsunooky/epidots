@@ -42,8 +42,8 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
 
 # Set window borders
 default_border pixel 2
-gaps outer 3
-gaps inner 6
+gaps outer 2
+gaps inner 4
 
 # Set i3 font to JetBrains Mono
 font pango:JetBrains Mono 11
