@@ -1,15 +1,12 @@
 @import "colors.rasi"
 
 * {
-    font:                        "JetBrainsMono Nerd Font 13";
+    font:                        "JetBrainsMono Nerd Font 10";
 }
 
 /*****----- Configuration -----*****/
 configuration {
-    modi:                        "drun";
     show-icons:                  false;
-    display-drun:                " ";
-    drun-display-format:         "{name}";
 }
 
 /*****----- Main Window -----*****/
@@ -48,43 +45,48 @@ mainbox {
 /*****----- Inputbar -----*****/
 inputbar {
     enabled:                     true;
-    spacing:                     15px;
+    spacing:                     10px;
     margin:                      0px;
     padding:                     15px;
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @on-primary;
     background-color:            @on-primary;
-    text-color:                  @selected;
-    children:                    [ "prompt", "entry" ];
+    children:                    [ "prompt", "dummy", "textbox-uptime" ];
 }
 
 prompt {
     enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
+    background-color:            @selected;
+    text-color:                  @background;
+    padding:                     8px 15px;
+    border-radius:               20px; /* Forme ovale */
 }
-textbox-prompt-colon {
+
+dummy {
+    expand:                      true;
+    background-color:            transparent;
+}
+
+textbox-uptime {
     enabled:                     true;
     expand:                      false;
-    str:                         "::";
-    background-color:            inherit;
-    text-color:                  inherit;
+    background-color:            @selected;
+    text-color:                  @background;
+    padding:                     8px 15px;
+    border-radius:               20px;
+    str:                         "";
 }
+
 entry {
-    enabled:                     true;
-    background-color:            inherit;
-    text-color:                  inherit;
-    cursor:                      text;
-    placeholder:                 "...";
-    placeholder-color:           inherit;
+    enabled:                     false;
 }
 
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       4;
+    lines:                       5;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -93,21 +95,13 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
 
-    spacing:                     0px;
-    margin:                      0px;
+    spacing:                     10px;
+    margin:                      15px;
     padding:                     0px;
     border:                      0px solid;
-    border-radius:               0px;
-    border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      "default";
-}
-scrollbar {
-    handle-width:                5px ;
-    handle-color:                @selected;
-    border-radius:               0px;
-    background-color:            @background-alt;
 }
 
 /*****----- Elements -----*****/
@@ -117,7 +111,7 @@ element {
     margin:                      0px;
     padding:                     10px;
     border:                      0px solid;
-    border-radius:               0px;
+    border-radius:               8px;
     border-color:                @selected;
     background-color:            transparent;
     text-color:                  @foreground;
@@ -139,12 +133,6 @@ element selected.alternate {
     background-color:            @selected;
     text-color:                  @background;
 }
-element-icon {
-    background-color:            transparent;
-    text-color:                  inherit;
-    size:                        32px;
-    cursor:                      inherit;
-}
 element-text {
     background-color:            transparent;
     text-color:                  inherit;
@@ -155,19 +143,31 @@ element-text {
 }
 
 /*****----- Message -----*****/
-error-message {
-    padding:                     15px;
-    border:                      2px solid;
-    border-radius:               12px;
+message {
+    enabled:                     true;
+    margin:                      0px;
+    padding:                     10px;
+    border:                      0px solid;
+    border-radius:               0px;
     border-color:                @selected;
     background-color:            @background;
     text-color:                  @foreground;
 }
 textbox {
-    background-color:            @background;
-    text-color:                  @foreground;
+    background-color:            inherit;
+    text-color:                  inherit;
     vertical-align:              0.5;
     horizontal-align:            0.0;
-    highlight:                   none;
+    placeholder-color:           @foreground;
+    blink:                       true;
+    markup:                      true;
+}
+error-message {
+    padding:                     10px;
+    border:                      2px solid;
+    border-radius:               0px;
+    border-color:                @selected;
+    background-color:            @background;
+    text-color:                  @foreground;
 }
 

@@ -4,26 +4,28 @@
 theme="$HOME/.config/rofi/powermenu.rasi"
 
 # CMDs
-uptime="`uptime -p | sed -e 's/up //g'`"
+uptime="$(uptime -p | sed -e 's/up //g')"
+host=" $USER"
 
 # Options
-shutdown='   Shutdown'
-reboot='   Reboot'
-lock='   Lock'
-logout='   Logout'
-yes='   Yes'
-no='   No'
+shutdown='  Shutdown'
+reboot='  Reboot'
+lock='  Lock'
+logout='  Logout'
+yes='  Yes'
+no='  No'
 
 # Rofi CMD
 rofi_cmd() {
     rofi -dmenu -dpi 1 \
-        -mesg "Uptime: $uptime" \
+        -p "$host" \
+        -theme-str "textbox-uptime { str: \"$uptime\"; }" \
         -theme ${theme}
 }
 
 # Confirmation CMD
 confirm_cmd() {
-    rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 250px;}' \
+    rofi -theme-str 'window {location: center; anchor: center; fullscreen: false; width: 400px;}' \
         -theme-str 'mainbox {children: [ "message", "listview" ];}' \
         -theme-str 'listview {columns: 2; lines: 1;}' \
         -theme-str 'element-text {horizontal-align: 0.5;}' \
@@ -71,9 +73,10 @@ case ${chosen} in
         run_cmd --reboot
         ;;
     $lock)
-        i3lock
+            ~/.config/scripts/lock.sh
         ;;
     $logout)
         run_cmd --logout
         ;;
 esac
+
