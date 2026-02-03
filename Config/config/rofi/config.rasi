@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font:                        "JetBrainsMono Nerd Font 13";
+    font:                        "JetBrainsMono Nerd Font 12";
 }
 
 /*****----- Configuration -----*****/
@@ -116,7 +116,7 @@ element {
     enabled:                     true;
     spacing:                     10px;
     margin:                      0px;
-    padding:                     10px;
+    padding:                     6px;
     border:                      0px solid;
     border-radius:               0px;
     border-color:                @selected;

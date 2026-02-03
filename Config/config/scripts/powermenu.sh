@@ -73,7 +73,7 @@ case ${chosen} in
         run_cmd --reboot
         ;;
     $lock)
-            ~/.config/scripts/lock.sh
+        i3lock
         ;;
     $logout)
         run_cmd --logout
