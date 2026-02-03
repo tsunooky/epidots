@@ -1,7 +1,7 @@
 @import "colors.rasi"
 
 * {
-    font:                        "JetBrainsMono Nerd Font 10";
+    font:                        "JetBrainsMono Nerd Font 12";
 }
 
 /*****----- Configuration -----*****/
@@ -60,7 +60,7 @@ prompt {
     background-color:            @selected;
     text-color:                  @background;
     padding:                     8px 15px;
-    border-radius:               20px; /* Forme ovale */
+    border-radius:               20px;
 }
 
 dummy {
@@ -86,7 +86,7 @@ entry {
 listview {
     enabled:                     true;
     columns:                     1;
-    lines:                       5;
+    lines:                       4;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -95,8 +95,8 @@ listview {
     fixed-height:                true;
     fixed-columns:               true;
 
-    spacing:                     10px;
-    margin:                      15px;
+    spacing:                     6px;
+    margin:                      10px;
     padding:                     0px;
     border:                      0px solid;
     background-color:            transparent;
