@@ -6,6 +6,12 @@ fi
 
 touch "/tmp/flashbang.lock"
 
+pw-play --volume 0.8 ~/afs/.confs/config/scripts/fb1.mp3 &
+
+sleep 1.5
+
+pw-play --volume 0.8 ~/afs/.confs/config/scripts/fb2.mp3 &
+
 xrandr --output DP-1 --brightness 30 > /dev/null 2>&1
 xrandr --output HDMI-1 --brightness 30 > /dev/null 2>&1
 
