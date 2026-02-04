@@ -7,6 +7,8 @@ include ~/.config/i3/colors.conf
 # Set windows that are floating by default
 for_window [class="blueman-manager"] floating enable
 for_window [class="pavucontrol"] floating enable
+for_window [instance="fbgif"] floating enable, border none, sticky enable, focus mode_toggle
+no_focus [instance="fbgif"]
 
 # ---------- Launch programs at startup ----------
 
