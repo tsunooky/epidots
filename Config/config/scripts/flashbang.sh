@@ -6,17 +6,19 @@ fi
 
 touch "/tmp/flashbang.lock"
 
-pw-play --volume 0.8 ~/afs/.confs/config/scripts/fb1.mp3 &
-pqiv "$HOME/afs/.confs/config/scripts/fb.gif" --fullscreen --transparent-background=true --window-title="fbgif" --scale-images-up -i &
-sleep 2.5
+pw-play --volume 0.6 ~/afs/.confs/config/scripts/fb1.mp3 &
+pqiv "$HOME/afs/.confs/config/scripts/fb.gif" --transparent-background=true --window-title="fbgif" --scale-images-up -i &
+sleep 0.1
+xprop -name "fbgif" -f _NET_WM_WINDOW_TYPE 32a -set _NET_WM_WINDOW_TYPE _NET_WM_WINDOW_TYPE_DOCK
+sleep 4
 pkill pqiv
 
-pw-play --volume 0.8 ~/afs/.confs/config/scripts/fb2.mp3 &
+pw-play --volume 0.6 ~/afs/.confs/config/scripts/fb2.mp3 &
 
-xrandr --output DP-1 --brightness 50 > /dev/null 2>&1
-xrandr --output HDMI-1 --brightness 50 > /dev/null 2>&1
+xrandr --output DP-1 --brightness 40 > /dev/null 2>&1
+xrandr --output HDMI-1 --brightness 40 > /dev/null 2>&1
 
-b=50
+b=40
 while [ "$(echo "$b 1" | awk '{print ($1 > $2)}')" = 1 ]; do
     xrandr --output DP-1 --brightness "$b" > /dev/null 2>&1
     xrandr --output HDMI-1 --brightness "$b" > /dev/null 2>&1
