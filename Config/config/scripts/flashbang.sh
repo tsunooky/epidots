@@ -7,15 +7,16 @@ fi
 touch "/tmp/flashbang.lock"
 
 pw-play --volume 0.8 ~/afs/.confs/config/scripts/fb1.mp3 &
-
-sleep 1.5
+pqiv "$HOME/afs/.confs/config/scripts/fb.gif" --fullscreen --transparent-background=true --window-title="fbgif" --scale-images-up -i &
+sleep 2.5
+pkill pqiv
 
 pw-play --volume 0.8 ~/afs/.confs/config/scripts/fb2.mp3 &
 
-xrandr --output DP-1 --brightness 30 > /dev/null 2>&1
-xrandr --output HDMI-1 --brightness 30 > /dev/null 2>&1
+xrandr --output DP-1 --brightness 50 > /dev/null 2>&1
+xrandr --output HDMI-1 --brightness 50 > /dev/null 2>&1
 
-b=30
+b=50
 while [ "$(echo "$b 1" | awk '{print ($1 > $2)}')" = 1 ]; do
     xrandr --output DP-1 --brightness "$b" > /dev/null 2>&1
     xrandr --output HDMI-1 --brightness "$b" > /dev/null 2>&1
