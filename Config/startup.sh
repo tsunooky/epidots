@@ -37,6 +37,7 @@ PACKAGES=(
     "nixpkgs.zsh"
     "nixpkgs.zsh-autosuggestions"
     "nixpkgs.zsh-syntax-highlighting"
+    "nixpkgs.pqiv"
 )
 
 echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
