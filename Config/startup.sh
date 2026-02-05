@@ -94,6 +94,8 @@ for f in ~/afs/.confs/config/scripts/startup_scripts/* ; do
     $f
 done
 
+~/afs/.confs/config/scripts/aklog.sh & disown
+
 kill emacs > /dev/null
 sleep 0.1
 kill -9 $PPID
