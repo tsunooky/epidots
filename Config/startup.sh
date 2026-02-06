@@ -94,7 +94,7 @@ for f in ~/afs/.confs/config/scripts/startup_scripts/* ; do
     $f
 done
 
-~/afs/.confs/config/scripts/aklog.sh > /dev/null 2>&1 & disown
+# ~/afs/.confs/config/scripts/aklog.sh > /dev/null 2>&1 & disown
 
 kill emacs > /dev/null
 sleep 0.1
