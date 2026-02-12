@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 # Get the ID of the current focus window
 ID=$(xprop -root _NET_ACTIVE_WINDOW | awk '{print $5}')
 
