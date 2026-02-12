@@ -44,6 +44,7 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | Keybind | Action |
 | :--- | :--- |
 | `$mod` + `Enter` | Open Terminal |
+| `$mod` + `Shift` + `Enter` | Spawns a new terminal instance in current focused terminal directory |
 | `$mod` + `Shift` + `Q` | Kill focused window |
 | `$mod` + `D` | Open Application Launcher |
 | `$mod` + `F` | Toggle Fullscreen |
