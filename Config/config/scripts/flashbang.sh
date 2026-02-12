@@ -8,9 +8,7 @@ touch "/tmp/flashbang.lock"
 
 pw-play --volume 0.6 ~/afs/.confs/config/scripts/fb1.mp3 &
 pqiv "$HOME/afs/.confs/config/scripts/fb.gif" --transparent-background=true --window-title="fbgif" --scale-images-up -i &
-sleep 0.1
-xprop -name "fbgif" -f _NET_WM_WINDOW_TYPE 32a -set _NET_WM_WINDOW_TYPE _NET_WM_WINDOW_TYPE_DOCK
-sleep 3.5
+sleep 3.6
 pkill pqiv
 
 pw-play --volume 0.6 ~/afs/.confs/config/scripts/fb2.mp3 &
