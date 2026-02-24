@@ -1,7 +1,7 @@
 # 💠 Epidots
 
-⚠️ If you have a problem at anytime, first type `update-conf`, `reboot`, and look if the problem is still here.
-> To removes Epidots and restores the default EPITA configuration : `reset-conf`.
+⚠️ If you have a problem, first type `update-conf`, `reboot`, and look if the problem is still here.
+> To restore the default EPITA configuration : `reset-conf`.
 
 A clean, automated, and aesthetic NixOS configuration designed for **EPITA** school computers.
 
@@ -9,7 +9,7 @@ This setup enhances the default environment with terminal autocompletion, a mode
 
 Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for the vimrc.
 
-[**Join the Discord Server**](https://discord.gg/G7MNkdDFD9)
+[**Join the Discord Server**](https://discord.gg/G7MNkdDFD9) (important in case of problems!)
 
 ## 📦 Installation
 
