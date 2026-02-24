@@ -1,5 +1,8 @@
 # 💠 Epidots
 
+⚠️ If you have a problem at anytime, first type `update-conf`, `reboot`, and look if the problem is still here.
+> To removes Epidots and restores the default EPITA configuration : `reset-conf`.
+
 A clean, automated, and aesthetic NixOS configuration designed for **EPITA** school computers.
 
 This setup enhances the default environment with terminal autocompletion, a modern status bar, custom Vim bindings, and dynamic color theming using **Matugen**.
