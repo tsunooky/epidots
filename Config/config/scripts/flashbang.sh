@@ -6,12 +6,12 @@ fi
 
 touch "/tmp/flashbang.lock"
 
-pw-play --volume 0.0 ~/afs/.confs/config/scripts/fb1.mp3 &
+#pw-play --volume 0.0 ~/afs/.confs/config/scripts/fb1.mp3 &
 pqiv "$HOME/afs/.confs/config/scripts/fb.gif" --transparent-background=true --window-title="fbgif" --scale-images-up -i &
 sleep 3.6
 pkill pqiv
 
-pw-play --volume 0.0 ~/afs/.confs/config/scripts/fb2.mp3 &
+#pw-play --volume 0.0 ~/afs/.confs/config/scripts/fb2.mp3 &
 
 xrandr --output DP-1 --brightness 40 > /dev/null 2>&1
 xrandr --output HDMI-1 --brightness 40 > /dev/null 2>&1
