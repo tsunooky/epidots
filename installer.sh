@@ -7,7 +7,7 @@ NC='\033[0m'
 REPO_URL="https://github.com/tsunooky/epidots.git"
 TARGET_DIR=~/epidots
 
-echo -e "${BLUE}=== EPIDOTS BOOTSTRAP ===${NC}"
+echo -e "${BLUE}=== EPIDOTS SETUP ===${NC}"
 
 printf "${BLUE}::${NC} Cloning repository...             "
 if git clone "$REPO_URL" "$TARGET_DIR" > /dev/null 2>&1; then
