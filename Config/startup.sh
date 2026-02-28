@@ -14,35 +14,29 @@ NC='\033[0m'
 
 echo -e "${BLUE}=== Epidots Startup ===${NC}"
 
-printf "${BLUE}::${NC} Updating Nix channels... "
-{
-    nix-channel --add https://nixos.org/channels/nixpkgs-unstable
-    nix-channel --update
-} > /dev/null 2>&1 && echo -e "${GREEN}[DONE]${NC}" || echo -e "\033[0;31m[FAIL]${NC}"
-
 PACKAGES=(
-    "nixpkgs.lsd"
-    "nixpkgs.starship"
-    "nixpkgs.nerd-fonts.jetbrains-mono"
-    "nixpkgs.rofi"
-    "nixpkgs.pywal"
-    "nixpkgs.pywalfox-native"
-    "nixpkgs.picom"
-    "nixpkgs.polybar"
-    "nixpkgs.autotiling"
-    "nixpkgs.papirus-icon-theme"
-    "nixpkgs.bat"
-    "nixpkgs.matugen"
-    "nixpkgs.adw-gtk3"
-    "nixpkgs.zsh"
-    "nixpkgs.zsh-autosuggestions"
-    "nixpkgs.zsh-syntax-highlighting"
-    "nixpkgs.pqiv"
+    "nixpkgs#lsd"
+    "nixpkgs#starship"
+    "nixpkgs#nerd-fonts.jetbrains-mono"
+    "nixpkgs#rofi"
+    "nixpkgs#pywal"
+    "nixpkgs#pywalfox-native"
+    "nixpkgs#picom"
+    "nixpkgs#polybar"
+    "nixpkgs#autotiling"
+    "nixpkgs#papirus-icon-theme"
+    "nixpkgs#bat"
+    "nixpkgs#matugen"
+    "nixpkgs#adw-gtk3"
+    "nixpkgs#zsh"
+    "nixpkgs#zsh-autosuggestions"
+    "nixpkgs#zsh-syntax-highlighting"
+    "nixpkgs#pqiv"
 )
 
 echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
 
-nix-env -iA "${PACKAGES[@]}" > /tmp/epidots_install.log 2>&1 &
+nix profile install "${PACKAGES[@]}" --impure > /tmp/epidots_install.log 2>&1 &
 PID=$!
 
 sp="/-\|"
