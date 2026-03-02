@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("BufNewFile", {
-    pattern = { "*.h", "*.hh" },
+    pattern = { "*.h" },
     callback = function()
         local name = vim.fn.expand("%:t:r"):upper() .. "_H_"
         vim.api.nvim_buf_set_lines(0, 0, -1, false, {
@@ -11,6 +11,17 @@ vim.api.nvim_create_autocmd("BufNewFile", {
             "#endif /* !" .. name .. " */"
         })
         vim.api.nvim_win_set_cursor(0, {4, 0})
+    end
+})
+
+vim.api.nvim_create_autocmd("BufNewFile", {
+    pattern = { "*.hh"},
+    callback = function()
+        vim.api.nvim_buf_set_lines(0, 0, -1, false, {
+            "#pragma once",
+            "",
+        })
+        vim.api.nvim_win_set_cursor(0, {2, 0})
     end
 })
 

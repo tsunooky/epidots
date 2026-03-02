@@ -1,19 +1,27 @@
 return {
-    "nvim-treesitter/nvim-treesitter",
-    build = ":TSUpdate",
-    event = { "BufReadPost", "BufNewFile" },
-    config = function()
-        local ok, configs = pcall(require, "nvim-treesitter.configs")
-        if not ok then return end
-
-        configs.setup({
-            ensure_installed = { "c", "cpp", "java", "lua", "vim", "vimdoc", "query" },
-            sync_install = false,
-            auto_install = true,
-            highlight = {
-                enable = true,
-                additional_vim_regex_highlighting = false,
-            },
-        })
-    end
+  "nvim-neo-tree/neo-tree.nvim",
+  branch = "v3.x",
+  dependencies = {
+    "nvim-lua/plenary.nvim",
+    "nvim-tree/nvim-web-devicons",
+    "MunifTanjim/nui.nvim",
+  },
+  config = function()
+    require("neo-tree").setup({
+      filesystem = {
+        filtered_items = {
+          visible = true,
+          hide_dotfiles = false,
+          hide_gitignored = false,
+          hide_by_name = {
+            -- ".DS_Store",
+            -- "thumbs.db"
+          },
+        },
+        follow_current_file = { enabled = true },
+      },
+    })
+    
+    vim.keymap.set('n', '<C-t>', ':Neotree toggle<CR>', { silent = true })
+  end
 }
