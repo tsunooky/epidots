@@ -1,16 +1,6 @@
-#!/bin/sh
+#!/bin/bash
 
-# Fix Epita emacs config
-for F in ~/afs/.confs/emacs ~/.emacs; do
-    [ -f "$F" ] && sed -i 's/(global-linum-mode)/(global-display-line-numbers-mode)/g' "$F"
-done
-
-~/afs/.confs/config/scripts/rand_game.sh
-
-GREEN='\033[0;32m'
-BLUE='\033[0;34m'
-GRAY='\033[0;90m'
-NC='\033[0m'
+source "$HOME/afs/.confs/epidots/globals.sh"
 
 echo -e "${BLUE}=== Epidots Startup ===${NC}"
 
@@ -52,7 +42,7 @@ EXIT_CODE=$?
 if [ $EXIT_CODE -eq 0 ]; then
     echo -e "\b${GREEN}[DONE]${NC}"
 else
-    echo -e "\b\033[0;31m[FAIL]${NC}"
+    echo -e "\b${RED}[FAIL]${NC}"
     echo -e "${GRAY}An error occurred. Check /tmp/epidots_install.log for details.${NC}"
 fi
 
@@ -62,17 +52,16 @@ pywalfox install > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SK
 printf "${BLUE}::${NC} Restarting i3...                        "
 i3-msg restart > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SKIP]"
 
-BG_FILE=~/afs/.confs/.bg
-WALL_DIR=~/afs/.confs/wallpapers
-SCRIPT_BG=~/afs/.confs/config/scripts/change_wallpaper.sh
+# Utilisation de la variable $SCRIPTS de globals.sh
+SCRIPT_BG="$SCRIPTS/change_wallpaper.sh"
 
-if [ -f "$BG_FILE" ]; then
-    IMG_NAME=$(cat "$BG_FILE")
-    FULL_PATH="$WALL_DIR/$IMG_NAME"
-    if [ -f "$FULL_PATH" ] && [ -f "$SCRIPT_BG" ]; then
+if [ -f "$DOTBG" ]; then
+    IMG_NAME=$(cat "$DOTBG")
+    FULL_PATH="$WALLPAPERS/$IMG_NAME"
+    if [ -f "$FULL_PATH" ] &&[ -f "$SCRIPT_BG" ]; then
         printf "${BLUE}::${NC} Re-applying wallpaper theme...          "
         chmod +x "$SCRIPT_BG"
-        "$SCRIPT_BG" "$FULL_PATH" > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "\033[0;31m[FAIL]${NC}"
+        "$SCRIPT_BG" "$FULL_PATH" > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "${RED}[FAIL]${NC}"
     fi
 fi
 
@@ -82,14 +71,19 @@ nohup firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
 nohup alacritty > /dev/null 2>&1 & disown
 
 echo -e "${GRAY}Closing installer...${NC}"
-for f in ~/afs/.confs/config/scripts/startup_scripts/* ; do
-    chmod +x "$f"
-    echo "Executed script: $f"
-    $f
+
+# Lancement des scripts de démarrage perso
+for f in "$SCRIPTS/startup_scripts/"* ; do
+    if [ -f "$f" ]; then
+        chmod +x "$f"
+        echo "Executed script: $f"
+        "$f"
+    fi
 done
 
-# ~/afs/.confs/config/scripts/aklog.sh > /dev/null 2>&1 & disown
+# "$SCRIPTS/aklog.sh" > /dev/null 2>&1 & disown
 
-kill emacs > /dev/null
+killall emacs > /dev/null 2>&1
 sleep 0.1
 kill -9 $PPID
+

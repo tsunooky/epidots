@@ -155,25 +155,6 @@ alias makec="make && make check && make clean"
 alias gcw="gcc -std=c99 -pedantic -Werror -Wall -Wextra -Wvla"
 alias cf="clang-format -i"
 
-# SQL shortcuts
-alias sqlsetup='chmod +x ~/afs/.confs/config/scripts/setup_sql.sh && ~/afs/.confs/config/scripts/setup_sql.sh'
-alias sqlserv='postgres -k "$PGHOST"'
-alias sqlfix='sqlfluff fix'
-sqlrun()
-{
-    if [ $# -ne 1 ]; then
-        echo 'usage: sqlrun <file>.sql'
-    elif [ ! -f $1 ]; then
-        echo "error : $1: file not found" 
-    else
-        OUTPUT_FILE=/tmp/sqloutput.csv
-        echo "(empty)" > $OUTPUT_FILE
-        psql roger_roger -f $@ > $OUTPUT_FILE
-        bat -p $OUTPUT_FILE
-        rm $OUTPUT_FILE
-    fi
-}
-
 # Apply clang-format to the current repository
 cfe() {
     local here=$(pwd)
