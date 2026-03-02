@@ -98,14 +98,6 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `makec` | runs `make && make check && make clean` (The holy trinity) |
 | `gcw` | `gcc` with all required EPITA flags (`-Werror -Wall -Wextra -Wvla`...) |
 
-### SQL Utilities
-| Command | Description |
-| :--- | :--- |
-| `sqlsetup` | Initialize the database (same location as `roger_roger.dump`) |
-| `sqlserv` | Start the SQL server |
-| `sqlrun <request>` | Execute a SQL request and show colored output |
-| `sqlfix <request>` | Format your SQL request using `sqlfluff` |
-
 ### Git Shortcuts
 | Alias | Command |
 | :--- | :--- |
