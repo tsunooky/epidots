@@ -1,7 +1,6 @@
 [[ $- != *i* ]] && return
 
 # --- Run zsh ---
-
 if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
     if [[ $- == *i* ]]; then
         export SHELL="$HOME/.nix-profile/bin/zsh"
@@ -12,7 +11,6 @@ else
 fi
 
 # --- Default Epita configuration ---
-
 export PGDATA="$HOME/postgres_data"
 export PGHOST="/tmp"
 
@@ -32,7 +30,6 @@ alias grep='grep --color -n'
 PS1='[\u@\h \W]\$ '
 
 # --- CONFIG ---
-
 update-conf() {
     setopt local_options no_monitor
     echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
