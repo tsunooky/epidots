@@ -1,13 +1,17 @@
 #!/bin/sh
 
-if [ -f "/tmp/flashbang.lock" ]; then
+source "$HOME/afs/.confs/scripts/globals.sh"
+
+LOCK_FILE="/tmp/flashbang.lock"
+
+if [ -f "$LOCK_FILE" ]; then
     exit 0
 fi
 
-touch "/tmp/flashbang.lock"
+touch "$LOCK_FILE"
 
 #pw-play --volume 0.0 ~/afs/.confs/config/scripts/fb1.mp3 &
-pqiv "$HOME/afs/.confs/config/scripts/fb.gif" --transparent-background=true --window-title="fbgif" --scale-images-up -i &
+pqiv "$SCRIPTS/flashbang/fb.gif" --transparent-background=true --window-title="fbgif" --scale-images-up -i &
 sleep 3.6
 pkill pqiv
 
@@ -26,5 +30,5 @@ done
 xrandr --output DP-1 --brightness 1 > /dev/null 2>&1
 xrandr --output HDMI-1 --brightness 1 > /dev/null 2>&1
 
-rm "/tmp/flashbang.lock"
+rm "$LOCK_FILE"
 

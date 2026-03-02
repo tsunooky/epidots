@@ -23,6 +23,7 @@ NC="\033[0m"
 # CONFIG DIRECTORIES
 AFS="$HOME/afs"
 CONFS="$AFS/.confs"
+CONFIG="$CONFS/config"
 SCRIPTS="$CONFS/scripts"
 WALLPAPERS="$CONFS/wallpapers"
 

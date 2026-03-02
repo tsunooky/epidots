@@ -1,7 +1,9 @@
 #!/bin/sh
 
+source "$HOME/afs/.confs/scripts/globals.sh"
+
 # Current Theme
-theme="$HOME/.config/rofi/powermenu.rasi"
+theme="$CONFIG/rofi/powermenu.rasi"
 
 # CMDs
 uptime="$(uptime -p | sed -e 's/up //g')"
