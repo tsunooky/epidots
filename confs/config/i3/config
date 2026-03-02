@@ -1,6 +1,15 @@
 # Set mod key : Mod4 = WIN | Mod1 = ALT
 set $mod Mod4
 
+# ---------- Global variables ----------
+
+# Global variables
+set $afs ~/afs
+set $confs $afs/.confs
+set $config $confs/config
+set $scripts $confs/scripts
+set $wallpapers $confs/wallpapers
+
 # Import matugen generated colors
 include ~/.config/i3/colors.conf
 
@@ -13,7 +22,7 @@ no_focus [title="fbgif"]
 # ---------- Launch programs at startup ----------
 
 # Launch startup script
-exec --no-startup-id "alacritty --config-file ~/afs/.confs/config/alacritty/startup_conf.toml -e sh -c '~/afs/.confs/startup.sh; exec bash'"
+exec --no-startup-id "alacritty --config-file $config/alacritty/startup_conf.toml -e sh -c '$scripts/startup_scripts/startup.sh; exec bash'"
 
 # Set Epita keyboard layout
 exec "setxkbmap __START_KB__"
@@ -21,6 +30,10 @@ exec "setxkbmap -option caps:__CAPS_TO__"
 
 # Start XDG autostart .desktop files using dex. (Epita)
 exec --no-startup-id dex --autostart --environment i3
+
+# Run i3lock screen after 5 minutes of inactivity
+exec --no-startup-id xset s 300 300
+exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Launch autotiling to have a better automatic window tiling
 exec_always --no-startup-id autotiling
@@ -35,7 +48,7 @@ exec_always --no-startup-id "killall -q polybar; polybar main"
 exec --no-startup-id nm-applet
 
 # Set background to last used background
-exec --no-startup-id ~/afs/.confs/.fehbg
+exec --no-startup-id $confs/.fehbg
 
 # Locks the screen with i3lock after a certain time
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
@@ -55,20 +68,23 @@ floating_modifier $mod
 tiling_drag modifier titlebar
 
 # Changes the wallpaper to a random one inside the wallpaper directory
-bindsym $mod+Shift+b exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
+bindsym $mod+Shift+b exec --no-startup-id $scripts/wallpaper_scripts/random_wallpaper.sh
 
 # Opens rofi wallpaper chooser
-bindsym $mod+Shift+w exec --no-startup-id \tree ~/afs/.confs/wallpapers > /dev/null 2>&1 && ~/afs/.confs/config/scripts/bg_chooser.sh
+bindsym $mod+Shift+w exec --no-startup-id tree $wallpapers > /dev/null 2>&1 && $scripts/menus/wallpaper_menu.sh
 
 # i3lock
 bindsym $mod+i exec --no-startup-id i3lock
 bindsym $mod+l exec --no-startup-id i3lock
 
+# Start a terminal in afs
+bindsym $mod+Return exec --no-startup-id alacritty --working-directory ~/afs
+
 # Start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Ctrl+Return exec --no-startup-id alacritty
 
 # Start a terminal in the Working directory of the previous one
-bindsym $mod+Shift+Return exec --no-startup-id ~/afs/.confs/config/scripts/double.sh
+bindsym $mod+Shift+Return exec --no-startup-id $scripts/system/double.sh
 
 # Kill focused window
 bindsym $mod+Shift+q kill
@@ -77,7 +93,7 @@ bindsym $mod+Shift+q kill
 bindsym $mod+d exec --no-startup-id rofi -show drun -dpi 1
 
 # Open power menu
-bindsym $mod+Shift+e exec ~/.config/scripts/powermenu.sh
+bindsym $mod+Shift+e exec --no-startup-id $scripts/menus/power_menu.sh
 
 # Change focus
 bindsym $mod+Left focus left
@@ -107,9 +123,8 @@ bindsym $mod+Shift+space floating toggle
 # Change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 
-# notebook
-
-bindsym $mod + n exec --no-startup-id alacritty --class "float_window" -e ~/afs/.confs/config/scripts/note.sh
+# Note
+bindsym $mod+n exec --no-startup-id alacritty --class "float_window" -e $scripts/system/note.sh
 for_window [class="float_window"] floating enable, rezise set 800 600, move position center
 
 # Switch to workspace
@@ -161,10 +176,10 @@ bindsym XF86HomePage exec --no-startup-id firefox https://github.com/tsunooky/ep
 bindsym XF86WWW exec --no-startup-id firefox https://github.com/tsunooky/epidots
 
 # Random wallpaper
-bindsym XF86Mail exec --no-startup-id ~/afs/.confs/config/scripts/random_wallpaper.sh
+bindsym XF86Mail exec --no-startup-id $scripts/wallpaper_scripts/random_wallpaper.sh
 
 # Flashbang
-bindsym XF86Calculator exec --no-startup-id "~/afs/.confs/config/scripts/flashbang.sh"
+bindsym XF86Calculator exec --no-startup-id $scripts/flashbang/flashbang.sh
 
 # Pulse Audio controls
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
