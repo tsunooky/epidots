@@ -2,10 +2,12 @@
 
 set -e
 
-AFS_DIR=~/afs/.confs
-CONFIG_SRC="Config"
-REPO_DIR=~/epidots
-WALLPAPER_REPO="https://github.com/tsunooky/epidots-wallpapers.git"
+AFS="$HOME/afs"
+CONFS="$AFS/.confs"
+WALLPAPERS="$CONFS/wallpapers"
+CONFIG_SRC="confs"
+REPO_DIR="$HOME/epidots"
+REPO_WALLPAPER="https://github.com/tsunooky/epidots-wallpapers.git"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
@@ -34,12 +36,12 @@ run_step() {
 echo -e "${BLUE}=== EPIDOTS SETUP ===${NC}"
 
 run_step "Deploying config to AFS" \
-    "mkdir -p \"$AFS_DIR\" && cp -r \"$CONFIG_SRC/\"* \"$AFS_DIR/\""
+    "mkdir -p \"$CONFS\" && cp -r \"$CONFIG_SRC/\"* \"$CONFS/\""
 
 run_step "Downloading Default Wallpapers" \
-    "if [ ! -d \"$AFS_DIR/wallpapers\" ]; then \
-        git clone \"$WALLPAPER_REPO\" \"$AFS_DIR/wallpapers\" && \
-        rm -rf \"$AFS_DIR/wallpapers/.git\"; \
+    "if [ ! -d \"$WALLPAPERS\" ]; then \
+        git clone \"$REPO_WALLPAPER\" \"$WALLPAPERS\" && \
+        rm -rf \"$WALLPAPERS/.git\"; \
     else \
         echo \"[SKIP] Folder already exists\"; \
     fi"
@@ -47,9 +49,9 @@ run_step "Downloading Default Wallpapers" \
 run_step "Installing Vim plugins" \
     "vim +PluginInstall +qall"
 
-DEFAULT_WALL="$AFS_DIR/wallpapers/default.jpg"
+DEFAULT_WALL="$WALLPAPERS/default.jpg"
 run_step "Setting default wallpaper" \
-    "feh --bg-fill \"$DEFAULT_WALL\" && cp ~/.fehbg \"$AFS_DIR/\""
+    "feh --bg-fill \"$DEFAULT_WALL\" && cp ~/.fehbg \"$CONFS/\""
 
 run_step "Reloading i3 window manager" \
     "i3-msg restart"
@@ -58,7 +60,7 @@ run_step "! Check pywalfox extension for firefox color theming !" \
     "firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/"
 
 run_step "Cleaning up installation files" \
-    "cd ~ && rm -rf \"$REPO_DIR\""
+    "cd \"$HOME\" && rm -rf \"$REPO_DIR\""
 
 echo ""
 echo -e "${GREEN}=======================================${NC}"
