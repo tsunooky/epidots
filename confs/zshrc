@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
+source "$HOME/afs/.confs/scripts/globals.sh"
+
 # ----------------------
 # ZSH CORE CONFIGURATION
 # ----------------------
@@ -50,7 +52,7 @@ export MANPAGER="sh -c 'awk '\''{ gsub(/\x1B\[[0-9;]*m/, \"\", \$0); gsub(/.\x08
 # HISTORY & SHELL OPTIONS
 # -----------------------
 
-HISTFILE=~/afs/.confs/.zsh_history
+HISTFILE=$CONFS/.zsh_history
 HISTSIZE=10000
 SAVEHIST=20000
 
@@ -146,9 +148,6 @@ alias double='alacritty --working-directory "$PWD" > /dev/null 2>&1 & disown'
 
 # School shortcuts
 alias afs='cd ~/afs/'
-alias intra="firefox https://intra.forge.epita.fr/"
-alias moodle="firefox https://moodle.epita.fr/my/"
-alias forge="firefox https://cri.epita.fr/"
 
 # C Dev shortcuts
 alias makec="make && make check && make clean"
@@ -168,11 +167,6 @@ cfe() {
 # -----------------
 # UTILITY FUNCTIONS
 # -----------------
-
-# Create a directory and enter it
-mkcd() {
-    mkdir -p "$1" && cd "$1"
-}
 
 # Smart archive extractor
 extract() {
@@ -301,29 +295,31 @@ alias clean-afs='~/afs/.confs/config/scripts/afs_cleaner.sh'
 alias flash='~/afs/.confs/config/scripts/flashbang.sh & disown'
 
 # Switch between WIN and ALT mod key
-alias winpls="rm -f ~/afs/.confs/.alt && sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/afs/.confs/config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to WIN'"
-alias altpls="touch ~/afs/.confs/.alt && sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/afs/.confs/config/i3/config && i3-msg restart > /dev/null && echo 'Mod changed to ALT'"
+alias winpls="rm -f ~/afs/.confs/.alt 
+    && sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/afs/.confs/config/i3/config 
+    && i3-msg restart > /dev/null 
+    && echo 'Mod changed to WIN'"
+alias altpls="touch ~/afs/.confs/.alt 
+    && sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/afs/.confs/config/i3/config 
+    && i3-msg restart > /dev/null 
+    && echo 'Mod changed to ALT'"
 
 
 # Wallpaper & Matugen scripts
-alias bg='~/afs/.confs/config/scripts/change_wallpaper.sh'
-alias rbg='(~/afs/.confs/config/scripts/random_wallpaper.sh &)'
-alias bgdir='cd ~/afs/.confs/wallpapers'
+alias bg="$SCRIPTS/wallpaper_scripts/change_wallpaper.sh"
+alias rbg='($SCRIPTS/wallpaper_scripts/random_wallpaper.sh &)'
+alias bgdir='cd $WALLPAPERS'
 bgadd() {
-    cp "$1" ~/afs/.confs/wallpapers
+    cp "$1" "$WALLPAPERS"
 }
 scriptadd() {
-    cp "$1" ~/afs/.confs/config/scripts/startup_scripts
+    cp "$1" "$SCRIPTS/startup_scripts/"
 }
 
 # --- Custom aliases ---
 alias tarpls='extpls'
 alias clip='copy'
 alias repo='cdg'
-alias doom='wget "http://doomfactory.free.fr/NoHotLink/Doom.rar" -O ~/.doom.rar && nix-shell -p unrar --command "unrar x ~/.doom.rar <<< Y" && mv ~/Doom.wad ~/.doom.wad && nix-shell -p doomretro --command "doomretro -iwad ~/.doom.wad"'
-alias err='echo $?'
-alias todo="~/afs/.confs/config/scripts/todo"
-
 
 # ----- Prompt init with starship -----
 eval "$(starship init zsh)"
