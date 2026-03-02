@@ -1,3 +1,6 @@
+# BRANCH
+BRANCH="dev"
+
 # COLORS
 BLACK="\033[30m"
 WHITE="\033[97m"
@@ -20,16 +23,10 @@ NC="\033[0m"
 # CONFIG DIRECTORIES
 AFS="$HOME/afs"
 CONFS="$AFS/.confs"
-EPIDOTS="$CONFS/epidots"
-SCRIPTS="$EPIDOTS/scripts"
+SCRIPTS="$CONFS/scripts"
 WALLPAPERS="$CONFS/wallpapers"
-
-# KEY FILES
-DOTBG="$CONFS/.bg"
-NOTELOCK="/tmp/note.lock"
-FLASHLOCK="/tmp/flash.lock"
 
 # URLS
 REPO_EPIDOTS="https://github.com/tsunooky/epidots.git"
 REPO_WALLPAPER="https://github.com/tsunooky/epidots-wallpapers.git"
-
+RAW_REPO_EPIDOTS="https://raw.githubusercontent.com/tsunooky/epidots/refs/heads/$BRANCH/"
