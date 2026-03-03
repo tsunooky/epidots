@@ -83,6 +83,9 @@
         mv "$HOME/config.temp" "$i3c"
     fi
 
+    rm -f "$CONFIG/i3/config"
+    i3-config-wizard >/dev/null 2>&1
+
     printf "${GREEN}[OK]${NC}\n"
 
     pkill polybar >/dev/null 2>&1

@@ -20,6 +20,8 @@
             sed -i 's/set $mod Mod4/set $mod Mod1/' "$CONFS/config/i3/config"
         fi
         
+        sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh"
+
         chmod +x "$CONFS/install.sh" > /dev/null 2>&1
         AFS_DIR="$AFS" "$CONFS/install.sh"
         
@@ -46,8 +48,6 @@
     if [ $EXIT_CODE -eq 0 ]; then
         rm -f "$err"
         printf "\b${GREEN}[OK]${NC}\n"
-
-        sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh"
 
         i3-msg restart >/dev/null 2>&1
     else
