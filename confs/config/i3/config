@@ -5,10 +5,10 @@ set $mod Mod4
 
 # Global variables
 set $afs ~/afs
-set $confs $afs/.confs
-set $config $confs/config
-set $scripts $confs/scripts
-set $wallpapers $confs/wallpapers
+set $confs ~/afs/.confs
+set $config ~/afs/.confs/config
+set $scripts ~/afs/.confs/scripts
+set $wallpapers ~/afs/.confs/wallpapers
 
 # Import matugen generated colors
 include ~/.config/i3/colors.conf
