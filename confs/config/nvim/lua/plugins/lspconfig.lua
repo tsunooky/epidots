@@ -54,6 +54,7 @@ return {
                 "clangd",
                 "--background-index",
                 "--clang-tidy",
+                "--clang-tidy-checks=-modernize-use-auto",
                 "--header-insertion=iwyu",
                 "--completion-style=detailed",
                 "--function-arg-placeholders",
