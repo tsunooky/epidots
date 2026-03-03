@@ -46,6 +46,13 @@ run_step "Downloading Default Wallpapers" \
         echo \"[SKIP] Folder already exists\"; \
     fi"
 
+run_step "Downloading Vundle plugin manager" \
+    "if[ ! -d \"$CONFS/vim/bundle/Vundle.vim\" ]; then \
+        git clone https://github.com/VundleVim/Vundle.vim.git \"$CONFS/vim/bundle/Vundle.vim\"; \
+    else \
+        echo \"[SKIP] Vundle already installed\"; \
+    fi"
+
 run_step "Installing Vim plugins" \
     "vim +PluginInstall +qall"
 
