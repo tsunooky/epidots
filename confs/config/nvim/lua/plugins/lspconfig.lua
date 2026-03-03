@@ -2,55 +2,75 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = {
         "williamboman/mason-lspconfig.nvim",
-        "hrsh7th/cmp-nvim-lsp", -- Ensures we can link autocompletion capabilities
+        "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
-        -- Automatically install required LSPs
-        require("mason-lspconfig").setup({
-            ensure_installed = { "clangd", "bashls", "cmake" }
+        vim.diagnostic.config({
+            virtual_text = {
+                prefix = "●",
+                spacing = 4,
+            },
+            signs = true,
+            update_in_insert = false,
+            underline = true,
+            severity_sort = true,
+            float = {
+                border = "rounded",
+                source = "always",
+            },
         })
 
-        -- Modern Nvim 0.11 Keymaps (Triggered only when an LSP attaches to a buffer)
-        vim.api.nvim_create_autocmd("LspAttach", {
+        local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+        for type, icon in pairs(signs) do
+            local hl = "DiagnosticSign" .. type
+            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+        end
+        require("mason-lspconfig").setup({
+            ensure_installed = { "clangd", "bashls" }
+        })
+
+        require("mason-lspconfig").setup({
             group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
             callback = function(ev)
                 local opts = { buffer = ev.buf, silent = true }
                 
-                -- Definition / Code
+                if vim.lsp.inlay_hint then
+                    vim.lsp.inlay_hint.enable(true, { bufnr = ev.buf })
+                end
+                
                 vim.keymap.set("n", "gD", vim.lsp.buf.definition, opts)
-                
-                -- Declaration / Header
                 vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
-                
-                -- Documentation hover
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                
-                -- Rename variable everywhere
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
             end,
         })
 
-        -- Get completion capabilities from nvim-cmp
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        -- Setup C/C++ LSP using new Nvim 0.11 API (Merging with defaults)
         vim.lsp.config.clangd = vim.tbl_deep_extend("force", vim.lsp.config.clangd or {}, {
             capabilities = capabilities,
             filetypes = { "c", "cpp", "cc", "cxx", "objc", "objcpp", "cuda", "h", "hh", "hpp", "hxx" },
+            cmd = {
+                "clangd",
+                "--background-index",
+                "--clang-tidy",
+                "--header-insertion=iwyu",
+                "--completion-style=detailed",
+                "--function-arg-placeholders",
+                "--all-scopes-completion",
+            },
         })
         
-        -- Setup Bash LSP
         vim.lsp.config.bashls = vim.tbl_deep_extend("force", vim.lsp.config.bashls or {}, {
             capabilities = capabilities,
         })
         
-        -- Setup CMake LSP
         vim.lsp.config.cmake = vim.tbl_deep_extend("force", vim.lsp.config.cmake or {}, {
             capabilities = capabilities,
         })
 
-        -- Enable the LSPs natively
         vim.lsp.enable("clangd")
         vim.lsp.enable("bashls")
+        vim.lsp.enable("cmake")
     end,
 }

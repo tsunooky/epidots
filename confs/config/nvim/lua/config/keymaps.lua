@@ -18,3 +18,8 @@ vim.keymap.set("n", "<C-t>", "<cmd>Neotree toggle<CR>", { desc = "Toggle Explore
 
 -- Go back in jump list
 vim.keymap.set("n", "gb", "<C-o>", { desc = "Go back" })
+
+-- Diagnostics (Erreurs)
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show error details" })
+vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous error" })
+vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next error" })
