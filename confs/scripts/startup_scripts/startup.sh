@@ -2,11 +2,10 @@
 
 source "$HOME/afs/.confs/scripts/globals.sh"
 
-firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
-alacritty > /dev/null 2>&1 & disown
+nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
+nohup alacritty > /dev/null 2>&1 &
 
 printf "${BLUE}=== Epidots Startup ===${NC}\n"
-
 
 PACKAGES="
 nixpkgs#autotiling
@@ -25,6 +24,7 @@ nixpkgs#cmake-language-server
 nixpkgs#cmake-format
 nixpkgs#tree-sitter
 nixpkgs#ripgrep
+nixpkgs#flameshot
 "
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
