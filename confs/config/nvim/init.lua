@@ -1,4 +1,8 @@
+-- Load core options
 require("config.options")
+
+-- Load keymaps
 require("config.keymaps")
-require("config.autocmds")
+
+-- Bootstrap and load lazy.nvim
 require("config.lazy")

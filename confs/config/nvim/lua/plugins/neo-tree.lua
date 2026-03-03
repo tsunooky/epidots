@@ -7,11 +7,10 @@ return {
         "MunifTanjim/nui.nvim",
     },
     config = function()
-        vim.keymap.set("n", "<C-t>", "<Cmd>Neotree toggle<CR>")
+        -- Setup file explorer
         require("neo-tree").setup({
             close_if_last_window = true,
             enable_git_status = true,
-            enable_diagnostics = true,
         })
-    end
+    end,
 }
