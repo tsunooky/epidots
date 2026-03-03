@@ -31,10 +31,10 @@ PS1='[\u@\h \W]\$ '
 
 # --- CONFIG ---
 update-conf() {
-    sh "$HOME/afs/.confs/epidots/scripts/system/update_epidots.sh"
+    sh "$HOME/afs/.confs/scripts/system/update_epidots.sh"
     if [ $? -eq 0 ]; then
         source ~/.zshrc > /dev/null 2>&1
     fi
 }
 
-alias reset-conf="$HOME/afs/.confs/epidots/scripts/system/remove_epidots.sh"
+alias reset-conf="$HOME/afs/.confs/scripts/system/remove_epidots.sh"

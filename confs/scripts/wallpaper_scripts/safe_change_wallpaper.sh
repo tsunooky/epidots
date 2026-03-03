@@ -1,6 +1,6 @@
 #!/bin/sh
 
-source "$HOME/afs/.confs/epidots/globals.sh"
+source "$HOME/afs/.confs/scripts/globals.sh"
 
 DEFAULT_WALL="$WALLPAPERS/default.jpg"
 TARGET_WALL=""

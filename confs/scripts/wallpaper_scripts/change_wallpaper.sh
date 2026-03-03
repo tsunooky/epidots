@@ -1,6 +1,6 @@
 #!/bin/sh
 
-. "$HOME/afs/.confs/epidots/globals.sh"
+source "$HOME/afs/.confs/scripts/globals.sh"
 
 if [ -z "$1" ]; then
     exit 1
