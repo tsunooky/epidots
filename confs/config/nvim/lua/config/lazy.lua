@@ -1,4 +1,7 @@
+-- Define lazy.nvim installation path
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+
+-- Clone lazy.nvim if not installed
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
         "git",
@@ -9,6 +12,13 @@ if not vim.loop.fs_stat(lazypath) then
         lazypath,
     })
 end
+
+-- Add lazy.nvim to runtime path
 vim.opt.rtp:prepend(lazypath)
 
-require("lazy").setup("plugins")
+-- Setup lazy.nvim and load plugins
+require("lazy").setup({
+    spec = {
+        { import = "plugins" },
+    },
+})

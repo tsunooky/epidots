@@ -2,22 +2,12 @@ return {
     "danymat/neogen",
     dependencies = "nvim-treesitter/nvim-treesitter",
     config = function()
+        -- Setup Doxygen generator
         require("neogen").setup({
-            enabled = true,
-            languages = {
-                c = {
-                    template = {
-                        annotation_convention = "doxygen"
-                    }
-                },
-                cpp = {
-                    template = {
-                        annotation_convention = "doxygen"
-                    }
-                }
-            }
+            snippet_engine = "luasnip"
         })
-
-        vim.keymap.set("n", "<leader>df", ":lua require('neogen').generate()<CR>", { silent = true })
+        
+        -- Keymap for Doxygen generation
+        vim.keymap.set("n", "<leader>df", ":Neogen<CR>", { desc = "Generate Doxygen" })
     end,
 }

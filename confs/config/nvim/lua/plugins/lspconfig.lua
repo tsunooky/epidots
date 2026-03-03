@@ -1,67 +1,56 @@
 return {
     "neovim/nvim-lspconfig",
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    dependencies = {
+        "williamboman/mason-lspconfig.nvim",
+        "hrsh7th/cmp-nvim-lsp", -- Ensures we can link autocompletion capabilities
+    },
     config = function()
-        vim.filetype.add({
-            extension = {
-                hh = "cpp",
-                hxx = "cpp",
-                hpp = "cpp",
-                inc = "cpp",
-            },
+        -- Automatically install required LSPs
+        require("mason-lspconfig").setup({
+            ensure_installed = { "clangd", "bashls", "cmake" }
         })
 
-        vim.diagnostic.config({
-            virtual_text = true,
-            signs = true,
-            underline = true,
-            update_in_insert = false,
-        })
-
+        -- Modern Nvim 0.11 Keymaps (Triggered only when an LSP attaches to a buffer)
         vim.api.nvim_create_autocmd("LspAttach", {
-            callback = function(args)
-                local opts = { buffer = args.buf }
+            group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
+            callback = function(ev)
+                local opts = { buffer = ev.buf, silent = true }
                 
-                vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
+                -- Definition / Code
                 vim.keymap.set("n", "gD", vim.lsp.buf.definition, opts)
-                vim.keymap.set("n", "gb", "<C-o>", opts)
                 
+                -- Declaration / Header
+                vim.keymap.set("n", "gd", vim.lsp.buf.declaration, opts)
+                
+                -- Documentation hover
                 vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-                vim.keymap.set({"n", "i"}, "<A-Insert>", vim.lsp.buf.code_action, opts)
-                vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts)
+                
+                -- Rename variable everywhere
                 vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
             end,
         })
 
+        -- Get completion capabilities from nvim-cmp
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-        local root_files = { "Makefile", "configure.ac", ".git", "compile_flags.txt", "compile_commands.json" }
+        -- Setup C/C++ LSP using new Nvim 0.11 API (Merging with defaults)
+        vim.lsp.config.clangd = vim.tbl_deep_extend("force", vim.lsp.config.clangd or {}, {
+            capabilities = capabilities,
+            filetypes = { "c", "cpp", "cc", "cxx", "objc", "objcpp", "cuda", "h", "hh", "hpp", "hxx" },
+        })
+        
+        -- Setup Bash LSP
+        vim.lsp.config.bashls = vim.tbl_deep_extend("force", vim.lsp.config.bashls or {}, {
+            capabilities = capabilities,
+        })
+        
+        -- Setup CMake LSP
+        vim.lsp.config.cmake = vim.tbl_deep_extend("force", vim.lsp.config.cmake or {}, {
+            capabilities = capabilities,
+        })
 
-        if vim.fn.has("nvim-0.11") == 1 then
-            vim.lsp.config.clangd = {
-                cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
-                capabilities = capabilities,
-                filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-                root_markers = root_files,
-            }
-            vim.lsp.config.jdtls = { 
-                capabilities = capabilities,
-                root_markers = { "pom.xml", "gradle.build", ".git" },
-            }
-            vim.lsp.enable("clangd")
-            vim.lsp.enable("jdtls")
-        else
-            local lspconfig = require("lspconfig")
-            lspconfig.clangd.setup({
-                cmd = { "clangd", "--background-index", "--clang-tidy", "--header-insertion=iwyu" },
-                capabilities = capabilities,
-                filetypes = { "c", "cpp", "objc", "objcpp", "cuda", "proto" },
-                root_dir = lspconfig.util.root_pattern(unpack(root_files)),
-            })
-            lspconfig.jdtls.setup({ 
-                capabilities = capabilities,
-                root_dir = lspconfig.util.root_pattern("pom.xml", "gradle.build", ".git"),
-            })
-        end
-    end
+        -- Enable the LSPs natively
+        vim.lsp.enable("clangd")
+        vim.lsp.enable("bashls")
+    end,
 }
