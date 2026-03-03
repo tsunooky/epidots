@@ -1,89 +1,49 @@
-#!/bin/bash
+#!/bin/sh
 
 source "$HOME/afs/.confs/epidots/globals.sh"
 
-echo -e "${BLUE}=== Epidots Startup ===${NC}"
+printf "${BLUE}=== Epidots Startup ===${NC}\n"
 
-PACKAGES=(
-    "nixpkgs#lsd"
-    "nixpkgs#starship"
-    "nixpkgs#nerd-fonts.jetbrains-mono"
-    "nixpkgs#rofi"
-    "nixpkgs#pywal"
-    "nixpkgs#pywalfox-native"
-    "nixpkgs#picom"
-    "nixpkgs#polybar"
-    "nixpkgs#autotiling"
-    "nixpkgs#papirus-icon-theme"
-    "nixpkgs#bat"
-    "nixpkgs#matugen"
-    "nixpkgs#adw-gtk3"
-    "nixpkgs#zsh"
-    "nixpkgs#zsh-autosuggestions"
-    "nixpkgs#zsh-syntax-highlighting"
-    "nixpkgs#pqiv"
-)
-
-echo -ne "${BLUE}::${NC} Installing ${#PACKAGES[@]} packages...  "
-
-nix profile install "${PACKAGES[@]}" --impure > /tmp/epidots_install.log 2>&1 &
-PID=$!
-
-sp="/-\|"
-i=0
-while kill -0 $PID 2>/dev/null; do
-    printf "\b${sp:i++%${#sp}:1}"
-    sleep 0.1
-done
-
-wait $PID
-EXIT_CODE=$?
-
-if [ $EXIT_CODE -eq 0 ]; then
-    echo -e "\b${GREEN}[DONE]${NC}"
-else
-    echo -e "\b${RED}[FAIL]${NC}"
-    echo -e "${GRAY}An error occurred. Check /tmp/epidots_install.log for details.${NC}"
-fi
+nohup nvim --headless "+Lazy! sync" +qa > /dev/null 2>&1 &
 
 printf "${BLUE}::${NC} Configuring Pywalfox...                 "
-pywalfox install > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SKIP]"
-
-printf "${BLUE}::${NC} Restarting i3...                        "
-i3-msg restart > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "[SKIP]"
-
-# Utilisation de la variable $SCRIPTS de globals.sh
-SCRIPT_BG="$SCRIPTS/change_wallpaper.sh"
-
-if [ -f "$DOTBG" ]; then
-    IMG_NAME=$(cat "$DOTBG")
-    FULL_PATH="$WALLPAPERS/$IMG_NAME"
-    if [ -f "$FULL_PATH" ] &&[ -f "$SCRIPT_BG" ]; then
-        printf "${BLUE}::${NC} Re-applying wallpaper theme...          "
-        chmod +x "$SCRIPT_BG"
-        "$SCRIPT_BG" "$FULL_PATH" > /dev/null 2>&1 && echo -e "${GREEN}[OK]${NC}" || echo -e "${RED}[FAIL]${NC}"
-    fi
+if pywalfox install > /dev/null 2>&1; then
+    printf "${GREEN}[OK]${NC}\n"
+else
+    printf "[SKIP]\n"
 fi
 
-echo -e "${GREEN}All done!${NC}"
+printf "${BLUE}::${NC} Restarting i3...                        "
+if i3-msg restart > /dev/null 2>&1; then
+    printf "${GREEN}[OK]${NC}\n"
+else
+    printf "[SKIP]\n"
+fi
 
-nohup firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
-nohup alacritty > /dev/null 2>&1 & disown
+printf "${BLUE}::${NC} Re-applying wallpaper theme...          "
+if sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" > /dev/null 2>&1; then
+    printf "${GREEN}[OK]${NC}\n"
+else
+    printf "${RED}[FAIL]${NC}\n"
+fi
 
-echo -e "${GRAY}Closing installer...${NC}"
+printf "${GREEN}All done!${NC}\n"
 
-# Lancement des scripts de démarrage perso
-for f in "$SCRIPTS/startup_scripts/"* ; do
-    if [ -f "$f" ]; then
-        chmod +x "$f"
-        echo "Executed script: $f"
-        "$f"
-    fi
-done
+nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
+nohup alacritty > /dev/null 2>&1 &
 
-# "$SCRIPTS/aklog.sh" > /dev/null 2>&1 & disown
+printf "${GRAY}Closing installer...${NC}\n"
 
-killall emacs > /dev/null 2>&1
+if [ -d "$SCRIPTS/startup_scripts" ]; then
+    for f in "$SCRIPTS/startup_scripts"/*; do
+        [ -f "$f" ] || continue
+        fname="${f##*/}"
+        if [ "$fname" != "startup.sh" ]; then
+            chmod +x "$f"
+            "$f"
+        fi
+    done
+fi
+
 sleep 0.1
 kill -9 $PPID
-
