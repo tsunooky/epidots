@@ -2,9 +2,32 @@
 
 source "$HOME/afs/.confs/scripts/globals.sh"
 
+firefox intra.forge.epita.fr > /dev/null 2>&1 & disown
+alacritty > /dev/null 2>&1 & disown
+
 printf "${BLUE}=== Epidots Startup ===${NC}\n"
 
-nohup nvim --headless "+Lazy! sync" +qa > /dev/null 2>&1 &
+
+PACKAGES="
+nixpkgs#autotiling
+nixpkgs#picom
+nixpkgs#pywal
+nixpkgs#pywalfox-native
+nixpkgs#papirus-icon-theme
+nixpkgs#bat
+nixpkgs#adw-gtk3
+nixpkgs#pqiv
+nixpkgs#neovim
+nixpkgs#clang-tools
+nixpkgs#nodePackages.bash-language-server
+nixpkgs#shfmt
+nixpkgs#cmake-language-server
+nixpkgs#cmake-format
+nixpkgs#tree-sitter
+nixpkgs#ripgrep
+"
+
+nix profile install $PACKAGES --impure > /dev/null 2>&1
 
 printf "${BLUE}::${NC} Configuring Pywalfox...                 "
 if pywalfox install > /dev/null 2>&1; then
@@ -29,8 +52,6 @@ fi
 
 printf "${GREEN}All done!${NC}\n"
 
-nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
-nohup alacritty > /dev/null 2>&1 &
 
 printf "${GRAY}Closing installer...${NC}\n"
 

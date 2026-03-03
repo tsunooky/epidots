@@ -15,24 +15,8 @@ nixpkgs#lsd
 nixpkgs#starship
 nixpkgs#nerd-fonts.jetbrains-mono
 nixpkgs#rofi
-nixpkgs#pywal
-nixpkgs#pywalfox-native
-nixpkgs#picom
 nixpkgs#polybar
-nixpkgs#autotiling
-nixpkgs#papirus-icon-theme
-nixpkgs#bat
 nixpkgs#matugen
-nixpkgs#adw-gtk3
-nixpkgs#pqiv
-nixpkgs#neovim
-nixpkgs#clang-tools
-nixpkgs#nodePackages.bash-language-server
-nixpkgs#shfmt
-nixpkgs#cmake-language-server
-nixpkgs#cmake-format
-nixpkgs#tree-sitter
-nixpkgs#ripgrep
 "
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
