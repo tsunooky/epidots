@@ -1,7 +1,7 @@
 #!/bin/sh
 
 {
-    source "$HOME/afs/.confs/epidots/globals.sh"
+    source "$HOME/afs/.confs/scripts/globals.sh"
 
     printf "\n${RED}=== FACTORY RESET ===${NC}\n"
 

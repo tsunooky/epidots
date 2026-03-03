@@ -1,7 +1,7 @@
 #!/bin/sh
 
 {
-    source "$HOME/afs/.confs/epidots/globals.sh"
+    source "$HOME/afs/.confs/scripts/globals.sh"
 
     printf "=\b${RED}==== EPIDOTS UPDATE ====${NC}\n"
     printf "\b${RED}/!\\ Don't close this terminal during update${NC}\n"
