@@ -17,6 +17,7 @@ nixpkgs#nerd-fonts.jetbrains-mono
 nixpkgs#rofi
 nixpkgs#polybar
 nixpkgs#matugen
+nixpkgs#dunst
 "
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
