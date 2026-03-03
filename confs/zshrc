@@ -25,12 +25,12 @@ zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
 export PGDATA="$HOME/postgres_data"
 export PGHOST="/tmp"
 
-if [ -d ~/afs/bin ] ; then
-    export PATH=~/afs/bin:$PATH
+if [ -d $AFS/bin ] ; then
+    export PATH=$AFS/bin:$PATH
 fi
 
-if [ -d ~/.local/bin ] ; then
-    export PATH=~/.local/bin:$PATH
+if [ -d $HOME/.local/bin ] ; then
+    export PATH=$HOME/.local/bin:$PATH
 fi
 
 export LANG=en_US.utf8
@@ -57,11 +57,10 @@ HISTSIZE=10000
 SAVEHIST=20000
 
 # Share history and ignore duplicates
-# setopt SHARE_HISTORY
 setopt APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 setopt HIST_REDUCE_BLANKS
-HISTORY_IGNORE="(lsd|sl|ls|l|ll|la|cd|exit|clear|history|bg|fg)"
+HISTORY_IGNORE="(lsd|sl|ls|l|ll|la|cd|exit|clear|history|bg|fg|rbg)"
 
 # Navigation options
 setopt AUTO_CD
@@ -158,7 +157,7 @@ alias cf="clang-format -i"
 cfe() {
     local here=$(pwd)
     cd $(git rev-parse --show-toplevel)
-    cp ~/afs/.confs/clang-format ./.clang-format
+    cp $CONFS/clang-format ./.clang-format
     clang-format-epita
     rm .clang-format
     cd "$here"
@@ -195,7 +194,7 @@ extpls() {
         setopt local_options no_nomatch
     fi
 
-    mv ~/Downloads/*.{tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
+    mv "$HOME/Downloads/"*.{tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
 
     for ext in tar bz2 gz tbz2 zip Z rar 7z; do
         for file in *.$ext; do
@@ -229,88 +228,34 @@ copyname() {
 # ------
 
 update-conf() {
-    setopt local_options no_monitor
-    echo -e "=\b\033[0;31m==== EPIDOTS UPDATE ====\033[0m"
-    echo "\b\033[0;31m/!\ Don't close this terminal during update\033[0m"
-    echo -ne "\033[0;34m::\033[0m Updating Epidots...  "
-    local err=$(mktemp)
-    (
-        set -e
-        tmp=$(mktemp -d)
-        git clone --depth 1 https://github.com/tsunooky/epidots.git "$tmp"
-        cp -r "$tmp/Config/"* "$HOME/afs/.confs/"
-        if [ -f "$HOME/afs/.confs/.alt" ]; then
-            sed -i 's/set $mod Mod4/set $mod Mod1/' "$HOME/afs/.confs/config/i3/config"
-        fi
-        chmod +x "$HOME/afs/.confs/install.sh" > /dev/null 2>&1
-        AFS_DIR="$HOME/afs" "$HOME/afs/.confs/install.sh"
-        rm -rf "$tmp"
-    ) >"$err" 2>&1 &
-    local pid=$! sp='/-\|' i=0
-    while kill -0 $pid 2>/dev/null; do printf "\b${sp[(i++%4)+1]}"; sleep 0.1; done
-
-    BG_FILE=~/afs/.confs/.bg
-    WALL_DIR=~/afs/.confs/wallpapers
-    if [ -f "$BG_FILE" ]; then
-        IMG_NAME=$(cat "$BG_FILE")
-        FULL_PATH="$WALL_DIR/$IMG_NAME"
-        if [ -f "$FULL_PATH" ]; then
-            matugen image "$FULL_PATH" > /dev/null 2>&1
-            feh --bg-fill "$FULL_PATH"
-        fi
-    fi
-
-    wait $pid
+    sh "$SCRIPTS/system/update_epidots.sh"
     if [ $? -eq 0 ]; then
-        rm "$err"
-        echo -e "\b\033[0;32m[OK]\033[0m"
-        i3-msg restart >/dev/null 2>&1
         source ~/.zshrc > /dev/null 2>&1
-    else
-        echo -e "\b\033[0;31m[FAIL]\033[0m"; cat "$err"; rm "$err"
     fi
 }
 
-reset-conf() {
-    echo -e "\n\033[0;31m=== FACTORY RESET ===\033[0m"
-    echo -ne "\033[0;34m::\033[0m Restoring defaults...   "
-    if curl -L https://raw.githubusercontent.com/Darkrentin/default-nixos-config-epita/refs/heads/main/installer.sh 2>/dev/null | sh -s >/dev/null 2>&1; then
-        echo -e "\033[0;32m[OK]\033[0m"
-    else
-        echo -e "\033[0;31m[FAIL]\033[0m"; return 1
-    fi
-    echo -ne "\033[0;34m::\033[0m Cleaning files...       "
-    local i3c="$HOME/afs/.confs/config/i3/config"
-    [ -f "$i3c" ] && cp "$i3c" "$HOME/config.temp"
-    rm -rf "$HOME/afs/.confs/"{wallpapers,config/{alacritty,matugen,gtk-*,qt*ct,rofi,scripts,polybar,picom,starship.toml}}
-    [ -f "$HOME/config.temp" ] && mkdir -p "$(dirname "$i3c")" && mv "$HOME/config.temp" "$i3c"
-    echo -e "\033[0;32m[OK]\033[0m"
-    pkill polybar; pkill picom; i3-msg restart >/dev/null 2>&1
-    "$HOME/afs/.confs/install.sh" >/dev/null 2>&1
-    echo -e "\033[0;32mReset done.\033[0m Restart terminal."
-}
+alias reset-conf="sh \"$SCRIPTS/system/remove_epidots.sh\""
 
-alias clean-afs='~/afs/.confs/config/scripts/afs_cleaner.sh'
+alias clean-afs="sh \"$SCRIPTS/system/afs_cleaner.sh\""
 
-alias flash='~/afs/.confs/config/scripts/flashbang.sh & disown'
+alias flash="sh \"$SCRIPTS/flashbang/flashbang.sh\" & disown"
 
 # Switch between WIN and ALT mod key
-alias winpls="rm -f ~/afs/.confs/.alt 
-    && sed -i 's/set \$mod Mod1/set \$mod Mod4/' ~/afs/.confs/config/i3/config 
-    && i3-msg restart > /dev/null 
+alias winpls="rm -f \"$CONFS/.alt\" \
+    && sed -i 's/set \$mod Mod1/set \$mod Mod4/' \"$CONFS/config/i3/config\" \
+    && i3-msg restart > /dev/null \
     && echo 'Mod changed to WIN'"
-alias altpls="touch ~/afs/.confs/.alt 
-    && sed -i 's/set \$mod Mod4/set \$mod Mod1/' ~/afs/.confs/config/i3/config 
-    && i3-msg restart > /dev/null 
+alias altpls="touch \"$CONFS/.alt\" \
+    && sed -i 's/set \$mod Mod4/set \$mod Mod1/' \"$CONFS/config/i3/config\" \
+    && i3-msg restart > /dev/null \
     && echo 'Mod changed to ALT'"
 
-
 # Wallpaper & Matugen scripts
-alias bg="$SCRIPTS/wallpaper_scripts/change_wallpaper.sh"
-alias rbg='($SCRIPTS/wallpaper_scripts/random_wallpaper.sh &)'
-alias bgdir='cd $WALLPAPERS'
+alias bg="sh \"$SCRIPTS/wallpaper_scripts/change_wallpaper.sh\""
+alias rbg="(sh \"$SCRIPTS/wallpaper_scripts/random_wallpaper.sh\" &)"
+alias bgdir='cd "$WALLPAPERS"'
 bgadd() {
-    cp "$1" "$WALLPAPERS"
+    cp "$1" "$WALLPAPERS/"
 }
 scriptadd() {
     cp "$1" "$SCRIPTS/startup_scripts/"
@@ -333,7 +278,6 @@ if [ -f "$HOME/.nix-profile/share/zsh-autosuggestions/zsh-autosuggestions.zsh" ]
     ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=60'
 fi
 
-# Syntax highlighting (DOIT toujours être à la fin du fichier)
 if [ -f "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh" ]; then
     source "$HOME/.nix-profile/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh"
 fi

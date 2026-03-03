@@ -25,15 +25,15 @@ run_step() {
     printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "$description..."
 
     if eval "$command" > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
+        printf "${GREEN}[OK]${NC}\n"
     else
-        echo -e "${RED}[FAIL]${NC}"
+        printf "${RED}[FAIL]${NC}\n"
     fi
 
     STEP=$((STEP + 1))
 }
 
-echo -e "${BLUE}=== EPIDOTS SETUP ===${NC}"
+printf "${BLUE}=== EPIDOTS SETUP ===${NC}\n"
 
 run_step "Deploying config to AFS" \
     "mkdir -p \"$CONFS\" && cp -r \"$CONFIG_SRC/\"* \"$CONFS/\""
@@ -43,14 +43,15 @@ run_step "Downloading Default Wallpapers" \
         git clone \"$REPO_WALLPAPER\" \"$WALLPAPERS\" && \
         rm -rf \"$WALLPAPERS/.git\"; \
     else \
-        echo \"[SKIP] Folder already exists\"; \
+        echo \"[SKIP]\"; \
     fi"
 
 run_step "Downloading Vundle plugin manager" \
-    "if[ ! -d \"$CONFS/vim/bundle/Vundle.vim\" ]; then \
+    "if [ ! -d \"$CONFS/vim/bundle/Vundle.vim\" ]; then \
+        mkdir -p \"$CONFS/vim/bundle\" && \
         git clone https://github.com/VundleVim/Vundle.vim.git \"$CONFS/vim/bundle/Vundle.vim\"; \
     else \
-        echo \"[SKIP] Vundle already installed\"; \
+        echo \"[SKIP]\"; \
     fi"
 
 run_step "Installing Vim plugins" \
@@ -58,7 +59,7 @@ run_step "Installing Vim plugins" \
 
 DEFAULT_WALL="$WALLPAPERS/default.jpg"
 run_step "Setting default wallpaper" \
-    "feh --bg-fill \"$DEFAULT_WALL\" && cp ~/.fehbg \"$CONFS/\""
+    "feh --bg-fill \"$DEFAULT_WALL\" && cp \"$HOME/.fehbg\" \"$CONFS/\""
 
 run_step "Reloading i3 window manager" \
     "i3-msg restart"
@@ -69,11 +70,9 @@ run_step "! Check pywalfox extension for firefox color theming !" \
 run_step "Cleaning up installation files" \
     "cd \"$HOME\" && rm -rf \"$REPO_DIR\""
 
-echo ""
-echo -e "${GREEN}=======================================${NC}"
-echo -e "${GREEN}        Installation Complete!         ${NC}"
-echo -e "${GREEN}     Please logout and reconnect...    ${NC}"
-echo -e "${GREEN}=======================================${NC}"
-echo ""
+printf "\n${GREEN}=======================================${NC}\n"
+printf "${GREEN}        Installation Complete!         ${NC}\n"
+printf "${GREEN}     Please logout and reconnect...    ${NC}\n"
+printf "${GREEN}=======================================${NC}\n\n"
 
 i3-nagbar -t warning -m 'Epidots installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &
