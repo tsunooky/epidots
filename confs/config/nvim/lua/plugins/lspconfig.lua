@@ -25,9 +25,6 @@ return {
             local hl = "DiagnosticSign" .. type
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
         end
-        require("mason-lspconfig").setup({
-            ensure_installed = {}
-        })
 
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
@@ -54,12 +51,20 @@ return {
                 "clangd",
                 "--background-index",
                 "--clang-tidy",
-                "--clang-tidy-checks=-modernize-use-auto",
+                "--clang-tidy-checks=*",
                 "--header-insertion=iwyu",
                 "--completion-style=detailed",
                 "--function-arg-placeholders",
                 "--all-scopes-completion",
             },
+            settings = {
+                clangd = {
+                    diagnostics = {
+                        -- On demande à clangd de ne pas promouvoir les warnings en erreurs
+                        warningsAsErrors = false,
+                    }
+                }
+            }
         })
         
         vim.lsp.config.bashls = vim.tbl_deep_extend("force", vim.lsp.config.bashls or {}, {
