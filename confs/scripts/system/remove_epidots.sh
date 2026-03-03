@@ -76,7 +76,11 @@
            "$CONFS/config/scripts" \
            "$CONFS/config/polybar" \
            "$CONFS/config/picom" \
-           "$CONFS/config/starship.toml"
+           "$CONFS/config/starship.toml" \
+           "$CONFS/startup.sh" \
+           "$CONFS/gdbinit" \
+           "$CONFS/zshrc" \
+           "$CONFS/clang-format"
 
     if [ -f "$HOME/config.temp" ]; then
         mkdir -p "$(dirname "$i3c")"
