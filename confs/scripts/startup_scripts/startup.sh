@@ -5,7 +5,8 @@ source "$HOME/afs/.confs/scripts/globals.sh"
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
 nohup alacritty > /dev/null 2>&1 &
 
-printf "${BLUE}=== Epidots Startup ===${NC}\n"
+dunstify "=== Epidots Startup ==="
+dunstify -r 42 "Installing additional packages..."
 
 PACKAGES="
 nixpkgs#autotiling
@@ -29,31 +30,32 @@ nixpkgs#flameshot
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
 
-printf "${BLUE}::${NC} Configuring Pywalfox...                 "
+
+dunstify -r 42 "Configuring Pywalfox..."
 if pywalfox install > /dev/null 2>&1; then
-    printf "${GREEN}[OK]${NC}\n"
+    dunstify -r 42 "Configuring Pywalfox [OK]"
 else
-    printf "[SKIP]\n"
+    dunstify -u critical "Configuring Pywalfox [FAIL]"
 fi
 
-printf "${BLUE}::${NC} Restarting i3...                        "
+dunstify -r 42  "Restarting i3..."
 if i3-msg restart > /dev/null 2>&1; then
-    printf "${GREEN}[OK]${NC}\n"
+    dunstify -r 42 "Restarting i3 [OK]"
 else
-    printf "[SKIP]\n"
+    dunstify -r 42 "Restarting i3 [SKIP]"
 fi
 
-printf "${BLUE}::${NC} Re-applying wallpaper theme...          "
+dunstify -r 42 "Re-applying wallpaper theme..."
 if sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" > /dev/null 2>&1; then
-    printf "${GREEN}[OK]${NC}\n"
+    dunstify -r 42 "Re-applying wallpaper theme [OK]"
 else
-    printf "${RED}[FAIL]${NC}\n"
+    dunstify -u critical "Re-applying wallpaper theme [FAIL]"
 fi
 
-printf "${GREEN}All done!${NC}\n"
+dunstify -r 42 "All done!"
 
 
-printf "${GRAY}Closing installer...${NC}\n"
+LOG_FILE="/tmp/startup_scripts.log"
 
 if [ -d "$SCRIPTS/startup_scripts" ]; then
     for f in "$SCRIPTS/startup_scripts"/*; do
@@ -61,7 +63,11 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
         fname="${f##*/}"
         if [ "$fname" != "startup.sh" ]; then
             chmod +x "$f"
-            "$f"
+            echo "===== LOG $fname =====" >> $LOG_FILE
+            dunstify -r 42 "Execution startup script : $fname"
+            if ! "$f" >> $LOG_FILE 2<&1; then
+                dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
+            fi
         fi
     done
 fi
