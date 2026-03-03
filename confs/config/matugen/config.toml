@@ -31,8 +31,19 @@ output_path = '~/afs/.confs/config/alacritty/colors.toml'
 # Pywalfox
 [templates.pywalfox]
 input_path = '~/afs/.confs/config/matugen/templates/pywalfox.json'
-output_path = '~/.cache/wal/colors.json'
+output_path = '~/afs/.confs/config/matugen/pywalfox.json'
 post_hook = 'pywalfox update'
+
+# Dunst
+[templates.dunst]
+input_path = '~/afs/.confs/config/matugen/templates/dunstrc'
+output_path = '~/afs/.confs/config/dunst/dunstrc'
+post_hook = 'dunstctl reload'
+
+# Flameshot
+[templates.flameshot]
+input_path = '~/afs/.confs/config/matugen/templates/flameshot.ini'
+output_path = '~/afs/.confs/config/flameshot/flameshot.ini'
 
 # Gtk 3
 [templates.gtk3]
