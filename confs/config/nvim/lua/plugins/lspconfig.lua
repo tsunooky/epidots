@@ -74,6 +74,16 @@ return {
             capabilities = capabilities,
         })
 
+        local notify = vim.lsp.handlers["textDocument/publishDiagnostics"]
+        vim.lsp.handlers["textDocument/publishDiagnostics"] = function(_, result, ctx, config)
+            for _, diagnostic in ipairs(result.diagnostics) do
+                if diagnostic.source == "clang-tidy" then
+                    diagnostic.severity = vim.diagnostic.severity.WARN
+                end
+            end
+            notify(_, result, ctx, config)
+        end
+
         vim.lsp.enable("clangd")
         vim.lsp.enable("bashls")
         vim.lsp.enable("cmake")
