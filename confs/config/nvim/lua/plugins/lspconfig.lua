@@ -26,7 +26,7 @@ return {
             vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
         end
         require("mason-lspconfig").setup({
-            ensure_installed = { "clangd", "bashls" }
+            ensure_installed = {}
         })
 
         require("mason-lspconfig").setup({
