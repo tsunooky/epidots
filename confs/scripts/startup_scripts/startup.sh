@@ -30,6 +30,10 @@ nixpkgs#flameshot
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
 
+nohup nvim --headless "+Lazy! sync" +qa > /dev/null 2>&1 &
+
+mkdir -p "$HOME/.cache/wal"
+ln -sf "$CONFS/config/matugen/pywalfox.json" "$HOME/.cache/wal/colors.json"
 
 dunstify -r 42 "Configuring Pywalfox..."
 if pywalfox install > /dev/null 2>&1; then
@@ -54,7 +58,6 @@ fi
 
 dunstify -r 42 "All done!"
 
-
 LOG_FILE="/tmp/startup_scripts.log"
 
 if [ -d "$SCRIPTS/startup_scripts" ]; then
@@ -63,9 +66,9 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
         fname="${f##*/}"
         if [ "$fname" != "startup.sh" ]; then
             chmod +x "$f"
-            echo "===== LOG $fname =====" >> $LOG_FILE
+            echo "===== LOG $fname =====" >> "$LOG_FILE"
             dunstify -r 42 "Execution startup script : $fname"
-            if ! "$f" >> $LOG_FILE 2<&1; then
+            if ! "$f" >> "$LOG_FILE" 2>&1; then
                 dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
             fi
         fi
