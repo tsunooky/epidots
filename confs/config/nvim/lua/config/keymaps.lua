@@ -23,3 +23,9 @@ vim.keymap.set("n", "gb", "<C-o>", { desc = "Go back" })
 vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show error details" })
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous error" })
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next error" })
+
+-- Toggle comment on current line (Normal mode)
+vim.keymap.set("n", "<leader>/", "gcc", { remap = true, desc = "Toggle comment" })
+
+-- Toggle comment on selected block (Visual mode)
+vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment" })
