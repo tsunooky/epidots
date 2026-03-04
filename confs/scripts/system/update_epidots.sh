@@ -47,11 +47,11 @@
 
     if [ $EXIT_CODE -eq 0 ]; then
         rm -f "$err"
-        printf "\b${GREEN}[OK]${NC}\n"
+        printf "\b[${GREEN}OK${NC}]\n"
 
         i3-msg restart >/dev/null 2>&1
     else
-        printf "\b${RED}[FAIL]${NC}\n"
+        printf "\b[${RED}KO${NC}]\n"
         cat "$err"
         rm -f "$err"
         exit 1

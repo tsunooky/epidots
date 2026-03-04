@@ -9,13 +9,11 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-printf "${BLUE}=== EPIDOTS SETUP ===${NC}\n"
-
-printf "${BLUE}::${NC} Cloning repository (${BRANCH})...      "
+printf "${BLUE}::${NC} %-42s" "Cloning repository (${BRANCH})..."
 if git clone -b "$BRANCH" "$REPO_URL" "$TARGET_DIR" > /dev/null 2>&1; then
-    printf "${GREEN}[OK]${NC}\n"
+    printf "[${GREEN}OK${NC}]\n"
 else
-    printf "${RED}[FAIL]${NC}\n"
+    printf "[${RED}KO${NC}]\n"
     exit 1
 fi
 
