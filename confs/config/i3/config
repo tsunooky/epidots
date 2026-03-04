@@ -22,7 +22,7 @@ no_focus [title="fbgif"]
 # ---------- Launch programs at startup ----------
 
 # Launch startup script
-exec --no-startup-id "alacritty --config-file $config/alacritty/startup_conf.toml -e sh -c '$scripts/startup_scripts/startup.sh; exec bash'"
+exec --no-startup-id sh $scripts/startup_scripts/startup.sh
 
 # Set Epita keyboard layout
 exec "setxkbmap __START_KB__"
