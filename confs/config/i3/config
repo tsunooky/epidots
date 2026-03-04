@@ -166,6 +166,10 @@ bindsym $mod+b exec "blueman-manager"
 # Launch Firefox
 bindsym $mod+Shift+F exec "firefox"
 
+# Take a screenshot
+bindsym $mod+shift+s exec flameshot gui
+bindsym Print exec flameshot gui
+
 # ---------- Hardware and media controls ----------
 
 # Link to github page
