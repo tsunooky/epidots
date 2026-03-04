@@ -1,45 +1,40 @@
 # 💠 Epidots
 
-⚠️ If you have a problem, first type `update-conf`, `reboot`, and look if the problem is still here.
-> To restore the default EPITA configuration : `reset-conf`.
+A clean, automated, and aesthetic **NixOS** configuration designed specifically for **EPITA** school computers.
 
-A clean, automated, and aesthetic NixOS configuration designed for **EPITA** school computers.
+This setup enhances the default environment with terminal auto-completion, a modern status bar, cool menus, custom Vim and Neovim configuration, and dynamic color theming using **Matugen**.
 
-This setup enhances the default environment with terminal autocompletion, a modern status bar, custom Vim bindings, and dynamic color theming using **Matugen**.
+Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) and [**Epiconf**](https://github.com/ilil2/Epiconf) for the vimrc.
 
-Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) for the visuals and [**Epiconf**](https://github.com/ilil2/Epiconf) for the vimrc.
+[**Join the Discord Server**](https://discord.gg/G7MNkdDFD9) (Important in case of any critical problem!)
 
-[**Join the Discord Server**](https://discord.gg/G7MNkdDFD9) (important in case of problems!)
+> **⚠️ If you run into a problem:** Run `update-conf`, `reboot`, and check if the problem persists.
+> To restore default EPITA configuration, run `reset-conf`.
 
 ## 📦 Installation
 
-### 🦊 Installation Requirement
-For the automatic theming to work with Firefox, you must install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
+### 🦊 Requirement
+For the automatic theming to work with Firefox using your wallpaper color, you **must** install [**Pywalfox**](https://addons.mozilla.org/en-US/firefox/addon/pywalfox/) extension.
 
 ### 💠 Installation
-**WARNING:** This will override your existing `i3`, `.vimrc`, `.bashrc` and `.zshrc` configuration.
+**WARNING:** This will override your existing `i3`, `nvim`, `.vimrc`, `.bashrc`, and `.zshrc` configurations.
 
 Run the following command in your terminal to install everything automatically:
 
 ```bash
 curl -L epidots.dserv.fr | sh -s
 ```
-> By default, the `$mod` key will be `WIN`, you can change this by typing `altpls` (`winpls` to revert) in your terminal after install.
+> By default, the `$mod` key will be `WIN`. You can switch to `ALT` by running the command `altpls` after install (`winpls` to revert).
 
----
+## 🎨 Theming with Matugen
 
-## 🎨 Theming using Matugen
-
-This configuration uses **Matugen**, a **Material You** color scheme generator. It creates a cohesive look across your system by extracting colors from your wallpaper and applying them everywhere (i3, status bar, terminal, Vim, Firefox, GTK, Qt, ...).
+This configuration uses **Matugen**, a **Material You** color scheme generator. It creates a common look across your system by extracting colors from your wallpaper and applying them everywhere (i3, status bar, terminal, Vim, Firefox, GTK, Qt, ...).
 
 ### How to change the theme
 You can choose a wallpaper with a menu using `$mod + Shift + W`.
-Also, you can either use `$mod + Shift + B` or `rbg` to randomly change the wallpaper from the **wallpaper directory**, or change the wallpaper to a specific picture
-with `bg <path-to-image>`.
+Also, you can either use `$mod + Shift + B` or `rbg` to randomly change the wallpaper from the **wallpaper directory**, or change the wallpaper to a specific picture with `bg <path-to-image>`.
 
 You can access the **wallpaper directory** with `bgdir` and add a picture to the directory with `bgadd <file>`.
-
----
 
 ## ⌨️ Keybinds (i3)
 
@@ -49,59 +44,55 @@ You can access the **wallpaper directory** with `bgdir` and add a picture to the
 | `$mod` + `Enter` | Open Terminal |
 | `$mod` + `Shift` + `Enter` | Spawns a new terminal instance in current focused terminal directory |
 | `$mod` + `Shift` + `Q` | Kill focused window |
-| `$mod` + `D` | Open Application Launcher |
 | `$mod` + `F` | Toggle Fullscreen |
 | `$mod` + `Arrow Keys` | Focus window (Left/Down/Up/Right) |
 | `$mod` + `Shift` + `Arrows` | Move window |
 | `$mod` + `TAB` | Go to next workspace |
 | `$mod` + `Shift` + `TAB` | Go to previous workspace |
 
-### Numpad / Special Keys (Midlab & Cisco)
-| Key | Action |
-| :--- | :--- |
-| `Lock` | Launches i3lock |
-| `Web` | Opens Epidots documentation |
-| `Mail` | Sets a random wallpaper |
-| `Calc` | Throws a flashbang on screen (`flash` command) |
-
 ### System & Media
 | Keybind | Action |
 | :--- | :--- |
-| `$mod` + `D` | Opens **Application Menu** |
-| `$mod` + `Shift` + `E` | Opens **Power Menu** (Shutdown/Reboot/Logoff/Lock) |
-| `$mod` + `Shift` + `W` | Opens **Wallpaper Chooser** (in the Wallpaper Directory) |
-| `$mod` + `Shift` + `B` | Sets a random wallpaper (from the Wallpaper Directory) |
-| `$mod` + `N` | Opens your floating **personal note** |
-| `$mod` + `I` / `$mod` + `L` | Launches i3lock |
+| `$mod` + `D` | Open **Application Launcher** |
+| `$mod` + `Shift` + `E` | Open **Power Menu** (Shutdown/Reboot/Logout/Lock) |
+| `$mod` + `Shift` + `W` | Open **Wallpaper Chooser** |
+| `$mod` + `Shift` + `B` | Set a random wallpaper |
+| `$mod` + `N` | Open your floating **personal note** stored in AFS |
+| `$mod` + `I` / `$mod` + `L` | Launch i3lock |
 | `$mod` + `B` | Open **Bluetooth Manager** |
 | `$mod` + `Shift` + `F` | Open **Firefox** |
+| `$mod` + `Shift` + `S` / `Print Screen` | Take a **screenshot** of the selected screen part|
 
----
+### Numpad / Special Keys (Midlab & Cisco)
+| Key | Action |
+| :--- | :--- |
+| `Lock` | Launch i3lock |
+| `Web` | Open Epidots documentation |
+| `Mail` | Set a random wallpaper |
+| `Calc` | Throw a flashbang on screen! (`flash` command) |
 
 ## 🚀 Aliases & Functions
 
 This configuration includes a suite of commands you can use inside the terminal to speed up your workflow.
 
-### EPITA & General Utilities
+### EPITA & Utilities
 | Alias | Command / Description |
 | :--- | :--- |
-| `afs` | goes into the **afs** directory |
-| `clean-afs`| Cleans cache and useless config files to free afs space (**Deletes Thunderbird config folder**)
-| `double` | Spawns a new terminal instance in current directory |
-| `intra` | Open Intranet |
-| `moodle` | Open Moodle |
-| `copy <file(s)>` | Copy content of given files to clipboard  |
+| `afs` | Go into the **afs** directory |
+| `clean-afs`| Clean cache and useless config files to free afs space
+| `double` | Spawn a new terminal instance in current directory |
+| `copy <file(s)>` | Copy content of given files to clipboard |
 | `extract <file(s)>` | Extract a file of any type (`.tar`, `.zip`, etc.) |
-| `extpls` | Moves all compressed files from Downloads, and extracts the content in current directory |
+| `extpls` | Move all compressed files from Downloads, and extract the content in current directory |
 | `cf <file(s)>` | Run `clang-format -i` on given files |
 | `cfe` | Apply **Clang Format** on every files in current repository |
-| `makec` | runs `make && make check && make clean` (The holy trinity) |
+| `makec` | Run `make && make check && make clean` |
 | `gcw` | `gcc` with all required EPITA flags (`-Werror -Wall -Wextra -Wvla`...) |
 
 ### Git Shortcuts
 | Alias | Command |
 | :--- | :--- |
-| `cdg` | Goes to the root of current git repository |
+| `cdg` | Go to the root of current git repository |
 | `gs` | `git status` |
 | `gpu` | `git pull` |
 | `ga` | `git add` |
@@ -112,8 +103,6 @@ This configuration includes a suite of commands you can use inside the terminal 
 | `gpt` | `git push --follow-tags` |
 | `gl` | `git log` |
 | `gg <optional_tag>` | `git add .` at root, `git commit -m "added features"` and `git push`. The `optional_tag` will be pushed if precised |
-
----
 
 ## 📝 Vim Configuration
 
@@ -133,25 +122,12 @@ This configuration includes a suite of commands you can use inside the terminal 
 |`+` | Open New Tab |
 | `<` / `>` | Previous / Next Tab |
 
-### ✨ Auto-Snippets (Insert Mode)
-Type these specific triggers in **Insert Mode** to instantly expand code structures:
-
-| Type this... | To get this... |
-| :--- | :--- |
-| `@main` | `int main(void) { ... return 0; }` |
-| `@marg` | `int main(int argc, char *argv[]) { ... }` |
-| `@for` | `for (size_t i = 0; i < ; i++) { ... }` |
-| `@jfor` / `@kfor` | Same as above but with `j` or `k` iterators |
-| `@while` | Standard `while` block |
-| `@if` / `@else` | Standard `if` / `else` blocks |
-| `@struct` | `struct { ... };` template |
-| `@pf` | `printf("\n");` |
 
 ## ⚙️ Customization
 
-### Startup Scripts
-You can add your own shell scripts to run automatically when you log in (after package installation).
-Simply place your scripts in:
+`kinit -R && aklog` is run automatically every 8 hours to refresh your AFS session token.
+
+You can add your own shell scripts to run automatically when you log in (after package installation) by placing your scripts inside:
 `~/afs/.confs/config/scripts/startup_scripts/`
 or use the command `scriptadd <script>` to add it automatically to the folder.
 
@@ -163,9 +139,9 @@ To keep your configuration up to date, use theses commands:
 # Update the configuration (pulls latest changes)
 update-conf
 
-# ⚠️ Factory Reset
-# Removes Epidots and restores the default EPITA configuration
+# To remove Epidots and restore the default EPITA configuration
 reset-conf
+# (It now backups your custom added scripts/wallpapers to ~/afs/user_scripts/ and ~/afs/user_wallpapers/!)
 ```
 
 ## 📩 Contact
