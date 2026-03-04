@@ -16,7 +16,7 @@ RED='\033[0;31m'
 NC='\033[0m'
 
 STEP=1
-TOTAL_STEPS=7
+TOTAL_STEPS=8
 
 run_step() {
     local description=$1
@@ -66,6 +66,16 @@ run_step "Reloading i3 window manager" \
 
 run_step "! Check pywalfox extension for firefox color theming !" \
     "firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/"
+
+run_step "Restoring user backup files" \
+    "if [ -d \"$AFS/user_scripts\" ]; then \
+        mv \"$AFS/user_scripts/\"* \"$CONFS/scripts/startup_scripts/\" 2>/dev/null; \
+        rm -rf \"$AFS/user_scripts\"; \
+    fi; \
+    if [ -d \"$AFS/user_wallpapers\" ]; then \
+        mv \"$AFS/user_wallpapers/\"* \"$WALLPAPERS/\" 2>/dev/null; \
+        rm -rf \"$AFS/user_wallpapers\"; \
+    fi"
 
 run_step "Cleaning up installation files" \
     "cd \"$HOME\" && rm -rf \"$REPO_DIR\""
