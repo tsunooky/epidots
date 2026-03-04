@@ -5,44 +5,54 @@
 
     printf "\n${RED}=== FACTORY RESET ===${NC}\n"
 
-    printf "${BLUE}::${NC} Backing up user files...  "
+    printf "${BLUE}::${NC} Comparing with remote repositories... "
 
+    tmp_chk=$(mktemp -d)
+
+    if git clone --depth 1 -b "$BRANCH" "$REPO_EPIDOTS" "$tmp_chk/main" >/dev/null 2>&1 && \
+       git clone --depth 1 "$REPO_WALLPAPER" "$tmp_chk/walls" >/dev/null 2>&1; then
+        printf "${GREEN}[OK]${NC}\n"
+    else
+        rm -rf "$tmp_chk"
+        printf "${RED}[FAIL]${NC}\n"
+        exit 1
+    fi
+
+    printf "${BLUE}::${NC} Backing up user files...            "
+
+    # Backup Scripts
     if [ -d "$SCRIPTS/startup_scripts" ]; then
+        mkdir -p "$AFS/user_scripts"
+        ls "$tmp_chk/main/confs/scripts/startup_scripts" > "$tmp_chk/defaults_scripts.txt"
+        
         for sc in "$SCRIPTS/startup_scripts"/*; do
             [ -e "$sc" ] || continue
             fname="${sc##*/}"
-            if [ "$fname" != "startup.sh" ]; then
-                mkdir -p "$AFS/user_scripts"
+            if ! grep -Fqx "$fname" "$tmp_chk/defaults_scripts.txt"; then
                 mv "$sc" "$AFS/user_scripts/"
             fi
         done
     fi
 
-    is_default_wp() {
-        case "$1" in
-            abyss.jpg|boat.jpg|cats.jpg|default.jpg|epita.jpg|island_1.jpg|island_2.jpg|island_3.jpg|island_4.jpg|lake.jpg|liquid.jpg|moon.jpg|pirates.jpg|red.jpg|sky.jpg|tower.jpg|trees.jpg|winter.jpg)
-                return 0
-                ;;
-            *)
-                return 1
-                ;;
-        esac
-    }
-
+    # Backup Wallpapers
     if [ -d "$WALLPAPERS" ]; then
+        mkdir -p "$AFS/user_wallpapers"
+        ls "$tmp_chk/walls" > "$tmp_chk/defaults_walls.txt"
+
         for wp in "$WALLPAPERS"/*; do
             [ -e "$wp" ] || continue
             fname="${wp##*/}"
-            if ! is_default_wp "$fname"; then
-                mkdir -p "$AFS/user_wallpapers"
+            if [ "$fname" = ".git" ]; then continue; fi
+            if ! grep -Fqx "$fname" "$tmp_chk/defaults_walls.txt"; then
                 mv "$wp" "$AFS/user_wallpapers/"
             fi
         done
     fi
-
+    
+    rm -rf "$tmp_chk"
     printf "${GREEN}[OK]${NC}\n"
 
-    printf "${BLUE}::${NC} Restoring defaults...     "
+    printf "${BLUE}::${NC} Restoring defaults...               "
 
     tmp=$(mktemp -d)
     if git clone "https://gitlab.cri.epita.fr/forge/packages/sm-default-dotfiles.git" "$tmp" >/dev/null 2>&1; then
@@ -57,7 +67,7 @@
         exit 1
     fi
 
-    printf "${BLUE}::${NC} Cleaning files...         "
+    printf "${BLUE}::${NC} Cleaning files...                   "
 
     i3c="$CONFS/config/i3/config"
     if [ -f "$i3c" ]; then
@@ -66,6 +76,7 @@
 
     rm -rf "$CONFS/wallpapers" \
            "$CONFS/scripts" \
+           "$CONFS/config/scripts" \
            "$CONFS/config/alacritty" \
            "$CONFS/config/matugen" \
            "$CONFS/config/gtk-3.0" \
@@ -73,13 +84,17 @@
            "$CONFS/config/qt5ct" \
            "$CONFS/config/qt6ct" \
            "$CONFS/config/rofi" \
-           "$CONFS/config/scripts" \
-           "$CONFS/config/polybar" \
+           "$CONFS/config/dunst" \
            "$CONFS/config/picom" \
+           "$CONFS/config/polybar" \
+           "$CONFS/config/flameshot" \
+           "$CONFS/config/nvim" \
+           "$CONFS/config/i3/colors.conf" \
            "$CONFS/config/starship.toml" \
            "$CONFS/startup.sh" \
            "$CONFS/gdbinit" \
            "$CONFS/zshrc" \
+           "$CONFS/vimrc" \
            "$CONFS/clang-format"
 
     if [ -f "$HOME/config.temp" ]; then
@@ -87,13 +102,14 @@
         mv "$HOME/config.temp" "$i3c"
     fi
 
-    rm -f "$CONFIG/i3/config"
+    rm -f "$CONFS/config/i3/config"
     i3-config-wizard >/dev/null 2>&1
 
     printf "${GREEN}[OK]${NC}\n"
 
     pkill polybar >/dev/null 2>&1
     pkill picom >/dev/null 2>&1
+    pkill dunst >/dev/null 2>&1
     i3-msg restart >/dev/null 2>&1
 
     if [ -x "$CONFS/install.sh" ]; then
