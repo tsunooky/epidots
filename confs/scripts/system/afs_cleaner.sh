@@ -3,11 +3,11 @@
 source "$HOME/afs/.confs/scripts/globals.sh"
 
 used=$(fs quota ~/afs 2>/dev/null | cut -d'%' -f1)
-printf "${BLUE}::${NC} %-42s" "Current AFS usage: $used%"
-printf "[${GREEN}OK${NC}]\n"
+printf "${BLUE}::${NC} %-42s" "Current AFS usage:"
+printf "[${RED} $used%${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Removing bloatware..."
-rm -rf "$CONFS"/{bash,blerc,emacs,epiconf,jnewsrc,msmtprc,muttrc,pkgs.sh,slrnrc,xinitrc,startup.sh,gitignore,.git}
+rm -rf "$CONFS"/{bash,blerc,emacs,epiconf,jnewsrc,msmtprc,muttrc,pkgs.sh,slrnrc,xinitrc,startup.sh,.gitignore,.git,sqlfluff}
 rm -rf "$CONFIG"/{autostart,Windows,ble,cef_user_data,chromium,dconf,doomretro,enchant,geany,gedit,glib-2.0,gimp,GIMP,gtk-2.0,libfm,lxpanel,matplotlib,menus,mimeapps.list,mpv,pavucontrol.ini,pcmanfm,pulse,QtProject.conf,RStudio,rstudio,Syncplay,syncplay.ini,Thunar,tint2,vlc,wslu,xfce4,powermenu.rasi,Electron}
 printf "[${GREEN}OK${NC}]\n"
 
@@ -37,5 +37,6 @@ if [ -d "$CONFIG/JetBrains" ]; then
 fi
 
 used_after=$(fs quota ~/afs 2>/dev/null | cut -d'%' -f1)
-printf "${BLUE}::${NC} %-42s" "AFS usage after cleanup: $used_after%"
-printf "[${GREEN}OK${NC}]\n"
+printf "${BLUE}::${NC} %-42s" "Current AFS usage:"
+printf "[${GREEN} $used_after%${NC}]\n"
+
