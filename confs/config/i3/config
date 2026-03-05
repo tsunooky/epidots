@@ -81,7 +81,7 @@ bindsym $mod+i exec --no-startup-id i3lock
 bindsym $mod+l exec --no-startup-id i3lock
 
 # Start a terminal in AFS
-bindsym $mod+Return exec --no-startup-id alacritty --working-directory ~/afs
+bindsym $mod+Return exec --no-startup-id exec $scripts/system/open_afs.sh
 
 # Start a terminal
 bindsym $mod+Ctrl+Return exec --no-startup-id alacritty
