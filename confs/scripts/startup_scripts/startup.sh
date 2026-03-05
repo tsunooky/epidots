@@ -41,7 +41,7 @@ dunstify -r "$IDB" -t 0 "Configuring Pywalfox..."
 if pywalfox install > /dev/null 2>&1; then
     dunstify -r "$IDB" "Configuring Pywalfox [OK]"
 else
-    dunstify -c "$IDB"
+    dunstify -C "$IDB"
     dunstify -u critical "Configuring Pywalfox [FAIL]"
 fi
 
@@ -56,7 +56,7 @@ dunstify -r "$IDB" -t 0 "Re-applying wallpaper theme..."
 if sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" > /dev/null 2>&1; then
     dunstify -r "$IDB" -t 0 "Re-applying wallpaper theme [OK]"
 else
-    dunstify -c "$IDB"
+    dunstify -C "$IDB"
     dunstify -u critical "Re-applying wallpaper theme [FAIL]"
 fi
 
@@ -73,13 +73,13 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
             echo "===== LOG $fname =====" >> "$LOG_FILE"
             dunstify -r "$IDB" -t 0 "Execution startup script : $fname"
             if ! "$f" >> "$LOG_FILE" 2>&1; then
-                dunstify -c "$IDB"
+                dunstify -C "$IDB"
                 dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
             fi
         fi
     done
 fi
 
-dunstify -c "$IDA"
-dunstify -c "$IDB"
+dunstify -C "$IDA"
+dunstify -C "$IDB"
 
