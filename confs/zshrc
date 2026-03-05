@@ -90,9 +90,9 @@ better_cat() {
   local args=()
   for arg in "$@"; do
     if [[ "$arg" == "-e" ]]; then
-      args+=("-A")  # On remplace -e par -A
+      args+=("-A")
     else
-      args+=("$arg") # On garde l'argument tel quel
+      args+=("$arg")
     fi
   done
 
