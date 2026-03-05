@@ -63,7 +63,7 @@ fi
 dunstify -r "$IDB" -t 0 "All done!"
 
 LOG_FILE="/tmp/startup_scripts.log"
-
+echo "\n===== STARTUP LOG =====" >> "$LOG_FILE"
 if [ -d "$SCRIPTS/startup_scripts" ]; then
     for f in "$SCRIPTS/startup_scripts"/*; do
         [ -f "$f" ] || continue
