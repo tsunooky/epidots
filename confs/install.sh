@@ -18,6 +18,8 @@ nixpkgs#rofi
 nixpkgs#polybar
 nixpkgs#matugen
 nixpkgs#dunst
+nixpkgs#pywal
+nixpkgs#pywalfox-native
 "
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
