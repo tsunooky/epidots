@@ -8,6 +8,8 @@ nohup alacritty > /dev/null 2>&1 &
 IDA=42;
 IDB=43;
 IDC=44;
+IDD=45;
+IDE=46;
 
 dunstify -r "$IDA" -t 0 "=== Epidots Startup ==="
 dunstify -r "$IDB" -t 0 "Installing additional packages..."
@@ -45,22 +47,22 @@ else
     dunstify -u critical "Configuring Pywalfox [FAIL]"
 fi
 
-dunstify -r "$IDB" -t 0 "Restarting i3..."
+dunstify -r "$IDC" -t 0 "Restarting i3..."
 if i3-msg restart > /dev/null 2>&1; then
-    dunstify -r "$IDB" -t 0 "Restarting i3 [OK]"
+    dunstify -r "$IDC" -t 0 "Restarting i3 [OK]"
 else
-    dunstify -r "$IDB" -t 0 "Restarting i3 [SKIP]"
+    dunstify -r "$IDC" -t 0 "Restarting i3 [SKIP]"
 fi
 
-dunstify -r "$IDB" -t 0 "Re-applying wallpaper theme..."
+dunstify -r "$IDD" -t 0 "Re-applying wallpaper theme..."
 if sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" > /dev/null 2>&1; then
-    dunstify -r "$IDB" -t 0 "Re-applying wallpaper theme [OK]"
+    dunstify -r "$IDD" -t 0 "Re-applying wallpaper theme [OK]"
 else
-    dunstify -C "$IDB"
+    dunstify -C "$IDD"
     dunstify -u critical "Re-applying wallpaper theme [FAIL]"
 fi
 
-dunstify -r "$IDB" -t 0 "All done!"
+dunstify -r "$IDE" -t 0 "All done!"
 
 LOG_FILE="/tmp/startup_scripts.log"
 echo "\n===== STARTUP LOG =====" >> "$LOG_FILE"
@@ -71,15 +73,18 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
         if [ "$fname" != "startup.sh" ]; then
             chmod +x "$f"
             echo "===== LOG $fname =====" >> "$LOG_FILE"
-            dunstify -r "$IDB" -t 0 "Execution startup script : $fname"
+            dunstify -r "$IDE" -t 0 "Execution startup script : $fname"
             if ! "$f" >> "$LOG_FILE" 2>&1; then
-                dunstify -C "$IDB"
+                dunstify -C "$IDE"
                 dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
             fi
         fi
     done
 fi
 
-dunstify -C "$IDA"
+dunstify -C "$IDE"
+dunstify -C "$IDD"
+dunstify -C "$IDC"
 dunstify -C "$IDB"
+dunstify -C "$IDA"
 
