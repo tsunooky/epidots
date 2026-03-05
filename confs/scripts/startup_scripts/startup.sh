@@ -73,5 +73,3 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
     done
 fi
 
-sleep 0.1
-kill -9 $PPID
