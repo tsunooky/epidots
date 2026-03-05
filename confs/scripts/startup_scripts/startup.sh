@@ -34,35 +34,49 @@ nixpkgs#flameshot
 
 nix profile install $PACKAGES --impure > /dev/null 2>&1
 
+
+send_notif() {
+    local msg="$1"
+    local id="$2"
+    
+    if [ -z "$id" ]; then
+        dunstify -p "$msg" -t 0
+    else
+        dunstify -r "$id" "$msg" -t 0
+        echo "$id"
+    fi
+}
+
+
 nohup nvim --headless "+Lazy! sync" +qa > /dev/null 2>&1 &
 
 mkdir -p "$HOME/.cache/wal"
 ln -sf "$CONFS/config/matugen/pywalfox.json" "$HOME/.cache/wal/colors.json"
 
-dunstify -r "$IDB" -t 0 "Configuring Pywalfox..."
+ID=$(send_notif "Configuring Pywalfox...")
 if pywalfox install > /dev/null 2>&1; then
-    dunstify -r "$IDB" "Configuring Pywalfox [OK]"
+    send_notif "Configuring Pywalfox [OK]" "$ID"
 else
-    dunstify -C "$IDB"
+    dunstify -C "$ID"
     dunstify -u critical "Configuring Pywalfox [FAIL]"
 fi
 
-dunstify -r "$IDC" -t 0 "Restarting i3..."
+ID=$(send_notif "Restarting i3...")
 if i3-msg restart > /dev/null 2>&1; then
-    dunstify -r "$IDC" -t 0 "Restarting i3 [OK]"
+    send_notif "Restarting i3 [OK]" "$ID"
 else
-    dunstify -r "$IDC" -t 0 "Restarting i3 [SKIP]"
+    send_notif "Restarting i3 [SKIP]" "$ID"
 fi
 
-dunstify -r "$IDD" -t 0 "Re-applying wallpaper theme..."
+ID=$(send_notif "Re-applying wallpaper theme...")
 if sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" > /dev/null 2>&1; then
-    dunstify -r "$IDD" -t 0 "Re-applying wallpaper theme [OK]"
+    send_notif "Re-applying wallpaper theme [OK]" "$ID"
 else
-    dunstify -C "$IDD"
+    dunstify -C "$ID"
     dunstify -u critical "Re-applying wallpaper theme [FAIL]"
 fi
 
-dunstify -r "$IDE" -t 0 "All done!"
+ID=$(send_notif "All done!")
 
 LOG_FILE="/tmp/startup_scripts.log"
 echo "\n===== STARTUP LOG =====" >> "$LOG_FILE"
@@ -73,18 +87,13 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
         if [ "$fname" != "startup.sh" ]; then
             chmod +x "$f"
             echo "===== LOG $fname =====" >> "$LOG_FILE"
-            dunstify -r "$IDE" -t 0 "Execution startup script : $fname"
+            ID=$(send_notif  "Execution startup script : $fname")
             if ! "$f" >> "$LOG_FILE" 2>&1; then
-                dunstify -C "$IDE"
+                dunstify -C "$ID"
                 dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
             fi
         fi
     done
 fi
 
-dunstify -C "$IDE"
-dunstify -C "$IDD"
-dunstify -C "$IDC"
-dunstify -C "$IDB"
-dunstify -C "$IDA"
-
+pkill dunst && setsid dunst &
