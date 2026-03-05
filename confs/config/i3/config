@@ -202,3 +202,6 @@ bindsym XF86AudioPrev exec playerctl previous
 # Toggle microphone mute
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
 
+# Change brightness
+bindsym XF86MonBrightnessUp exec $scripts/system/brightness.sh up
+bindsym XF86MonBrightnessDown exec $scripts/system/brightness.sh down

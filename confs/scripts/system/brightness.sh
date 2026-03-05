@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 OUTPUT=$(xrandr --query | grep " connected" | cut -d ' ' -f1 | head -n 1)
 
@@ -8,7 +8,6 @@ send_notif() {
     local percent=$(echo "$current * 100" | bc | cut -d '.' -f1)
 
     dunstify -h string:x-dunst-stack-tag:brightness \
-             -h int:value:"$percent" \
              "Luminosité : $percent%" \
              -t 1500 -a "System"
 }
