@@ -86,12 +86,25 @@ bindkey \^U backward-kill-line
 # GENERAL ALIASES & REPLACEMENTS
 # ------------------------------
 
+better_cat() {
+  local args=()
+  for arg in "$@"; do
+    if [[ "$arg" == "-e" ]]; then
+      args+=("-A")  # On remplace -e par -A
+    else
+      args+=("$arg") # On garde l'argument tel quel
+    fi
+  done
+
+  command bat -pp "${args[@]}"
+}
+
 # Colorize standard commands
 alias diff='diff --color=auto'
 alias grep='grep --color=auto'
 alias ip='ip -color=auto'
-alias cat='bat -pp'
-alias cqt='bat -pp'
+alias cat='better_cat'
+alias cqt='better_cat'
 alias ls='lsd'
 alias sl='lsd'
 alias la='lsd -A'
