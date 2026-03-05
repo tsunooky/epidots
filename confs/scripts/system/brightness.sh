@@ -21,7 +21,7 @@ send_notif() {
              -t 1500 -a "System"
 }
 
-STEP=0.05
+STEP=0.1 # Min var posible
 
 case "$1" in
     up)
@@ -33,7 +33,6 @@ case "$1" in
     down)
         curr=$(xrandr --verbose --query | grep -A 5 "$OUTPUT" | grep "Brightness" | cut -d ' ' -f2)
         new=$(echo "$curr - $STEP" | bc)
-        # On évite de descendre à 0 (écran noir complet)
         if (( $(echo "$new > 0.1" | bc -l) )); then
             xrandr --output "$OUTPUT" --brightness "$new"
             send_notif
