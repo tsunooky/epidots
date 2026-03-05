@@ -4,7 +4,7 @@ source "$HOME/afs/.confs/scripts/globals.sh"
 
 used=$(fs quota ~/afs 2>/dev/null | cut -d'%' -f1)
 printf "${BLUE}::${NC} %-42s" "Current AFS usage:"
-printf "[${RED} $used%${NC}]\n"
+echo -e "[${RED} $used%${NC}]"
 
 printf "${BLUE}::${NC} %-42s" "Removing bloatware..."
 rm -rf "$CONFS"/{bash,blerc,emacs,epiconf,jnewsrc,msmtprc,muttrc,pkgs.sh,slrnrc,xinitrc,startup.sh,.gitignore,.git,sqlfluff}
@@ -38,5 +38,5 @@ fi
 
 used_after=$(fs quota ~/afs 2>/dev/null | cut -d'%' -f1)
 printf "${BLUE}::${NC} %-42s" "Current AFS usage:"
-printf "[${GREEN} $used_after%${NC}]\n"
+echo -e "[${GREEN} $used_after%${NC}]"
 
