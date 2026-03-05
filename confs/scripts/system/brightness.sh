@@ -1,10 +1,10 @@
 #!/bin/sh
 
-if pgrep -x "redshift" > /dev/null; then
+if systemctl --user is-active --quiet redshift; then
     dunstify -u critical \
              -h string:x-dunst-stack-tag:brightness \
              "Action Blocked" \
-             "Please disable Redshift to change brightness." \
+             "Redshift service is active. Disable it to change brightness." \
              -t 3000
     exit 1
 fi
