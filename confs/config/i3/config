@@ -71,7 +71,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Shift+b exec --no-startup-id $scripts/wallpaper_scripts/random_wallpaper.sh
 
 # Throw a flashbang
-bindsym $mod+Crtl+f exec --no-startupèid $script/flashbang/flashbang.sh
+bindsym $mod+Ctrl+f exec --no-startupèid $script/flashbang/flashbang.sh
 
 # Opens rofi wallpaper chooser
 bindsym $mod+Shift+w exec --no-startup-id tree $wallpapers > /dev/null 2>&1 && $scripts/menus/wallpaper_menu.sh
