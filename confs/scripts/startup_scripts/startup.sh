@@ -79,5 +79,5 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
     done
 fi
 
-dunstify -C "$IDA"
 dunstify -C "$IDB"
+dunstify -C "$IDA"
