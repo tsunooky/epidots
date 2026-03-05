@@ -189,8 +189,6 @@ bindsym XF86Mail exec --no-startup-id $scripts/wallpaper_scripts/random_wallpape
 bindsym XF86Calculator exec --no-startup-id $scripts/flashbang/flashbang.sh
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # Media player controls
