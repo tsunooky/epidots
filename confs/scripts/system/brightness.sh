@@ -1,5 +1,14 @@
 #!/bin/sh
 
+if pgrep -x "redshift" > /dev/null; then
+    dunstify -u critical \
+             -h string:x-dunst-stack-tag:brightness \
+             "Action Blocked" \
+             "Please disable Redshift to change brightness." \
+             -t 3000
+    exit 1
+fi
+
 OUTPUT=$(xrandr --query | grep " connected" | cut -d ' ' -f1 | head -n 1)
 
 send_notif() {
