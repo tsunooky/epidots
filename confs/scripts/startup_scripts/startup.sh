@@ -5,8 +5,12 @@ source "$HOME/afs/.confs/scripts/globals.sh"
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
 nohup alacritty > /dev/null 2>&1 &
 
-dunstify "=== Epidots Startup ==="
-dunstify -r 42 "Installing additional packages..."
+IDA=42;
+IDB=43;
+IDC=44;
+
+dunstify -r "$IDA" -t 0 "=== Epidots Startup ==="
+dunstify -r "$IDB" -t 0 "Installing additional packages..."
 
 PACKAGES="
 nixpkgs#autotiling
@@ -33,28 +37,30 @@ nohup nvim --headless "+Lazy! sync" +qa > /dev/null 2>&1 &
 mkdir -p "$HOME/.cache/wal"
 ln -sf "$CONFS/config/matugen/pywalfox.json" "$HOME/.cache/wal/colors.json"
 
-dunstify -r 42 "Configuring Pywalfox..."
+dunstify -r "$IDB" -t 0 "Configuring Pywalfox..."
 if pywalfox install > /dev/null 2>&1; then
-    dunstify -r 42 "Configuring Pywalfox [OK]"
+    dunstify -r "$IDB" "Configuring Pywalfox [OK]"
 else
+    dunstify -c "$IDB"
     dunstify -u critical "Configuring Pywalfox [FAIL]"
 fi
 
-dunstify -r 42  "Restarting i3..."
+dunstify -r "$IDB" -t 0 "Restarting i3..."
 if i3-msg restart > /dev/null 2>&1; then
-    dunstify -r 42 "Restarting i3 [OK]"
+    dunstify -r "$IDB" -t 0 "Restarting i3 [OK]"
 else
-    dunstify -r 42 "Restarting i3 [SKIP]"
+    dunstify -r "$IDB" -t 0 "Restarting i3 [SKIP]"
 fi
 
-dunstify -r 42 "Re-applying wallpaper theme..."
+dunstify -r "$IDB" -t 0 "Re-applying wallpaper theme..."
 if sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" > /dev/null 2>&1; then
-    dunstify -r 42 "Re-applying wallpaper theme [OK]"
+    dunstify -r "$IDB" -t 0 "Re-applying wallpaper theme [OK]"
 else
+    dunstify -c "$IDB"
     dunstify -u critical "Re-applying wallpaper theme [FAIL]"
 fi
 
-dunstify -r 42 "All done!"
+dunstify -r "$IDB" -t 0 "All done!"
 
 LOG_FILE="/tmp/startup_scripts.log"
 
@@ -65,11 +71,15 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
         if [ "$fname" != "startup.sh" ]; then
             chmod +x "$f"
             echo "===== LOG $fname =====" >> "$LOG_FILE"
-            dunstify -r 42 "Execution startup script : $fname"
+            dunstify -r "$IDB" -t 0 "Execution startup script : $fname"
             if ! "$f" >> "$LOG_FILE" 2>&1; then
+                dunstify -c "$IDB"
                 dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
             fi
         fi
     done
 fi
+
+dunstify -c "$IDA"
+dunstify -c "$IDB"
 
