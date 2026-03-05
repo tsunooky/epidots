@@ -59,7 +59,6 @@ return {
             settings = {
                 clangd = {
                     diagnostics = {
-                        -- On demande à clangd de ne pas promouvoir les warnings en erreurs
                         warningsAsErrors = false,
                     }
                 }
