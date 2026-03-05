@@ -80,8 +80,11 @@ bindsym $mod+Shift+w exec --no-startup-id tree $wallpapers > /dev/null 2>&1 && $
 bindsym $mod+i exec --no-startup-id i3lock
 bindsym $mod+l exec --no-startup-id i3lock
 
+# Start a terminal in AFS
+bindsym $mod+Return exec --no-startup-id alacritty --working-directory ~/afs
+
 # Start a terminal
-bindsym $mod+Return exec --no-startup-id alacritty
+bindsym $mod+Ctrl+Return exec --no-startup-id alacritty
 
 # Start a terminal in the Working directory of the previous one
 bindsym $mod+Shift+Return exec --no-startup-id $scripts/system/double.sh

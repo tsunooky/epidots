@@ -64,6 +64,7 @@ HISTORY_IGNORE="(lsd|sl|ls|l|ll|la|cd|exit|clear|history|bg|fg|rbg)"
 
 # Navigation options
 setopt AUTO_CD
+set -o CHASE_LINKS
 
 # Fix weird keys mapping
 bindkey -e
