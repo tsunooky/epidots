@@ -11,8 +11,6 @@ dunstify -r 42 "Installing additional packages..."
 PACKAGES="
 nixpkgs#autotiling
 nixpkgs#picom
-nixpkgs#pywal
-nixpkgs#pywalfox-native
 nixpkgs#papirus-icon-theme
 nixpkgs#bat
 nixpkgs#adw-gtk3
