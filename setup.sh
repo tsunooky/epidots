@@ -28,6 +28,7 @@ echo -e "${BLUE}          |__/                                                 $
 
 printf "${BLUE}::${NC} %-42s" "Deploying config to AFS..."
 mkdir -p "$CONFS" && cp -r "$CONFIG_SRC/"* "$CONFS/"
+mv "version" "$AFS/.version"
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers..."

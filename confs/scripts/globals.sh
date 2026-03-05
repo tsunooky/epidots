@@ -27,6 +27,14 @@ CONFIG="$CONFS/config"
 SCRIPTS="$CONFS/scripts"
 WALLPAPERS="$CONFS/wallpapers"
 
+# VERSION
+VERSION_FILE="$AFS/.version"
+VERSION=0
+
+if [ -f $VERSION_FILE ]; then
+    VERSION=$(cat "$VERSION_FILE")
+fi
+
 # URLS
 REPO_EPIDOTS="https://github.com/tsunooky/epidots.git"
 REPO_WALLPAPER="https://github.com/tsunooky/epidots-wallpapers.git"
