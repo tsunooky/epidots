@@ -71,10 +71,10 @@ dummy {
 entry {
     enabled:                     true;
     background-color:            inherit;
-    text-color:                  @selected;
+    text-color:                  @urgent;
     cursor:                      text;
     placeholder:                 "Enter the link...";
-    placeholder-color:           inherit;
+    placeholder-color:           @selected;
 }
 
 /*****----- Listview -----*****/
@@ -136,3 +136,4 @@ element-text {
     vertical-align:              0.5;
     horizontal-align:            0.0;
 }
+
