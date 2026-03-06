@@ -2,9 +2,9 @@
 
 source "$HOME/afs/.confs/scripts/globals.sh"
 
-PRESENCE_FILE="$HOME/.cache/epita_presence_url"
+PRESENCE_FILE="$CONFS/.check_presence_url"
 theme="$CONFIG/rofi/epita_menu.rasi"
-host=" Epita Hub"
+host="  Epita Hub"
 
 check_pres='  Check Presence'
 moodle='  Moodle'
@@ -20,11 +20,11 @@ rofi_cmd() {
 
 ask_url_cmd() {
     rofi -theme-str 'listview {lines: 0;}' \
-         -theme-str 'inputbar {children: [ "prompt", "entry" ];}' \
+         -theme-str 'inputbar {children: [ "prompt", "entry" ]; background-color: @on-primary;}' \
          -theme-str 'prompt {background-color: @selected; text-color: @background; padding: 8px 15px; border-radius: 20px;}' \
-         -theme-str 'entry {padding: 8px 15px; text-color: @background;}' \
+         -theme-str 'entry {background-color: inherit; text-color: @selected; placeholder-color: @selected; padding: 8px 15px;}' \
          -dmenu \
-         -p 'Link' \
+         -p ' Link' \
          -theme ${theme} \
          -dpi 1
 }
