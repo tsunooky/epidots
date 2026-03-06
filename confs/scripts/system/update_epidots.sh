@@ -14,6 +14,11 @@
         tmp=$(mktemp -d)
         
         git clone --depth 1 -b "$BRANCH" "$REPO_EPIDOTS" "$tmp"
+        if [ "$VERSION" -gt 0 ]; then
+            rm -rf "$tmp/confs/zshrc"
+            rm -rf "$tmp/confs/bashrc"
+        fi
+
         cp -r "$tmp/confs/"* "$CONFS/"
         
         if [ -f "$CONFS/.alt" ]; then
