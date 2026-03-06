@@ -52,6 +52,14 @@
     printf "${BLUE}::${NC} %-42s" "Restoring default dotfiles..."
     tmp=$(mktemp -d)
     if git clone "https://gitlab.cri.epita.fr/forge/packages/sm-default-dotfiles.git" "$tmp" >/dev/null 2>&1; then
+        
+        for file_to_keep in "$@"; do
+            file="$tmp/confs/$file_to_keep"
+            if [ -f "$file" ]; then
+                rm -rf "$file"
+            fi
+        done
+        
         cp -Rf "$tmp/"* "$CONFS/" 2>/dev/null
         cp -Rf "$tmp/".[!.]* "$CONFS/" 2>/dev/null
         rm -rf "$CONFS/.git"
@@ -64,7 +72,8 @@
     fi
 
     printf "${BLUE}::${NC} %-42s" "Cleaning files..."
-    rm -rf "$CONFS/wallpapers" \
+    files_to_remove=(
+           "$CONFS/wallpapers" \
            "$CONFS/scripts" \
            "$CONFS/config/scripts" \
            "$CONFS/config/alacritty" \
@@ -86,6 +95,21 @@
            "$CONFS/zshrc" \
            "$CONFS/vimrc" \
            "$CONFS/clang-format"
+       )
+
+    for file_to_remove in "${files_to_remove[@]}"; do
+        should_delete=true
+        for file_to_keep in "$@"; do
+            if [ "$file_to_keep" = "$CONFS/$file_to_keep" ]; then
+                should_delete=false;
+                break;
+            fi
+        done
+
+        if [ "$should_delete" = true ]; then
+            rm -rf "$file_to_remove"
+        fi
+    done
 
     i3-config-wizard >/dev/null 2>&1
     printf "[${GREEN}OK${NC}]\n"
