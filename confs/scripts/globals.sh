@@ -42,7 +42,7 @@ fi
 
 REPO_VERSION_FILE="/tmp/epidots_repo_version"i
 if ! [ -f "$REPO_VERSION_FILE" ]; then
-    curl -L "$RAW_REPO_EPIDOTS/confs/epidots/version" > "$REPO_VERSION_FILE"
+    curl -Ls "$RAW_REPO_EPIDOTS/confs/epidots/version" > "$REPO_VERSION_FILE"
 fi
 
 REPO_VERSION="$(cat $REPO_VERSION_FILE)"

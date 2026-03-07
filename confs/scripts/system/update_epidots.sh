@@ -1,10 +1,33 @@
 #!/bin/sh
 
+source "$HOME/afs/.confs/scripts/globals.sh"
+
+pre_update_handle_version0()
 {
-    source "$HOME/afs/.confs/scripts/globals.sh"
+    rm -rf "$tmp/confs/zshrc"
+    rm -rf "$tmp/confs/bashrc"i
+
+    TMP_STARTUP_SCRIPTS_SAVE="/tmp/tmp_startup_scripts_save"
+    mkdir "$TMP_STARTUP_SCRIPTS_SAVE"
+    cp "$CONFIG/scripts/startup_scripts/*" "$TMP_STARTUP_SCRIPTS_SAVE/"
+
+    rm -rf "$CONFIG/scripts"
+
+}
+post_update_handle_version0()
+{
+    cp "$TMP_STARTUP_SCRIPTS_SAVE/*" "$SCRIPTS/startup_scripts/"
+    rm -rf "$TMP_STARTUP_SCRIPTS_SAVE"
+}
+
+
+
+{
 
     printf "=\b${RED}==== EPIDOTS UPDATE ====${NC}\n"
     printf "\b${RED}/!\\ Don't close this terminal during update${NC}\n"
+    echo -e "\bi${BLUE}::Current Version : $VERSION${NC}"
+    echo -e "\bi${BLUE}::Latest Version : $REPO_VERSION${NC}"
     printf "${BLUE}::${NC} Updating Epidots (${BRANCH})...  "
 
     err=$(mktemp)
@@ -14,9 +37,10 @@
         tmp=$(mktemp -d)
         
         git clone --depth 1 -b "$BRANCH" "$REPO_EPIDOTS" "$tmp"
-        if [ "$VERSION" -gt 0 ]; then
-            rm -rf "$tmp/confs/zshrc"
-            rm -rf "$tmp/confs/bashrc"
+        
+        # Pre-update version handler
+        if [ "$VERSION" -eq 0 ]; then
+            pre_update_handle_version0
         fi
 
         cp -r "$tmp/confs/"* "$CONFS/"
@@ -30,6 +54,11 @@
         chmod +x "$CONFS/install.sh" > /dev/null 2>&1
         AFS_DIR="$AFS" "$CONFS/install.sh"
         
+        # Post-update version handler
+        if [ "$VERSION" -gt 0 ]; then
+            post_update_handle_version0
+        fi
+
         rm -rf "$tmp"
     ) >"$err" 2>&1 &
 
