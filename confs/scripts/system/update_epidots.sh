@@ -20,7 +20,6 @@
         fi
 
         cp -r "$tmp/confs/"* "$CONFS/"
-        cp "$tmp/version" "$AFS/.version"
 
         if [ -f "$CONFS/.alt" ]; then
             sed -i 's/set $mod Mod4/set $mod Mod1/' "$CONFS/config/i3/config"

@@ -75,6 +75,7 @@
     files_to_remove=(
            "$CONFS/wallpapers" \
            "$CONFS/scripts" \
+           "$CONFS/epidots" \
            "$CONFS/config/scripts" \
            "$CONFS/config/alacritty" \
            "$CONFS/config/matugen" \
