@@ -5,7 +5,7 @@ source "$HOME/afs/.confs/scripts/globals.sh"
 pre_update_handle_version0()
 {
     rm -rf "$tmp/confs/zshrc"
-    rm -rf "$tmp/confs/bashrc"i
+    rm -rf "$tmp/confs/bashrc"
 
     TMP_STARTUP_SCRIPTS_SAVE="/tmp/tmp_startup_scripts_save"
     mkdir "$TMP_STARTUP_SCRIPTS_SAVE"
@@ -24,11 +24,11 @@ post_update_handle_version0()
 
 {
 
-    printf "=\b${RED}==== EPIDOTS UPDATE ====${NC}\n"
-    printf "\b${RED}/!\\ Don't close this terminal during update${NC}\n"
-    echo -e "\bi${BLUE}::Current Version : $VERSION${NC}"
-    echo -e "\bi${BLUE}::Latest Version : $REPO_VERSION${NC}"
-    printf "${BLUE}::${NC} Updating Epidots (${BRANCH})...  "
+    echo -e "=\b${RED}==== EPIDOTS UPDATE ====${NC}"
+    echo -e "\b${RED}/!\\ Don't close this terminal during update${NC}"
+    echo -e "\b${BLUE}::Current Version : $VERSION${NC}"
+    echo -e "\b${BLUE}::Latest Version : $REPO_VERSION${NC}"
+    echo -ne "${BLUE}::${NC} Updating Epidots (${BRANCH})...  "
 
     err=$(mktemp)
 
@@ -55,7 +55,7 @@ post_update_handle_version0()
         AFS_DIR="$AFS" "$CONFS/install.sh"
         
         # Post-update version handler
-        if [ "$VERSION" -gt 0 ]; then
+        if [ "$VERSION" -eq 0 ]; then
             post_update_handle_version0
         fi
 
