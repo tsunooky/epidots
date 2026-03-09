@@ -54,7 +54,7 @@ if [ -f "$CONFS/config/matugen/pywalfox.json" ]; then
 fi
 
 dunstify -r "$IDB" -t 0 "Reloading i3..."
-if i3-msg reload > /dev/null 2>&1; then
+if i3-msg restart > /dev/null 2>&1; then
     dunstify -r "$IDB" -t 0 "Reloading i3 [OK]"
 else
     dunstify -r "$IDB" -t 0 "Reloading i3 [SKIP]"
