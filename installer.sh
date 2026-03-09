@@ -1,19 +1,19 @@
 #!/bin/sh
 
+BRANCH="dev"
+REPO_URL="https://github.com/tsunooky/epidots.git"
+TARGET_DIR="$HOME/epidots"
+
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
-GRAY='\033[0;90m'
+RED='\033[0;31m'
 NC='\033[0m'
-REPO_URL="https://github.com/tsunooky/epidots.git"
-TARGET_DIR=~/epidots
 
-echo -e "${BLUE}=== EPIDOTS BOOTSTRAP ===${NC}"
-
-printf "${BLUE}::${NC} Cloning repository...             "
-if git clone "$REPO_URL" "$TARGET_DIR" > /dev/null 2>&1; then
-    echo -e "${GREEN}[OK]${NC}"
+printf "${BLUE}::${NC} %-42s" "Cloning repository (${BRANCH})..."
+if git clone -b "$BRANCH" "$REPO_URL" "$TARGET_DIR" > /dev/null 2>&1; then
+    printf "[${GREEN}OK${NC}]\n"
 else
-    echo -e "\033[0;31m[FAIL]${NC}"
+    printf "[${RED}KO${NC}]\n"
     exit 1
 fi
 

@@ -1,0 +1,40 @@
+[[ $- != *i* ]] && return
+
+# --- Run zsh ---
+if [ -x "$HOME/.nix-profile/bin/zsh" ]; then
+    if [[ $- == *i* ]]; then
+        export SHELL="$HOME/.nix-profile/bin/zsh"
+        exec "$HOME/.nix-profile/bin/zsh" -l
+    fi
+else
+    echo "Zsh failed. Try to update-conf and reboot to fix this."
+fi
+
+# --- Default Epita configuration ---
+export PGDATA="$HOME/postgres_data"
+export PGHOST="/tmp"
+
+if [ -d ~/afs/bin ] ; then
+    export PATH=~/afs/bin:$PATH
+fi
+if [ -d ~/.local/bin ] ; then
+    export PATH=~/.local/bin:$PATH
+fi
+
+export LANG=en_US.utf8
+export NNTPSERVER="news.epita.fr"
+export EDITOR=vim
+
+alias ls='ls --color=auto'
+alias grep='grep --color -n'
+PS1='[\u@\h \W]\$ '
+
+# --- CONFIG ---
+update-conf() {
+    sh "$HOME/afs/.confs/scripts/system/update_epidots.sh"
+    if [ $? -eq 0 ]; then
+        source ~/.zshrc > /dev/null 2>&1
+    fi
+}
+
+alias reset-conf="$HOME/afs/.confs/scripts/system/remove_epidots.sh"

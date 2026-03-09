@@ -2,69 +2,78 @@
 
 set -e
 
-AFS_DIR=~/afs/.confs
+AFS="$HOME/afs"
+CONFS="$AFS/.confs"
+WALLPAPERS="$CONFS/wallpapers"
 CONFIG_SRC="Config"
-REPO_DIR=~/epidots
-WALLPAPER_REPO="https://github.com/tsunooky/epidots-wallpapers.git"
+REPO_DIR="$HOME/epidots"
+REPO_WALLPAPER="https://github.com/tsunooky/epidots-wallpapers.git"
 
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
-GRAY='\033[0;90m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-STEP=1
-TOTAL_STEPS=7
+clear
 
-run_step() {
-    local description=$1
-    local command=$2
+echo -e "${BLUE} /\$\$\$\$\$\$\$\$           /\$\$       /\$\$             /\$\$             ${NC}";
+echo -e "${BLUE}| \$\$_____/          |__/      | \$\$            | \$\$             ${NC}";
+echo -e "${BLUE}| \$\$        /\$\$\$\$\$\$  /\$\$  /\$\$\$\$\$\$\$  /\$\$\$\$\$\$  /\$\$\$\$\$\$   /\$\$\$\$\$\$\$${NC}";
+echo -e "${BLUE}| \$\$\$\$\$    /\$\$__  \$\$| \$\$ /\$\$__  \$\$ /\$\$__  \$\$|_  \$\$_/  /\$\$_____/${NC}";
+echo -e "${BLUE}| \$\$__/   | \$\$  \\ \$\$| \$\$| \$\$  | \$\$| \$\$  \\ \$\$  | \$\$   |  \$\$\$\$\$\$ ${NC}";
+echo -e "${BLUE}| \$\$      | \$\$  | \$\$| \$\$| \$\$  | \$\$| \$\$  | \$\$  | \$\$ /\$\$\\____  \$\$${NC}";
+echo -e "${BLUE}| \$\$\$\$\$\$\$\$| \$\$\$\$\$\$\$/| \$\$|  \$\$\$\$\$\$\$|  \$\$\$\$\$\$/  |  \$\$\$\$//\$\$\$\$\$\$\$/${NC}";
+echo -e "${BLUE}|________/| \$\$____/ |__/ \\_______/ \\______/    \\___/ |_______/ ${NC}";
+echo -e "${BLUE}          | \$\$                                                 ${NC}";
+echo -e "${BLUE}          | \$\$                                                 ${NC}";
+echo -e "${BLUE}          |__/                                                 ${NC}";
 
-    printf "${BLUE}[%d/%d]${NC} %-40s " "$STEP" "$TOTAL_STEPS" "$description..."
+printf "${BLUE}::${NC} %-42s" "Deploying config to AFS..."
+mkdir -p "$CONFS" && cp -r "$CONFIG_SRC/"* "$CONFS/"
+cp "version" "$CONFS/epidots/version" # Move Version
+printf "[${GREEN}OK${NC}]\n"
 
-    if eval "$command" > /dev/null 2>&1; then
-        echo -e "${GREEN}[OK]${NC}"
-    else
-        echo -e "${RED}[FAIL]${NC}"
-    fi
+printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers..."
+if [ ! -d "$WALLPAPERS" ]; then
+    git clone "$REPO_WALLPAPER" "$WALLPAPERS" > /dev/null 2>&1
+    rm -rf "$WALLPAPERS/.git" > /dev/null 2>&1
+fi
+printf "[${GREEN}OK${NC}]\n"
 
-    STEP=$((STEP + 1))
-}
+printf "${BLUE}::${NC} %-42s" "Downloading Vundle plugin manager..."
+if [ ! -d "$CONFS/vim/bundle/Vundle.vim" ]; then
+    mkdir -p "$CONFS/vim/bundle" && git clone https://github.com/VundleVim/Vundle.vim.git "$CONFS/vim/bundle/Vundle.vim" > /dev/null 2>&1
+fi
+printf "[${GREEN}OK${NC}]\n"
 
-echo -e "${BLUE}=== EPIDOTS SETUP ===${NC}"
+printf "${BLUE}::${NC} %-42s" "Installing Vim plugins..."
+vim +PluginInstall +qall > /dev/null 2>&1
+printf "[${GREEN}OK${NC}]\n"
 
-run_step "Deploying config to AFS" \
-    "mkdir -p \"$AFS_DIR\" && cp -r \"$CONFIG_SRC/\"* \"$AFS_DIR/\""
+printf "${BLUE}::${NC} %-42s" "Setting default wallpaper..."
+feh --bg-fill "$WALLPAPERS/default.jpg" && cp "$HOME/.fehbg" "$CONFS/"
+printf "[${GREEN}OK${NC}]\n"
 
-run_step "Downloading Default Wallpapers" \
-    "if [ ! -d \"$AFS_DIR/wallpapers\" ]; then \
-        git clone \"$WALLPAPER_REPO\" \"$AFS_DIR/wallpapers\" && \
-        rm -rf \"$AFS_DIR/wallpapers/.git\"; \
-    else \
-        echo \"[SKIP] Folder already exists\"; \
-    fi"
+printf "${BLUE}::${NC} %-42s" "Restoring user backup files..."
+[ -d "$AFS/user_scripts" ] && mv "$AFS/user_scripts/"* "$CONFS/scripts/startup_scripts/" 2>/dev/null && rm -rf "$AFS/user_scripts"
+[ -d "$AFS/user_wallpapers" ] && mv "$AFS/user_wallpapers/"* "$WALLPAPERS/" 2>/dev/null && rm -rf "$AFS/user_wallpapers"
 
-run_step "Installing Vim plugins" \
-    "vim +PluginInstall +qall"
+if [ -f "$AFS/user_zshrc/zshrc" ]; then
+    cp "$AFS/user_zshrc/zshrc" "$CONFS/zshrc"
+    rm -rf "$AFS/user_zshrc"
+fi
+printf "[${GREEN}OK${NC}]\n"
 
-DEFAULT_WALL="$AFS_DIR/wallpapers/default.jpg"
-run_step "Setting default wallpaper" \
-    "feh --bg-fill \"$DEFAULT_WALL\" && cp ~/.fehbg \"$AFS_DIR/\""
+printf "${BLUE}::${NC} %-42s" "Cleaning up installation files..."
+cd "$HOME" && rm -rf "$REPO_DIR"
+printf "[${GREEN}OK${NC}]\n"
 
-run_step "Reloading i3 window manager" \
-    "i3-msg restart"
+printf "${BLUE}::${NC} Be sure to have ${BLUE}Pywalfox extension${NC} installed to theme Firefox accordingly to your wallpaper.\n"
+firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/ > /dev/null 2>&1 &
 
-run_step "! Check pywalfox extension for firefox color theming !" \
-    "firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/"
+printf "\n${BLUE}┌──────────────────────────────────────────┐${NC}\n"
+printf "${BLUE}│         INSTALLATION COMPLETED !         │${NC}\n"
+printf "${BLUE}│      Please logout and reconnect...      │${NC}\n"
+printf "${BLUE}└──────────────────────────────────────────┘${NC}\n\n"
 
-run_step "Cleaning up installation files" \
-    "cd ~ && rm -rf \"$REPO_DIR\""
-
-echo ""
-echo -e "${GREEN}=======================================${NC}"
-echo -e "${GREEN}        Installation Complete!         ${NC}"
-echo -e "${GREEN}     Please logout and reconnect...    ${NC}"
-echo -e "${GREEN}=======================================${NC}"
-echo ""
-
-i3-nagbar -t warning -m 'Epidots installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &
+i3-nagbar -t warning -m 'Epidots is installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &

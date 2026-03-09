@@ -84,18 +84,6 @@ nnoremap <C-t> :NERDTreeToggle<CR>
 
 :inoremap { {}<Left>
 
-:inoremap @for for (size_t i = 0; i < ; i++)<CR><BS>{<CR><BS>}<Left><CR><Up><Tab><Up><Up><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right><Right>
-:inoremap @jfor for (size_t j = 0; j < size; j++)<CR><BS>{<CR><BS>}<Left><CR><Up><Tab>
-:inoremap @kfor for (size_t k = 0; k < size; k++)<CR><BS>{<CR><BS>}<Left><CR><Up><Tab>
-:inoremap @while while ()<CR><BS>{<CR><BS>}<Up><CR>a<BS><Up><Up><Right><Right><Right>
-:inoremap @if if ()<CR><BS>{<CR><BS>}<Up><CR>a<BS><Up><Up>
-:inoremap @elif else if ()<CR><BS>{<CR><BS>}<Up><CR>a<BS><Up><Up><Right><Right><Right><Right><Right>
-:inoremap @else else<CR><BS>{<CR><BS>}<Up><CR>a<BS>
-:inoremap @marg int main(int argc, char *argv[])<CR><BS>{<CR><BS>}<Left><CR><Up><Tab>return 0;<Up><CR>
-::noremap @main int main(void)<CR><BS>{<CR><BS>}<Left><CR><Up><Tab>return 0;<Up><CR>
-:inoremap @pf printf("\n");<Left><Left><Left><Left><Left>
-:inoremap @struct struct <CR>{<CR>};<Up><Up><Right><Right><Right><Right><Right>
-
 " --- Colors & Highlights ---
 highlight Search cterm=bold ctermfg=lightblue ctermbg=NONE
 highlight IncSearch cterm=bold,underline ctermfg=lightblue ctermbg=NONE
