@@ -21,6 +21,7 @@ if [ ! -x "$HOME/.nix-profile/bin/zsh" ] || [ ! -x "$HOME/.nix-profile/bin/rofi"
     nixpkgs#dunst
     nixpkgs#pywal
     nixpkgs#pywalfox-native
+    nixpkgs#picom
     "
 
     nix profile install $PACKAGES --impure > /dev/null 2>&1
