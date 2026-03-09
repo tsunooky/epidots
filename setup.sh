@@ -5,7 +5,7 @@ set -e
 AFS="$HOME/afs"
 CONFS="$AFS/.confs"
 WALLPAPERS="$CONFS/wallpapers"
-CONFIG_SRC="confs"
+CONFIG_SRC="Config"
 REPO_DIR="$HOME/epidots"
 REPO_WALLPAPER="https://github.com/tsunooky/epidots-wallpapers.git"
 
