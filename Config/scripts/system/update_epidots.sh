@@ -25,8 +25,8 @@ post_update_handle_version0()
 
     echo -e "=\b${RED}==== EPIDOTS UPDATE ====${NC}"
     echo -e "\b${RED}/!\\ Don't close this terminal during update${NC}"
-    echo -e "\b${BLUE}::Current Version : $VERSION${NC}"
-    echo -e "\b${BLUE}::Latest Version : $REPO_VERSION${NC}"
+    echo -e "\b${BLUE}:: Current Version : $VERSION${NC}"
+    echo -e "\b${BLUE}:: Latest Version : $REPO_VERSION${NC}"
     echo -ne "${BLUE}::${NC} Updating Epidots (${BRANCH})...  "
 
     err=$(mktemp)
@@ -81,11 +81,11 @@ post_update_handle_version0()
 
     if [ $EXIT_CODE -eq 0 ]; then
         rm -f "$err"
-        printf "\b[${GREEN}OK${NC}]\n"
+        echo -e "\b[${GREEN}OK${NC}]"
 
         i3-msg restart >/dev/null 2>&1
     else
-        printf "\b[${RED}KO${NC}]\n"
+        echo -e "\b[${RED}KO${NC}]"
         cat "$err"
         rm -f "$err"
         exit 1
