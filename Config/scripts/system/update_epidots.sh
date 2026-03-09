@@ -12,8 +12,8 @@ fi
 
 pre_update_handle_version0()
 {
-    rm -rf "$tmp/confs/zshrc"
-    rm -rf "$tmp/confs/bashrc"
+    rm -rf "$CONFS/zshrc"
+    rm -rf "$CONFS/bashrc"
 
     TMP_STARTUP_SCRIPTS_SAVE="/tmp/tmp_startup_scripts_save"
     rm -rf "$TMP_STARTUP_SCRIPTS_SAVE"
@@ -52,6 +52,13 @@ post_update_handle_version0()
         # Pre-update version handler
         if [ "$VERSION" -eq 0 ]; then
             pre_update_handle_version0
+        fi
+
+        if [ -f "$CONFS/bashrc" ]; then
+            rm -rf "$tmp/$CONFIG_DIR/bashrc"
+        fi
+        if [ -f "$CONFS/zshrc" ]; then
+            rm -rf "$tmp/$CONFIG_DIR/zshrc"
         fi
 
         cp -r "$tmp/$CONFIG_DIR/"* "$CONFS/"
