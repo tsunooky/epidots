@@ -3,6 +3,13 @@
 source "$HOME/afs/.confs/scripts/globals.sh"
 CONFIG_DIR="Config"
 
+used=$(fs quota "$HOME/afs" 2>/dev/null | cut -d'%' -f1 | tr -d ' ')
+if [ "$used" -ge 95 ]; then
+    printf "${BLUE}::${NC} %-42s[${RED}KO${NC}]\n" "Checking AFS quota"
+    printf "${RED}Error: AFS quota is at ${used}%%. Please run 'clean-afs' before updating.${NC}\n"
+    exit 1
+fi
+
 pre_update_handle_version0()
 {
     rm -rf "$tmp/confs/zshrc"
