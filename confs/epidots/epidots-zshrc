@@ -208,9 +208,9 @@ extpls() {
         setopt local_options no_nomatch
     fi
 
-    mv "$HOME/Downloads/"*.{tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
+    mv "$HOME/Downloads/"*.{tgz,tar,bz2,gz,tbz2,zip,Z,rar,7z} . 2> /dev/null
 
-    for ext in tar bz2 gz tbz2 zip Z rar 7z; do
+    for ext in tgz tar bz2 gz tbz2 zip Z rar 7z; do
         for file in *.$ext; do
             if [ -f "$file" ]; then
                 extract "$file"
