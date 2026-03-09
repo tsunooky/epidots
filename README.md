@@ -1,15 +1,12 @@
 # 💠 Epidots
 
-A clean, automated, and aesthetic **NixOS** configuration designed specifically for **EPITA** school computers.
+A clean, automated, and aesthetic **NixOS** configuration designed specifically for **EPITA** school computers. It is inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles).
 
-This setup enhances the default environment with terminal auto-completion, a modern status bar, cool menus, custom Vim and Neovim configuration, and dynamic color theming using **Matugen**.
+This setup enhances the default environment with terminal auto-completion, a modern status bar, cool menus, custom Vim and Neovim configs, and dynamic color theming using **Matugen**.
 
-Inspired by my [**Arch Linux dotfiles**](https://github.com/tsunooky/dotfiles) and [**Epiconf**](https://github.com/ilil2/Epiconf) for the vimrc.
+[**Join the Discord server !**](https://discord.gg/ftsGDqBfWY) (Important in case of problems)
 
-[**Join the Discord Server**](https://discord.gg/G7MNkdDFD9) (Important in case of any critical problem!)
-
-> **⚠️ If you run into a problem:** Run `update-conf`, `reboot`, and check if the problem persists.
-> To restore default EPITA configuration, run `reset-conf`.
+> **⚠️ If you run into a problem:** Run `update-conf`, `reboot`, and check if the problem persists. To restore default EPITA configuration, run `reset-conf`.
 
 ## 📦 Installation
 
@@ -146,4 +143,4 @@ reset-conf
 
 ## 📩 Contact
 
-If you encounter any kind of problem or have any suggestion about Epidots, feel free to report it on the [Discord Server](https://discord.gg/G7MNkdDFD9).
+If you encounter any kind of problem or have any suggestion about Epidots, feel free to report it on the [Discord Server](https://discord.gg/ftsGDqBfWY).
