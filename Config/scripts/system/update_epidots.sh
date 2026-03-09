@@ -1,6 +1,7 @@
 #!/bin/sh
 
 source "$HOME/afs/.confs/scripts/globals.sh"
+CONFIG_DIR="Config"
 
 pre_update_handle_version0()
 {
@@ -9,18 +10,16 @@ pre_update_handle_version0()
 
     TMP_STARTUP_SCRIPTS_SAVE="/tmp/tmp_startup_scripts_save"
     mkdir "$TMP_STARTUP_SCRIPTS_SAVE"
-    cp "$CONFIG/scripts/startup_scripts/*" "$TMP_STARTUP_SCRIPTS_SAVE/"
+    cp "$CONFIG/scripts/startup_scripts" "$TMP_STARTUP_SCRIPTS_SAVE" -r
 
     rm -rf "$CONFIG/scripts"
 
 }
 post_update_handle_version0()
 {
-    cp "$TMP_STARTUP_SCRIPTS_SAVE/*" "$SCRIPTS/startup_scripts/"
+    cp "$TMP_STARTUP_SCRIPTS_SAVE" "$SCRIPTS/startup_scripts" -r
     rm -rf "$TMP_STARTUP_SCRIPTS_SAVE"
 }
-
-
 
 {
 
@@ -43,7 +42,7 @@ post_update_handle_version0()
             pre_update_handle_version0
         fi
 
-        cp -r "$tmp/confs/"* "$CONFS/"
+        cp -r "$tmp/$CONFIG_DIR/"* "$CONFS/"
         cp "$tmp/version" "$EPIDOTS/version" # Apply Version
 
         if [ -f "$CONFS/.alt" ]; then
