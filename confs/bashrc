@@ -1,2 +1,2 @@
-source "~/afs/.confs/epidots/bashrc" # Keep this line
+source "~/afs/.confs/epidots/epidots-bashrc" # Keep this line
 # This is the user bashrc, this file will never be overwrite by an update
