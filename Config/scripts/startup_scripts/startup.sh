@@ -33,7 +33,11 @@ if [ ! -x "$HOME/.nix-profile/bin/bat" ]; then
     nixpkgs#ripgrep
     nixpkgs#flameshot
     "
-    nix profile install $PACKAGES --impure > /dev/null 2>&1
+    if nix profile install $PACKAGES --impure > /dev/null 2>&1; then
+        dunstify -r "$IDB" -t 5000 "Packages installed [OK]"
+    else
+        dunstify -r "$IDB" -u critical "Packages installation [FAIL]"
+    fi
 fi
 
 if [ ! -d "$HOME/.local/share/nvim/lazy" ]; then
@@ -46,21 +50,18 @@ if [ -f "$CONFS/config/matugen/pywalfox.json" ]; then
 
     dunstify -r "$IDB" -t 0 "Configuring Pywalfox..."
     if command -v pywalfox > /dev/null 2>&1 && pywalfox install > /dev/null 2>&1; then
-        dunstify -r "$IDB" "Configuring Pywalfox [OK]"
+        dunstify -r "$IDB" -t 3000 "Configuring Pywalfox [OK]"
     else
-        dunstify -C "$IDB"
         dunstify -u critical "Configuring Pywalfox [FAIL]"
     fi
 fi
 
 dunstify -r "$IDB" -t 0 "Reloading i3..."
 if i3-msg restart > /dev/null 2>&1; then
-    dunstify -r "$IDB" -t 0 "Reloading i3 [OK]"
+    dunstify -r "$IDB" -t 3000 "Reloading i3 [OK]"
 else
-    dunstify -r "$IDB" -t 0 "Reloading i3 [SKIP]"
+    dunstify -r "$IDB" -t 3000 "Reloading i3 [SKIP]"
 fi
-
-dunstify -r "$IDB" -t 0 "All done!"
 
 LOG_FILE="/tmp/startup_scripts.log"
 echo "===== STARTUP LOG =====" > "$LOG_FILE"
@@ -73,10 +74,9 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
         if [ "$fname" != "startup.sh" ] && [ "$fname" != "aklogger.sh" ] && [ "$fname" != "check_update.sh" ]; then
             chmod +x "$f"
             echo "===== LOG $fname =====" >> "$LOG_FILE"
-            dunstify -r "$IDB" -t 0 "Execution startup script : $fname"
+            dunstify -r "$IDB" -t 0 "Execution : $fname"
             if ! "$f" >> "$LOG_FILE" 2>&1; then
-                dunstify -C "$IDB"
-                dunstify -u critical "Error executing : $fname" "See log in $LOG_FILE"
+                dunstify -u critical "Error executing : $fname" "See $LOG_FILE"
             fi
         fi
     done
@@ -85,5 +85,6 @@ if [ -d "$SCRIPTS/startup_scripts" ]; then
     [ -f "$SCRIPTS/startup_scripts/check_update.sh" ] && sh "$SCRIPTS/startup_scripts/check_update.sh" > /dev/null 2>&1 &
 fi
 
-dunstify -C "$IDB"
+dunstify -r "$IDB" -t 5000 "All done! System ready."
+sleep 5
 dunstify -C "$IDA"
