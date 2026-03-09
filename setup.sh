@@ -14,6 +14,8 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+clear
+
 echo -e "${BLUE} /\$\$\$\$\$\$\$\$           /\$\$       /\$\$             /\$\$             ${NC}";
 echo -e "${BLUE}| \$\$_____/          |__/      | \$\$            | \$\$             ${NC}";
 echo -e "${BLUE}| \$\$        /\$\$\$\$\$\$  /\$\$  /\$\$\$\$\$\$\$  /\$\$\$\$\$\$  /\$\$\$\$\$\$   /\$\$\$\$\$\$\$${NC}";
@@ -31,10 +33,12 @@ mkdir -p "$CONFS" && cp -r "$CONFIG_SRC/"* "$CONFS/"
 cp "version" "$CONFS/epidots/version" # Move Version
 printf "[${GREEN}OK${NC}]\n"
 
-printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers..."
+printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers...\n"
 if [ ! -d "$WALLPAPERS" ]; then
     git clone "$REPO_WALLPAPER" "$WALLPAPERS" && rm -rf "$WALLPAPERS/.git" > /dev/null 2>&1
 fi
+
+printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers "
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Downloading Vundle plugin manager..."
