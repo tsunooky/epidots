@@ -22,7 +22,7 @@ pre_update_handle_version0()
     cp -r "$CONFIG/scripts/startup_scripts/." "$TMP_STARTUP_SCRIPTS_SAVE/"
 
     rm -rf "$CONFIG/scripts"
-
+    rm -rf "$CONFS/startup.sh"
 }
 post_update_handle_version0()
 {
