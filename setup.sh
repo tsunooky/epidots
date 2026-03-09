@@ -33,17 +33,16 @@ mkdir -p "$CONFS" && cp -r "$CONFIG_SRC/"* "$CONFS/"
 cp "version" "$CONFS/epidots/version" # Move Version
 printf "[${GREEN}OK${NC}]\n"
 
-printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers...\n"
+printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers..."
 if [ ! -d "$WALLPAPERS" ]; then
-    git clone "$REPO_WALLPAPER" "$WALLPAPERS" && rm -rf "$WALLPAPERS/.git" > /dev/null 2>&1
+    git clone "$REPO_WALLPAPER" "$WALLPAPERS" > /dev/null 2>&1
+    rm -rf "$WALLPAPERS/.git" > /dev/null 2>&1
 fi
-
-printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers "
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Downloading Vundle plugin manager..."
 if [ ! -d "$CONFS/vim/bundle/Vundle.vim" ]; then
-    mkdir -p "$CONFS/vim/bundle" && git clone https://github.com/VundleVim/Vundle.vim.git "$CONFS/vim/bundle/Vundle.vim"
+    mkdir -p "$CONFS/vim/bundle" && git clone https://github.com/VundleVim/Vundle.vim.git "$CONFS/vim/bundle/Vundle.vim" > /dev/null 2>&1
 fi
 printf "[${GREEN}OK${NC}]\n"
 
@@ -58,13 +57,18 @@ printf "[${GREEN}OK${NC}]\n"
 printf "${BLUE}::${NC} %-42s" "Restoring user backup files..."
 [ -d "$AFS/user_scripts" ] && mv "$AFS/user_scripts/"* "$CONFS/scripts/startup_scripts/" 2>/dev/null && rm -rf "$AFS/user_scripts"
 [ -d "$AFS/user_wallpapers" ] && mv "$AFS/user_wallpapers/"* "$WALLPAPERS/" 2>/dev/null && rm -rf "$AFS/user_wallpapers"
+
+if [ -f "$AFS/user_zshrc/zshrc" ]; then
+    cp "$AFS/user_zshrc/zshrc" "$CONFS/zshrc"
+    rm -rf "$AFS/user_zshrc"
+fi
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Cleaning up installation files..."
 cd "$HOME" && rm -rf "$REPO_DIR"
 printf "[${GREEN}OK${NC}]\n"
 
-printf "${BLUE}::${NC} Be sure to have ${RED}Pywalfox${BLUE} installed to theme Firefox accordingly to your wallpaper.\n"
+printf "${BLUE}::${NC} Be sure to have ${BLUE}Pywalfox extension${NC} installed to theme Firefox accordingly to your wallpaper.\n"
 firefox https://addons.mozilla.org/en-US/firefox/addon/pywalfox/ > /dev/null 2>&1 &
 
 printf "\n${BLUE}┌──────────────────────────────────────────┐${NC}\n"
@@ -72,4 +76,4 @@ printf "${BLUE}│         INSTALLATION COMPLETED !         │${NC}\n"
 printf "${BLUE}│      Please logout and reconnect...      │${NC}\n"
 printf "${BLUE}└──────────────────────────────────────────┘${NC}\n\n"
 
-i3-nagbar -t warning -m 'Epidots installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &
+i3-nagbar -t warning -m 'Epidots is installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &

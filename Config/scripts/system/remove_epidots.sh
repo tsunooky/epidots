@@ -20,9 +20,17 @@
     fi
 
     printf "${BLUE}::${NC} %-42s" "Backing up user files..."
+    
+    if [ -f "$CONFS/zshrc" ]; then
+        mkdir -p "$AFS/user_zshrc"
+        if ! cmp -s "$CONFS/zshrc" "$tmp_chk/main/Config/zshrc"; then
+            cp "$CONFS/zshrc" "$AFS/user_zshrc/zshrc"
+        fi
+    fi
+
     if [ -d "$SCRIPTS/startup_scripts" ]; then
         mkdir -p "$AFS/user_scripts"
-        ls "$tmp_chk/main/confs/scripts/startup_scripts" > "$tmp_chk/defaults_scripts.txt"
+        ls "$tmp_chk/main/Config/scripts/startup_scripts" > "$tmp_chk/defaults_scripts.txt" 2>/dev/null
         
         for sc in "$SCRIPTS/startup_scripts"/*; do
             [ -e "$sc" ] || continue
@@ -35,7 +43,7 @@
 
     if [ -d "$WALLPAPERS" ]; then
         mkdir -p "$AFS/user_wallpapers"
-        ls "$tmp_chk/walls" > "$tmp_chk/defaults_walls.txt"
+        ls "$tmp_chk/walls" > "$tmp_chk/defaults_walls.txt" 2>/dev/null
 
         for wp in "$WALLPAPERS"/*; do
             [ -e "$wp" ] || continue

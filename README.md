@@ -153,7 +153,7 @@ To remove Epidots and restore the default EPITA configuration :
 ```bash
 reset-conf
 ```
->This move your custom added scripts/wallpapers to ~/afs/user_scripts/ and ~/afs/user_wallpapers/
+>This saves your custom zshrc, wallpapers and startup scripts to ~/afs/user_...
 
 ## 📩 Contact
 
