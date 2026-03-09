@@ -1,2 +1,4 @@
 source "$HOME/afs/.confs/epidots/epidots-zshrc" # Keep this line
 # This is the user zshrc, this file will never be overwrite by an update
+
+
