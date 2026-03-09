@@ -1,5 +1,5 @@
 # BRANCH
-BRANCH="dev"
+BRANCH="main"
 
 # COLORS
 BLACK="\033[30m"

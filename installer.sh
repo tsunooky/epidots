@@ -1,6 +1,6 @@
 #!/bin/sh
 
-BRANCH="dev"
+BRANCH="main"
 REPO_URL="https://github.com/tsunooky/epidots.git"
 TARGET_DIR="$HOME/epidots"
 
