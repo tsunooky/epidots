@@ -30,7 +30,7 @@ echo -e "${BLUE}          |__/                                                 $
 
 printf "${BLUE}::${NC} %-42s" "Deploying config to AFS..."
 mkdir -p "$CONFS" && cp -r "$CONFIG_SRC/"* "$CONFS/"
-cp "version" "$CONFS/epidots/version" # Move Version
+cp "version" "$CONFS/epidots/version"
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Downloading Default Wallpapers..."

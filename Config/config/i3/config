@@ -15,7 +15,6 @@ include ~/.config/i3/colors.conf
 
 # Set windows that are floating by default
 for_window [class="float_window"] floating enable, rezise set 800 600, move position center
-for_window [class="check_presence"] floating enable, rezise set 1200 800, move position center
 for_window [class="blueman-manager"] floating enable
 for_window [class="pavucontrol"] floating enable
 for_window [title="fbgif"] floating enable, border none, sticky enable, focus mode_toggle, resize set 1920 1080, move position center

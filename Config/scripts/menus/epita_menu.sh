@@ -39,7 +39,7 @@ case ${chosen} in
         if [ -f "$PRESENCE_FILE" ]; then
             url=$(cat "$PRESENCE_FILE")
             if [ -n "$url" ]; then
-                firefox --class "check_presence" --new-window "$url" &
+                firefox "$url" &
             else
                 notify-send "Error" "The link is empty. Please use 'Set Check Presence'."
             fi
