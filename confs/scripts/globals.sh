@@ -25,6 +25,7 @@ AFS="$HOME/afs"
 CONFS="$AFS/.confs"
 CONFIG="$CONFS/config"
 SCRIPTS="$CONFS/scripts"
+EPIDOTS="$CONFS/epidots"
 WALLPAPERS="$CONFS/wallpapers"
 
 # URLS
@@ -33,14 +34,14 @@ REPO_WALLPAPER="https://github.com/tsunooky/epidots-wallpapers.git"
 RAW_REPO_EPIDOTS="https://raw.githubusercontent.com/tsunooky/epidots/refs/heads/$BRANCH/"
 
 # VERSION
-VERSION_FILE="$AFS/.version"
+VERSION_FILE="$EPIDOTS/version"
 VERSION=0
 
 if [ -f $VERSION_FILE ]; then
     VERSION=$(cat "$VERSION_FILE")
 fi
 
-REPO_VERSION_FILE="/tmp/epidots_repo_version"i
+REPO_VERSION_FILE="/tmp/epidots_repo_version"
 if ! [ -f "$REPO_VERSION_FILE" ]; then
     curl -Ls "$RAW_REPO_EPIDOTS/confs/epidots/version" > "$REPO_VERSION_FILE"
 fi

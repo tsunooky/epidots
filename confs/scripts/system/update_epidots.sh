@@ -44,6 +44,7 @@ post_update_handle_version0()
         fi
 
         cp -r "$tmp/confs/"* "$CONFS/"
+        cp "$tmp/version" "$EPIDOTS/version" # Apply Version
 
         if [ -f "$CONFS/.alt" ]; then
             sed -i 's/set $mod Mod4/set $mod Mod1/' "$CONFS/config/i3/config"
