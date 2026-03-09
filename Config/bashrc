@@ -1,2 +1,5 @@
 source "$HOME/afs/.confs/epidots/epidots-bashrc" # Keep this line
 # This is the user bashrc, this file will never be overwrite by an update
+#
+# /!\ This file is run only if Zsh failed,
+# if you want to customize your shell use zshrc instead
