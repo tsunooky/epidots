@@ -16,15 +16,20 @@ pre_update_handle_version0()
     rm -rf "$tmp/confs/bashrc"
 
     TMP_STARTUP_SCRIPTS_SAVE="/tmp/tmp_startup_scripts_save"
-    mkdir "$TMP_STARTUP_SCRIPTS_SAVE"
-    cp "$CONFIG/scripts/startup_scripts" "$TMP_STARTUP_SCRIPTS_SAVE" -r
+    rm -rf "$TMP_STARTUP_SCRIPTS_SAVE"
+    mkdir -p "$TMP_STARTUP_SCRIPTS_SAVE"
+
+    cp -r "$CONFIG/scripts/startup_scripts/." "$TMP_STARTUP_SCRIPTS_SAVE/"
 
     rm -rf "$CONFIG/scripts"
 
 }
 post_update_handle_version0()
 {
-    cp "$TMP_STARTUP_SCRIPTS_SAVE" "$SCRIPTS/startup_scripts" -r
+    mkdir -p "$SCRIPTS/startup_scripts"
+
+    cp -r "$TMP_STARTUP_SCRIPTS_SAVE/." "$SCRIPTS/startup_scripts/"
+
     rm -rf "$TMP_STARTUP_SCRIPTS_SAVE"
 }
 
