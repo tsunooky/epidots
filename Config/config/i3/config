@@ -9,6 +9,7 @@ set $confs ~/afs/.confs
 set $config ~/afs/.confs/config
 set $scripts ~/afs/.confs/scripts
 set $wallpapers ~/afs/.confs/wallpapers
+set $i3lock ~/afs/.confs/scripts/system/i3lock.sh
 
 # Import matugen generated colors
 include ~/.config/i3/colors.conf
@@ -34,7 +35,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # Run i3lock screen after 5 minutes of inactivity
 exec --no-startup-id xset s 300 300
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $i3lock --nofork
 
 # Launch autotiling to have a better automatic window tiling
 exec_always --no-startup-id autotiling
@@ -52,7 +53,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id $confs/.fehbg
 
 # Locks the screen with i3lock after a certain time
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $i3lock
 
 # ---------- General i3 settings and keybinds ----------
 
@@ -78,8 +79,8 @@ bindsym $mod+Ctrl+f exec --no-startup-id $script/flashbang/flashbang.sh
 bindsym $mod+Shift+w exec --no-startup-id tree $wallpapers > /dev/null 2>&1 && $scripts/menus/wallpaper_menu.sh
 
 # i3lock
-bindsym $mod+i exec --no-startup-id i3lock
-bindsym $mod+l exec --no-startup-id i3lock
+bindsym $mod+i exec --no-startup-id $i3lock
+bindsym $mod+l exec --no-startup-id $i3lock
 
 # Start a terminal in AFS
 bindsym $mod+Return exec --no-startup-id exec $scripts/system/open_afs.sh
