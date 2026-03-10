@@ -3,7 +3,7 @@
 source "$HOME/afs/.confs/scripts/globals.sh"
 
 nohup firefox intra.forge.epita.fr > /dev/null 2>&1 &
-#nohup "$SCRIPTS/system/open_afs.sh" &
+nohup "$SCRIPTS/system/open_afs.sh" &
 
 IDA=42
 IDB=43
