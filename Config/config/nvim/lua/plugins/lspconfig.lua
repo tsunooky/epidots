@@ -9,7 +9,7 @@ return {
                 prefix = "●",
                 spacing = 4,
             },
-            signs = true,
+            signs = false,
             update_in_insert = false,
             underline = true,
             severity_sort = true,

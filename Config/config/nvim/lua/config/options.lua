@@ -13,6 +13,9 @@ vim.opt.cursorlineopt = "number"
 vim.opt.list = true
 vim.opt.listchars = { tab = "▸ ", space = " " }
 
+-- sign column always visible
+vim.opt.signcolumn = "yes"
+
 -- Standard indentation settings
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 4
