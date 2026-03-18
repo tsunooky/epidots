@@ -69,6 +69,9 @@ font pango:JetBrains Mono 11
 floating_modifier $mod
 tiling_drag modifier titlebar
 
+# Focus link window on link opening
+focus_on_window_activation focus
+
 # Changes the wallpaper to a random one inside the wallpaper directory
 bindsym $mod+Shift+b exec --no-startup-id $scripts/wallpaper_scripts/random_wallpaper.sh
 
