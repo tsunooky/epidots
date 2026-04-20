@@ -37,8 +37,9 @@ export LANG=en_US.utf8
 export NNTPSERVER="news.epita.fr"
 export EDITOR=vim
 
-typeset -U path
-export PATH
+# nix develop fix
+#typeset -U path
+#export PATH
 
 # TAB colors
 if [ -x /usr/bin/dircolors ]; then
