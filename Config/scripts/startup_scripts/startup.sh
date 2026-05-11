@@ -7,6 +7,10 @@ IDB=43
 
 dunstify -r "$IDA" -t 0 "=== Epidots Startup ==="
 
+if [ -f "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" ]; then
+    sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" >/dev/null 2>&1
+fi
+
 if [ -f "$CONFS/config/matugen/pywalfox.json" ]; then
     mkdir -p "$HOME/.cache/wal"
     ln -sf "$CONFS/config/matugen/pywalfox.json" "$HOME/.cache/wal/colors.json"
@@ -21,10 +25,6 @@ fi
 
 nohup firefox intra.forge.epita.fr >/dev/null 2>&1 &
 nohup "$SCRIPTS/system/open_afs.sh" &
-
-if [ -f "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" ]; then
-    sh "$SCRIPTS/wallpaper_scripts/safe_change_wallpaper.sh" >/dev/null 2>&1
-fi
 
 if [ ! -x "$HOME/.nix-profile/bin/bat" ]; then
     dunstify -r "$IDB" -t 0 "Installing additional packages..."
