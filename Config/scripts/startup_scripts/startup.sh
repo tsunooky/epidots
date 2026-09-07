@@ -36,7 +36,7 @@ if [ ! -x "$HOME/.nix-profile/bin/bat" ]; then
     nixpkgs#pqiv
     nixpkgs#neovim
     nixpkgs#clang-tools
-    nixpkgs#nodePackages.bash-language-server
+    nixpkgs#bash-language-server
     nixpkgs#shfmt
     nixpkgs#cmake-language-server
     nixpkgs#cmake-format
