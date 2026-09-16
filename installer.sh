@@ -9,6 +9,8 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
+rm -rf "$TARGET_DIR"
+
 printf "${BLUE}::${NC} %-42s" "Cloning repository (${BRANCH})..."
 if git clone -b "$BRANCH" "$REPO_URL" "$TARGET_DIR" > /dev/null 2>&1; then
     printf "[${GREEN}OK${NC}]\n"
