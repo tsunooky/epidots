@@ -42,10 +42,17 @@ if [ -f $VERSION_FILE ]; then
 fi
 
 REPO_VERSION_FILE="/tmp/epidots_repo_version"
-if ! [ -f "$REPO_VERSION_FILE" ]; then
-    curl -Ls "$RAW_REPO_EPIDOTS/version" > "$REPO_VERSION_FILE"
+if ! [ -s "$REPO_VERSION_FILE" ]; then
+    fetched=$(curl -Lsf --max-time 3 "$RAW_REPO_EPIDOTS/version" 2>/dev/null | tr -d '[:space:]')
+    case "$fetched" in
+        ''|*[!0-9]*) ;;
+        *) echo "$fetched" > "$REPO_VERSION_FILE" ;;
+    esac
 fi
 
-REPO_VERSION="$(cat $REPO_VERSION_FILE)"
+REPO_VERSION=0
+if [ -s "$REPO_VERSION_FILE" ]; then
+    REPO_VERSION="$(cat "$REPO_VERSION_FILE")"
+fi
 
 
