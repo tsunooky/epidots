@@ -75,7 +75,7 @@ case ${chosen} in
         run_cmd --reboot
         ;;
     $lock)
-        i3lock
+        sh "$SCRIPTS/system/i3lock.sh"
         ;;
     $logout)
         run_cmd --logout
