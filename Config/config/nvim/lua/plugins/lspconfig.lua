@@ -15,15 +15,9 @@ return {
             severity_sort = true,
             float = {
                 border = "rounded",
-                source = "always",
+                source = true,
             },
         })
-
-        local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-        for type, icon in pairs(signs) do
-            local hl = "DiagnosticSign" .. type
-            vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-        end
 
         vim.api.nvim_create_autocmd("LspAttach", {
             group = vim.api.nvim_create_augroup("UserLspConfig", { clear = true }),
@@ -45,7 +39,7 @@ return {
 
         vim.lsp.config.clangd = vim.tbl_deep_extend("force", vim.lsp.config.clangd or {}, {
             capabilities = capabilities,
-            filetypes = { "c", "cpp", "cc", "cxx", "objc", "objcpp", "cuda", "h", "hh", "hpp", "hxx" },
+            filetypes = { "c", "cpp", "objc", "objcpp", "cuda" },
             cmd = {
                 "clangd",
                 "--background-index",
