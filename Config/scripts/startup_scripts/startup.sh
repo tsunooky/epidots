@@ -44,7 +44,7 @@ if [ ! -x "$HOME/.nix-profile/bin/bat" ]; then
     nixpkgs#ripgrep
     nixpkgs#flameshot
     "
-    if nix profile install $PACKAGES --impure >/dev/null 2>&1; then
+    if nix profile install $PACKAGES --impure >/dev/null 2>&1 || nix profile add $PACKAGES --impure >/dev/null 2>&1; then
         dunstify -r "$IDB" -t 5000 "Packages installed [OK]"
     else
         dunstify -r "$IDB" -u critical "Packages installation [FAIL]"
