@@ -2,7 +2,7 @@
 
 source "$HOME/afs/.confs/scripts/globals.sh"
 
-LOCK_FILE="/tmp/flashbang.lock"
+LOCK_FILE="${XDG_RUNTIME_DIR:-/tmp}/flashbang.lock"
 
 if [ -f "$LOCK_FILE" ]; then
     exit 0
@@ -17,18 +17,23 @@ pkill pqiv
 
 #pw-play --volume 0.0 ~/afs/.confs/config/scripts/fb2.mp3 &
 
-xrandr --output DP-1 --brightness 40 > /dev/null 2>&1
-xrandr --output HDMI-1 --brightness 40 > /dev/null 2>&1
+OUTPUTS=$(xrandr --query 2>/dev/null | grep " connected" | cut -d ' ' -f1)
+
+set_brightness() {
+    for output in $OUTPUTS; do
+        xrandr --output "$output" --brightness "$1" > /dev/null 2>&1
+    done
+}
+
+set_brightness 40
 
 b=40
 while [ "$(echo "$b 1" | awk '{print ($1 > $2)}')" = 1 ]; do
-    xrandr --output DP-1 --brightness "$b" > /dev/null 2>&1
-    xrandr --output HDMI-1 --brightness "$b" > /dev/null 2>&1
+    set_brightness "$b"
     b=$(echo "$b * 0.99" | bc)
 done
 
-xrandr --output DP-1 --brightness 1 > /dev/null 2>&1
-xrandr --output HDMI-1 --brightness 1 > /dev/null 2>&1
+set_brightness 1
 
 rm "$LOCK_FILE"
 
