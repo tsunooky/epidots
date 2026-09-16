@@ -33,6 +33,7 @@ PS1='[\u@\h \W]\$ '
 update-conf() {
     sh "$HOME/afs/.confs/scripts/system/update_epidots.sh"
     if [ $? -eq 0 ]; then
+        source ~/.zshrc > /dev/null 2>&1
         exec bash -l
     fi
 }
