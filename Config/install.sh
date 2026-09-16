@@ -1,6 +1,6 @@
 #!/bin/sh
 
-dot_list="zshrc bashrc gitconfig config mozilla signature ssh thunderbird emacs vim vimrc Xdefaults gdbinit"
+dot_list="zshrc bashrc gitconfig config mozilla signature ssh thunderbird emacs vim vimrc Xdefaults gdbinit clang-format"
 
 for f in $dot_list; do
   rm -rf "$HOME/.$f"

@@ -30,6 +30,10 @@ vim.keymap.set("v", "<leader>/", "gc", { remap = true, desc = "Toggle comment" }
 vim.keymap.set("n", "<C-z>", "u", { desc = "Undo" })
 vim.keymap.set("i", "<C-z>", "<Esc>ua", { desc = "Undo in insert mode" })
 
+vim.keymap.set({ "n", "i" }, "<C-f>", function()
+    require("conform").format({ async = true, lsp_fallback = true })
+end, { desc = "Format file" })
+
 vim.keymap.set("n", "<C-x>", "<cmd>wq<CR>", { desc = "Save and quit" })
 vim.keymap.set("i", "<C-x>", "<Esc><cmd>wq<CR>", { desc = "Save and quit" })
 

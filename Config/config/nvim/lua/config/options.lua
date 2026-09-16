@@ -30,3 +30,5 @@ vim.opt.clipboard = "unnamedplus"
 -- Disable netrw in favor of neo-tree
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+
+vim.g.c_syntax_for_h = 1

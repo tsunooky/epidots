@@ -128,9 +128,23 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<cr>"
 
+let g:c_syntax_for_h = 1
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 1
 let g:clang_format#enable_fallback_style = 0
+
+function! s:epidots_clang_format_args() abort
+    if &filetype ==# 'c'
+        let g:clang_format#extra_args = '-assume-filename=' . shellescape(expand('%:p:r') . '.c')
+    else
+        let g:clang_format#extra_args = ''
+    endif
+endfunction
+
+augroup epidots_clang_format
+    autocmd!
+    autocmd BufEnter,FileType * call s:epidots_clang_format_args()
+augroup END
 
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
