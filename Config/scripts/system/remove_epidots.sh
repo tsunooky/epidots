@@ -109,7 +109,7 @@
     for file_to_remove in "${files_to_remove[@]}"; do
         should_delete=true
         for file_to_keep in "$@"; do
-            if [ "$file_to_keep" = "$CONFS/$file_to_keep" ]; then
+            if [ "$file_to_remove" = "$CONFS/$file_to_keep" ]; then
                 should_delete=false;
                 break;
             fi
