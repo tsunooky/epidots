@@ -76,4 +76,4 @@ printf "${BLUE}│         INSTALLATION COMPLETED !         │${NC}\n"
 printf "${BLUE}│      Please logout and reconnect...      │${NC}\n"
 printf "${BLUE}└──────────────────────────────────────────┘${NC}\n\n"
 
-i3-nagbar -t warning -m 'Epidots is installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' 2&> /dev/null &
+i3-nagbar -t warning -m 'Epidots is installed! Logout and reconnect to apply.' -B ' -> LOGOUT <- ' 'i3-msg exit' > /dev/null 2>&1 &
