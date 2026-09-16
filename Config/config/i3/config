@@ -15,7 +15,7 @@ set $i3lock ~/afs/.confs/scripts/system/i3lock.sh
 include ~/.config/i3/colors.conf
 
 # Set windows that are floating by default
-for_window [class="float_window"] floating enable, rezise set 800 600, move position center
+for_window [class="float_window"] floating enable, resize set 800 600, move position center
 for_window [class="blueman-manager"] floating enable
 for_window [class="pavucontrol"] floating enable
 for_window [title="fbgif"] floating enable, border none, sticky enable, focus mode_toggle, resize set 1920 1080, move position center
@@ -35,7 +35,7 @@ exec --no-startup-id dex --autostart --environment i3
 
 # Run i3lock screen after 5 minutes of inactivity
 exec --no-startup-id xset s 300 300
-exec --no-startup-id xss-lock --transfer-sleep-lock -- $i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock -- $i3lock
 
 # Launch autotiling to have a better automatic window tiling
 exec_always --no-startup-id autotiling
@@ -51,9 +51,6 @@ exec --no-startup-id nm-applet
 
 # Set background to last used background
 exec --no-startup-id $confs/.fehbg
-
-# Locks the screen with i3lock after a certain time
-exec --no-startup-id xss-lock --transfer-sleep-lock -- $i3lock
 
 # ---------- General i3 settings and keybinds ----------
 
@@ -76,7 +73,7 @@ focus_on_window_activation focus
 bindsym $mod+Shift+b exec --no-startup-id $scripts/wallpaper_scripts/random_wallpaper.sh
 
 # Throw a flashbang
-bindsym $mod+Ctrl+f exec --no-startup-id $script/flashbang/flashbang.sh
+bindsym $mod+Ctrl+f exec --no-startup-id $scripts/flashbang/flashbang.sh
 
 # Opens rofi wallpaper chooser
 bindsym $mod+Shift+w exec --no-startup-id tree $wallpapers > /dev/null 2>&1 && $scripts/menus/wallpaper_menu.sh
@@ -177,10 +174,10 @@ bindsym $mod+Shift+r restart
 bindsym $mod+b exec "blueman-manager"
 
 # Launch Firefox
-bindsym $mod+Shift+F exec "firefox"
+bindsym $mod+Shift+f exec "firefox"
 
 # Take a screenshot
-bindsym $mod+shift+s exec flameshot gui
+bindsym $mod+Shift+s exec flameshot gui
 bindsym Print exec flameshot gui
 
 # ---------- Hardware and media controls ----------
