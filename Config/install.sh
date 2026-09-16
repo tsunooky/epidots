@@ -24,5 +24,5 @@ if [ ! -x "$HOME/.nix-profile/bin/zsh" ] || [ ! -x "$HOME/.nix-profile/bin/rofi"
     nixpkgs#picom
     "
 
-    nix profile install $PACKAGES --impure > /dev/null 2>&1
+    nix profile install $PACKAGES --impure > /dev/null 2>&1 || nix profile add $PACKAGES --impure > /dev/null 2>&1
 fi
