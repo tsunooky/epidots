@@ -41,10 +41,10 @@ case ${chosen} in
             if [ -n "$url" ]; then
                 firefox "$url" &
             else
-                notify-send "Error" "The link is empty. Please use 'Set Check Presence'."
+                dunstify "Error" "The link is empty. Please use 'Set Check Presence'."
             fi
         else
-            notify-send "Error" "No link found. Please use 'Set Check Presence' first."
+            dunstify "Error" "No link found. Please use 'Set Check Presence' first."
         fi
         ;;
     $moodle)
@@ -60,7 +60,7 @@ case ${chosen} in
         new_url=$(ask_url_cmd)
         if [ -n "$new_url" ]; then
             echo "$new_url" > "$PRESENCE_FILE"
-            notify-send "Epita Hub" "Presence link successfully saved!"
+            dunstify "Epita Hub" "Presence link successfully saved!"
         fi
         ;;
 esac
