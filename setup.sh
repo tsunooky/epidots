@@ -47,11 +47,11 @@ fi
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Installing Vim plugins..."
-vim +PluginInstall +qall > /dev/null 2>&1
+vim +PluginInstall +qall > /dev/null 2>&1 || true
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Setting default wallpaper..."
-feh --bg-fill "$WALLPAPERS/default.jpg" && cp "$HOME/.fehbg" "$CONFS/"
+feh --bg-fill "$WALLPAPERS/default.jpg" && cp "$HOME/.fehbg" "$CONFS/" || true
 printf "[${GREEN}OK${NC}]\n"
 
 printf "${BLUE}::${NC} %-42s" "Restoring user backup files..."
